@@ -267,8 +267,6 @@ function eventssearch(){
     valTypeSearch = 'BW';
     $('#searchBlessed').show();
     
-    
-    
         $('.homeSearch').tap(function(event){
     		event.preventDefault();
     		console.log("evento del home desde search");
@@ -357,7 +355,8 @@ function eventssearch(){
         });
         
         $('.searchInput').keyup(function(e){
-
+            
+            e.preventDefault();
             db = window.openDatabase("sundayApp", "1.0", "Sunday School DB", 1000000);
             
             if($(".searchInput").val().length == 0){
@@ -393,6 +392,25 @@ function eventssearch(){
      
 }
 
+function getDateOfWeek(week){
+    
+    var date =  new Date();
+    var d= new Date(date.getFullYear(), 0, 1);
+    var mes = d.getMonth();
+    d.setDate(d.getDate() - (d.getDay() + 7) % 7);
+    var numberWeek = week;
+    numberWeek--;
+    if(mes != d.getMonth())
+    {
+        d.setDate(d.getDate() + 7);
+        numberWeek--;
+    }
+    d.setDate(d.getDate() + 7*numberWeek);
+    
+    
+    return d;
+}
+
 function SearchBW(){
     
     db = window.openDatabase("sundayApp", "1.0", "Sunday School DB", 1000000);
@@ -402,39 +420,54 @@ function SearchBW(){
                     if (result.rows.length > 0) {
                         
                      var weekBlessed = result.rows.item(0);
-                      console.log("si hay resultados");
+                     var date =  new Date(getDateOfWeek($(".searchInput").val()));
+                     var mes = date.getMonth();   
+                     console.log(""+months[mes].month);   
+                     //console.log("si hay resultados y la fecha de la semana "+$(".searchInput").val()+" es ");
                         
                     $('#listBlessedWeek').append('<li data-role="list-divider" data-theme="b"></li>'+
                                              '<li data-role="list-divider">Week-'+$(".searchInput").val()+
                                              '<span class="ui-li-count"></span>'+
 	                                         '</li>');
                     
-                    $('#listBlessedWeek').append('<li><a href="#"><img src="images/calendar_dates_icons/sunday.png" />'+
-                                             '<h3>SUNDAY</h3><p>'+weekBlessed.sun+'</p></a></li>'+
-                                             '<li data-role="list-divider" data-theme="b"></li>');
-                    
+                    $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/sunday.png" />'+
+                                             '<h3>'+months[mes].month+'-'+date.getDate()+'-'+date.getFullYear()+'</h3><p>'+weekBlessed.sun+'</p>'+
+                                             '<p class="ui-li-aside"><strong>Sunday</strong></p></li>'); 
+                        
+                    date.setDate(date.getDate() + 1);
+                    mes = date.getMonth();
                     $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/monday.png" />'+
-                                             '<h3>MONDAY</h3><p>'+weekBlessed.mon+'</p>'+
+                                             '<h3>'+months[mes].month+'-'+date.getDate()+'-'+date.getFullYear()+'</h3><p>'+weekBlessed.mon+'</p>'+
                                              '<p class="ui-li-aside"><strong>Monday</strong></p></li>'); 
 			        
+                    date.setDate(date.getDate() + 1);
+                    mes = date.getMonth();
                     $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/tuesday.png" />'+
-                                             '<h3>TUESDAY</h3><p>'+weekBlessed.tue+'</p>'+
+                                             '<h3>'+months[mes].month+'-'+date.getDate()+'-'+date.getFullYear()+'</h3><p>'+weekBlessed.tue+'</p>'+
                                              '<p class="ui-li-aside"><strong>Tuesday</strong></p></li>'); 
                     
+                    date.setDate(date.getDate() + 1);
+                    mes = date.getMonth();
                     $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/wednesday.png" />'+
-                                             '<h3>WEDNESDAY</h3><p>'+weekBlessed.wed+'</p>'+
+                                             '<h3>'+months[mes].month+'-'+date.getDate()+'-'+date.getFullYear()+'</h3><p>'+weekBlessed.wed+'</p>'+
                                              '<p class="ui-li-aside"><strong>Wednesday</strong></p></li>');
                     
+                    date.setDate(date.getDate() + 1);
+                    mes = date.getMonth();
                     $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/thursday.png" />'+
-                                             '<h3>THURSDAY</h3><p>'+weekBlessed.thu+'</p>'+
+                                             '<h3>'+months[mes].month+'-'+date.getDate()+'-'+date.getFullYear()+'</h3><p>'+weekBlessed.thu+'</p>'+
                                              '<p class="ui-li-aside"><strong>Thursday</strong></p></li>'); 
                     
+                    date.setDate(date.getDate() + 1);
+                    mes = date.getMonth();
                     $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/friday.png" />'+
-                                             '<h3>FRIDAY</h3><p>'+weekBlessed.fri+'</p>'+
+                                             '<h3>'+months[mes].month+'-'+date.getDate()+'-'+date.getFullYear()+'</h3><p>'+weekBlessed.fri+'</p>'+
                                              '<p class="ui-li-aside"><strong>Friday</strong></p></li>');
                     
+                    date.setDate(date.getDate() + 1);
+                    mes = date.getMonth();
                     $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/saturday.png" />'+
-                                             '<h3>Saturday</h3><p>'+weekBlessed.sat+'</p>'+
+                                             '<h3>'+months[mes].month+'-'+date.getDate()+'-'+date.getFullYear()+'</h3><p>'+weekBlessed.sat+'</p>'+
                                              '<p class="ui-li-aside"><strong>Saturday</strong></p></li>'+
                                              '<li data-role="list-divider" data-theme="b"></li>');
                     
