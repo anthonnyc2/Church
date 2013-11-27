@@ -37,7 +37,8 @@ function init() {
         }
     });
 
-    $("#button").on('tap', function() {
+    $("#button").on('tap', function(event) {
+        event.preventDefault();
         if ($("#name").val() == "" || $("#email").val() == "" || $("#phoneNumber").val() == "") {
             alert("" + language[$('#language').val()].messageRequered);
         }else{
