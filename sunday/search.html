@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+    <head>
+    </head>
+    <body>
+        <div data-role="page" id="page" style="background-image:url(images/page_bg.jpg); background-position:0px 180px, center; background-size:100%; background-repeat:no-repeat">
+            <div data-theme="c" data-content-theme="c" data-role="panel" class="optionPanel" data-position-fixed="true" data-position="right" data-role="button" data-display="push">
+                <ul data-role="listview" data-theme="c" data-content-theme="c" >
+                    <li data-role="list-divider">
+                        <h2>Activation code</h2>
+                    </li>
+                    <li id="verification">
+                        <input placeholder="Enter validation code here" class="payedCode" type="text" id="payedCode" value="" maxlength="20">
+                        <input type="button" id="validate" value="Validate code" />
+                        <input type="button" id="store" class="store" value="Go to store" />
+                    </li>
+                    <li data-role="list-divider">
+                        <h2>Font sizes</h2>
+                    </li>
+                    <li class="fonts">
+                        <article class="fontSizeMinus">A</article>
+                        <article class="fontReset">A</article>
+                        <article class="fontSizePlus">A</article>
+                    </li>
+                </ul>
+            </div>
+            <div data-role="header" id="header">
+                <a class="backHomeSearch" href="#" data-icon="arrow-l">Back</a>
+                <h1>NOTES</h1>
+                <div align="center">
+                    <img src="images/RCCG_DCE_App_Banner3.jpg" style="max-height:100%; max-width:100%; min-width:100px; size:100%, auto">
+                </div>
+                <a data-icon="gear" class="options" data-iconpos="right">Options</a>
+            </div>
+            <div data-role="content" align="center" id="notepad">
+                
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <legend>Options:</legend>
+                    <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="BW" checked="checked">
+                    <label for="radio-choice-h-2a">B. Week</label>
+                    <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="NT">
+                    <label for="radio-choice-h-2b">Note</label>
+                    <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2c" value="LS">
+                    <label for="radio-choice-h-2c">Lesson</label>
+                </fieldset>
+                <label for="search">Search Field:</label>
+                <input type="search" name="search" id="search" value="" placeholder="Insert week number" class="searchInput">
+                
+                <div id="searchLessons">
+                    <ul id="listLessonsS" data-role="listview" data-theme="d" data-divider-theme="d" data-inset="true" >
+                        
+                    </ul>
+                </div>
+                
+                <div id="searchBlessed">
+                    <ul id ="listBlessedWeek" data-role="listview" data-theme="d" data-divider-theme="d" data-inset="true" >
+                
+                    </ul>
+                </div>
+                
+                <div id="searchNote">
+                    <div id="listNotes" data-role="collapsible-set" data-content-theme="d" id="set">
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <div data-role="navbar" class="nav-images" data-grid="d">
+                    <ul id="listFooter">
+                        <li><a href="#" id="calendar" class="calendarSearch" data-direction="reverse" data-icon="custom">Today</a></li>
+                        <li><a href="#" id="content" class="contentSearch" data-icon="custom">Lessons</a></li>
+                        <li><a href="" id="home" class="homeSearch" data-icon="custom">Home</a></li>
+                        <li><a href="#" id="note" class=" notesSearch" data-icon="custom">Notes</a></li>
+                        <li><a href="#" id="search" class="search" data-icon="custom">Search</a></li>
+                    </ul>
+                </div>
+            </div> <!-- /footer -->
+        </div>
+    </body>
+</html>

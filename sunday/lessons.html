@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <div  id="page" data-index="lessons" data-role="page" data-dom-cache="true" style="background-image:url(images/page_bg.jpg); background-position:0px 180px, center; background-size:100%; background-repeat:no-repeat" >
+            <div data-theme="c" data-content-theme="c" data-role="panel" class="optionPanel" data-position-fixed="true" data-position="right" data-role="button" data-display="push">
+                <ul data-role="listview" data-theme="c" data-content-theme="c" >
+                    <li data-role="list-divider">
+                        <h2>Activation code</h2>
+                    </li>
+                    <li id="verification">
+                        <input placeholder="Enter validation code here" class="payedCode" type="text" id="payedCode" value="" maxlength="20">
+                        <input type="button" id="validate" value="Validate code" />
+                        <input type="button" id="store" class="store" value="Go to store" />
+                    </li>
+                    <li data-role="list-divider">
+                        <h2>Font sizes</h2>
+                    </li>
+                    <li class="fonts">
+                        <article class="fontSizeMinus">A</article>
+                        <article class="fontReset">A</article>
+                        <article class="fontSizePlus">A</article>
+                    </li>
+                </ul>
+            </div>
+            <div data-role="header">
+                <a class="backHomeLesson" href="#" data-icon="arrow-l">Back</a>
+                <h1>LIST</h1>
+                <div align="center"><img src="images/Lessons_Content_Banner.jpg"  style="max-height:100%; max-width:100%; min-width:100px; size:100%, auto">
+                </div>
+                <a data-icon="gear" class="options" data-iconpos="right">Options</a>
+            </div>
+            <div data-role="content">
+                <ul id="listLessons" data-role="listview" data-theme="d" data-filter="true"  data-divider-theme="d" data-inset="true" >
+                    
+                </ul>
+            </div>
+            <!-- footer -->
+            <div data-role="footer" data-position="fixed">
+                <div data-role="navbar" class="nav-images" data-grid="d">
+                    <ul id="listFooter">
+                        <li><a href="#" id="calendar" class="calendarLesson" data-direction="reverse" data-icon="custom">Today</a></li>
+                        <li><a href="#" id="content" class="contentLesson" data-icon="custom">Lessons</a></li>
+                        <li><a href="#" id="home" class="backHomeLesson" data-icon="custom">Home</a></li>
+                        <li><a href="#" id="note" class="notesLesson" data-icon="custom">Notes</a></li>
+                        <li><a href="#" id="search" class="searchLesson" data-icon="custom">Search</a></li>
+                    </ul>
+                </div>
+            </div> <!-- /footer -->
+        </div> 
+    </body>
+</html>

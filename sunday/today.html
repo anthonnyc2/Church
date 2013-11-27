@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <div data-role="page" id="today" data-dom-cache="true">
+            <div data-theme="c" data-content-theme="c" data-role="panel" class="optionPanel" data-position-fixed="true" data-position="right" data-role="button" data-display="push">
+                <ul data-role="listview" data-theme="c" data-content-theme="c" >
+                    <li data-role="list-divider">
+                        <h2>Activation code</h2>
+                    </li>
+                    <li id="verification">
+                        <input placeholder="Enter validation code here" class="payedCode" type="text" id="payedCode" value="" maxlength="20">
+                        <input type="button" id="validate" value="Validate code" />
+                        <input type="button" id="store" class="store" value="Go to store" />
+                    </li>
+                    <li data-role="list-divider">
+                        <h2>Font sizes</h2>
+                    </li>
+                    <li class="fonts">
+                        <article class="fontSizeMinus">A</article>
+                        <article class="fontReset">A</article>
+                        <article class="fontSizePlus">A</article>
+                    </li>
+                </ul>
+            </div>
+            <div data-role="header" id="header">
+                <a class="backHomeCalendar" href="#" data-icon="arrow-l">Back</a>
+                <h1>TODAY</h1>
+                <a data-icon="gear" class="options" data-iconpos="right">Options</a>
+                <div align="center">
+                    <img src="images/RCCG_DCE_App_Banner3.jpg"  style="max-height:100%; max-width:100%; min-width:100px; size:100%, auto">
+                </div>             
+            </div>
+             
+            <div data-role="content">
+                <div id="pro">
+                
+                    <ul data-role="listview" data-theme="d" data-divider-theme="d" data-inset="true" >
+                        <li data-role="list-divider" data-theme="b"></li>
+                        <li data-role="list-divider">
+                            <h3 id="lessonBW"></h3>
+        				    <span id="quarterBW" class="ui-li-count"></span>
+        				</li>
+        		   				
+                        <li style="background-color:#F1F1F1">
+        				    <h3 id="titleBW" style="white-space:pre-line"></h3>
+        					<p id="dateBW" class="ui-li-aside"><strong></strong></p>
+        				</li>
+                                
+                        <li>
+                            <img src="images/memory-verse.png" />
+        					<p id="memory_verseBW" style="white-space:pre-line"></p>
+                        </li>
+                                
+                        <li style="background-color:#F1F1F1">
+        				    <p id="bible_passBW" style="white-space:pre-line"></p>
+        				</li>
+            		</ul>
+                     
+                    <ul data-role="listview" data-theme="d" data-divider-theme="d" data-inset="true" >
+            	  
+                	  <li style="background-color:#F1F1F1">
+                	    <p id="introducionBW" style="white-space:pre-line"></p>
+                	   </li>
+            	  
+                	  <li>
+                	    <img src="images/outline.png" />
+                	    <p id="outBW" style="white-space:pre-line"></p>
+                	  </li>
+            	  
+                	  <li>
+                	    <p id="outline1BW" style="white-space:pre-line"></p>       
+                	  </li>
+                	  
+                      <li>
+                	    <p id="outline2BW" style="white-space:pre-line"></p>       
+                	  </li>
+                	  
+                      <li>
+            	        <p id="conclusionBW" style="white-space:pre-line"></p>       
+            	      </li>
+            	  
+                	  <li>
+                	      <p id="questionBW" style="white-space:pre-line"></p>       
+                	  </li>
+            	  
+            	      <li data-role="list-divider" data-theme="b"></li>
+        	  
+      	          </ul>
+                </div>
+                <div id="SundayLessonDiv" align="center">
+                        <h3>Blessed Day With The Holy Spirit</h3>
+                </div>
+                
+                <ul id ="blessedWeek" data-role="listview" data-theme="d" data-divider-theme="d" data-inset="true" >
+                
+                </ul>
+                
+            </div><!-- end content -->
+            
+            <!-- footer -->
+            <!-- footer -->
+            <div data-role="footer" data-position="fixed">
+                <div data-role="navbar" class="nav-images" data-grid="d">
+                    <ul>
+                        <li><a href="#" id="calendar" data-direction="reverse" data-icon="custom">Today</a></li>
+                        <li><a href="#" id="content" class="contentCalendar" data-direction="reverse" data-icon="custom">Lessons</a></li>
+                        <li><a href="#" id="home" class="homeCalendar" data-icon="custom">Home</a></li>
+                        <li><a href="#" id="note" class="notesCalendar" data-icon="custom">Notes</a></li>
+                        <li><a href="#" id="search" class="searchCalendar" data-icon="custom">Search</a></li>
+                    </ul>
+                </div>
+            </div> <!-- /footer -->
+        </div> 
+    </body>
+</html>
