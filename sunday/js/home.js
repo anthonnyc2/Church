@@ -165,18 +165,18 @@ function onBackKeyDown(e) {
             if(page == 2)
             {
                 page = 1;
-                $.mobile.changePage( "home.html", { transition: "slide" });
+                $.mobile.changePage( "home.html" );
                 init(); 
             }else{
                 if(page == 3)
                 {
                      page = 2;
                      $("#page").attr("data-index","lessons");
-                     $.mobile.changePage( "lessons.html", { transition: "slideup" });
+                     $.mobile.changePage( "lessons.html" );
                      init();
                 }else if(page == 4 || page == 5 || page == 6){
                         page = 1;
-                        $.mobile.changePage( "home.html", { transition: "slide" });
+                        $.mobile.changePage( "home.html" );
                         init();        
                     }
                 }
@@ -192,7 +192,7 @@ function eventsCalendar(){
     		event.preventDefault();
     		console.log("evento del home desde calendar");
             page = 1;
-            $.mobile.changePage( "home.html", { transition: "slide" });
+            $.mobile.changePage( "home.html" );
             $("#page").attr("data-index","home");
             init();
     	});
@@ -201,7 +201,7 @@ function eventsCalendar(){
     		event.preventDefault();
             console.log("tap lessons desde calendar");
             page = 2;
-            $.mobile.changePage( "lessons.html", { transition: "slideup" });
+            $.mobile.changePage( "lessons.html" );
             $("#page").attr("data-index","lessons");
     		//window.location='lessons.html';
             init();
@@ -211,7 +211,7 @@ function eventsCalendar(){
     		event.preventDefault();
             console.log("tap notes desde calendar");
             page = 5;
-            $.mobile.changePage( "notes.html", { transition: "slideup", reloadPage: true });
+            $.mobile.changePage( "notes.html", { reloadPage: true });
             $("#page").attr("data-index","notes");
     		//window.location='lessons.html';
             init();
@@ -222,7 +222,7 @@ function eventsCalendar(){
     		console.log("evento del back desde lessonsssss");
             page = 1;
             $("#page").attr("data-index","lessons");
-            $.mobile.changePage( "home.html", { transition: "slide" });
+            $.mobile.changePage( "home.html" );
             init();
     	});
         
@@ -235,7 +235,7 @@ function eventsCalendar(){
                  {
                      //console.log("Le dio comprar");
                      //page = 6;
-                     //$.mobile.changePage( "browser.html", { transition: "slideup", reloadPage: true });
+                     //$.mobile.changePage( "browser.html", { reloadPage: true });
                      cargarURl();
                  }    
              }       
@@ -252,7 +252,7 @@ function eventsCalendar(){
             console.log("evento search desde HOme");
             page = 6;
             $("#page").attr("data-index","search");
-            $.mobile.changePage( "search.html", { transition: "slideup", reloadPage: true });
+            $.mobile.changePage( "search.html", { reloadPage: true });
             init();
         });
         
@@ -271,7 +271,7 @@ function eventssearch(){
     		event.preventDefault();
     		console.log("evento del home desde search");
             page = 1;
-            $.mobile.changePage( "home.html", { transition: "slide" });
+            $.mobile.changePage( "home.html", {reverse: "true"} );
             $("#page").attr("data-index","home");
             init();
     	});
@@ -280,7 +280,7 @@ function eventssearch(){
     		event.preventDefault();
             console.log("tap lessons desde search");
             page = 2;
-            $.mobile.changePage( "lessons.html", { transition: "slideup"});
+            $.mobile.changePage( "lessons.html", { reverse: "true"});
             $("#page").attr("data-index","lessons");
     		//window.location='lessons.html';
             init();
@@ -290,7 +290,7 @@ function eventssearch(){
     		event.preventDefault();
             console.log("tap notes desde search");
             page = 5;
-            $.mobile.changePage( "notes.html", { transition: "slideup", reloadPage: true });
+            $.mobile.changePage( "notes.html", { reloadPage: true, reverse: "true" });
             $("#page").attr("data-index","notes");
     		//window.location='lessons.html';
             init();
@@ -301,7 +301,7 @@ function eventssearch(){
     		console.log("evento del back desde search");
             page = 1;
             $("#page").attr("data-index","lessons");
-            $.mobile.changePage( "home.html", { transition: "slide" });
+            $.mobile.changePage( "home.html", {reverse: "true"} );
             init();
     	});
         
@@ -309,7 +309,7 @@ function eventssearch(){
     		event.preventDefault();
             console.log("tap calendar desde search");
             page = 4;
-            $.mobile.changePage( "today.html", { transition: "slideup"});
+            $.mobile.changePage( "today.html", { reverse: "true"});
             $("#page").attr("data-index","today");
             init();
     	});
@@ -555,6 +555,7 @@ function cargarURl(){
     ref.addEventListener('loaderror', function(event) { alert('error: ' + event.message); });
     ref.addEventListener('exit', function(event) { 
         console.log("cerro el navegador");
+        event.preventDefault();
         window.location="home.html";
     });
 }
@@ -565,7 +566,8 @@ function eventsPanel(){
     $('.options').tap(openP)
     $('body').on( "swipeleft", openP );
     $('body').on( "swiperight", function(){$("#optionPanel").panel("close")});
-    $('input#validate').tap(function(){
+    $('input#validate').tap(function(event){
+        event.preventDefault();
         if(!$('.payedCode').val())
             alert('Please insert code')
         else
@@ -584,23 +586,21 @@ function eventsHome(){
     		event.preventDefault();
             console.log("tap lessons");
             page = 2;
-            $.mobile.changePage( "lessons.html", { transition: "slideup" });
+            $.mobile.changePage( "lessons.html", {reverse: "true"} );
             $("#page").attr("data-index","lessons");
     		//window.location='lessons.html';
             init();
 	    });  
     
         $('.home').tap(function(event){
-    		event.preventDefault();
-            console.log("tap home desde home");
-            
+            return;
     	});
         
         $('.calendar').tap(function(event){
     		event.preventDefault();
             console.log("tap calendar desde home");
             page = 4;
-            $.mobile.changePage( "today.html", { transition: "slideup" });
+            $.mobile.changePage( "today.html", {reverse: "true"} );
             $("#page").attr("data-index","today");
             init();
     	});
@@ -608,7 +608,7 @@ function eventsHome(){
         $('#goBW').tap(function(event){
     		event.preventDefault();
             page = 4;
-            $.mobile.changePage( "today.html", { transition: "slideup" });
+            $.mobile.changePage( "today.html" );
             $("#page").attr("data-index","today");
             init();
     	});
@@ -617,17 +617,18 @@ function eventsHome(){
     		event.preventDefault();
             console.log("tap notes desde home");
             page = 5;
-            $.mobile.changePage( "notes.html", { transition: "slideup" });
+            $.mobile.changePage( "notes.html" );
             $("#page").attr("data-index","notes");
     		//window.location='lessons.html';
             init();
     	});
         
         $('.search').tap(function(event){
+            event.preventDefault();
             console.log("evento search desde HOme");
             page = 6;
             $("#page").attr("data-index","search");
-            $.mobile.changePage( "search.html", { transition: "slideup"});
+            $.mobile.changePage( "search.html");
             init();
         });
         
@@ -1002,7 +1003,7 @@ function eventLessonDetail(){
     		console.log("evento del back desde detalle lesson");
             page = 2;
             $("#page").attr("data-index","lessons");
-            $.mobile.changePage( "lessons.html", { transition: "slide" });
+            $.mobile.changePage( "lessons.html", {reverse: "true"} );
             init();
     	});
     
@@ -1011,22 +1012,13 @@ function eventLessonDetail(){
 function eventDetailLesson(){
 
     console.log("entro en eventos detailLesson");
-        /*$('.backLessons').tap(function(event){
-    		//event.preventDefault();
-    		console.log("evento del back desde detalle lesson");
-            page = 2;
-            $("#page").attr("data-index","lessons");
-            $.mobile.changePage( "lessons.html", { transition: "slide" });
-            init();
-    	});*/
-    
     
     $('.homeLesson').tap(function(event){
     		event.preventDefault();
             console.log("tap calendar desde lesson");
             page = 4;
              $("#page").attr("data-index","today");
-            $.mobile.changePage( "today.html", { transition: "slide"});
+            $.mobile.changePage( "today.html", {reverse: "true"} );
             init();
     	});
         
@@ -1039,7 +1031,7 @@ function eventDetailLesson(){
                      console.log("Le dio comprar");
                      page = 1;
                      $("#page").attr("data-index","lessons");
-                     $.mobile.changePage( "home.html", { transition: "slide" });
+                     $.mobile.changePage( "home.html", {reverse: "true"} );
                      init();
                      cargarURl();
                  }   
@@ -1061,7 +1053,7 @@ function eventDetailLesson(){
             lessonQuarter = $(this).attr('data-quarter');
             lessonDate = $(this).attr('data-date');
             page = 3;
-            $.mobile.changePage( "detailLesson.html", { transition: "slide", reloadPage: true });
+            $.mobile.changePage( "detailLesson.html", {reloadPage: true });
             init();
     	});
         
@@ -1072,7 +1064,7 @@ function eventDetailLesson(){
             console.log("tap calendar desde lesson");
             page = 4;
              $("#page").attr("data-index","today");
-            $.mobile.changePage( "today.html", { transition: "slide"});
+            $.mobile.changePage( "today.html", { reverse: true});
             init();
     	});
         
@@ -1081,7 +1073,7 @@ function eventDetailLesson(){
     		console.log("evento del back desde lessonsssss");
             page = 1;
             $("#page").attr("data-index","lessons");
-            $.mobile.changePage( "home.html", { transition: "slide" });
+            $.mobile.changePage( "home.html" );
             init();
     	});
         
@@ -1091,7 +1083,7 @@ function eventDetailLesson(){
             console.log("evento search desde HOme");
             page = 6;
             $("#page").attr("data-index","search");
-            $.mobile.changePage( "search.html", { transition: "slideup", reloadPage: true });
+            $.mobile.changePage( "search.html", { reloadPage: true });
             init();
         });
         
@@ -1099,7 +1091,7 @@ function eventDetailLesson(){
     		event.preventDefault();
             console.log("tap notes desde lesson");
             page = 5;
-            $.mobile.changePage( "notes.html", { transition: "slideup", reloadPage: true });
+            $.mobile.changePage( "notes.html", { reloadPage: true });
             $("#page").attr("data-index","notes");
             init();
     	});
@@ -1116,7 +1108,7 @@ function eventsNotes(){
     		console.log("evento del home desde notes");
             page = 1;
             $("#page").attr("data-index","lessons");
-            $.mobile.changePage( "home.html", { transition: "slide" });
+            $.mobile.changePage( "home.html", {reverse: "true"} );
             init();
     	});
         
@@ -1125,7 +1117,7 @@ function eventsNotes(){
             console.log("tap calendar desde notes");
             page = 4;
              $("#page").attr("data-index","today");
-            $.mobile.changePage( "today.html", { transition: "slide" });
+            $.mobile.changePage( "today.html", {reverse: "true"} );
             init();
     	});
         
@@ -1144,7 +1136,7 @@ function eventsNotes(){
     		console.log("evento de lesson desde notes");
             page = 2;
             $("#page").attr("data-index","lessons");
-            $.mobile.changePage( "lessons.html", { transition: "slide" });
+            $.mobile.changePage( "lessons.html", {reverse: "true"} );
             init();
     	});
         
@@ -1153,7 +1145,7 @@ function eventsNotes(){
     		console.log("evento del back desde notes");
             page = 1;
             $("#page").attr("data-index","lessons");
-            $.mobile.changePage( "home.html", { transition: "slide" });
+            $.mobile.changePage( "home.html", {reverse: "true"} );
             init();
     	});
         
@@ -1162,7 +1154,7 @@ function eventsNotes(){
             console.log("evento search desde HOme");
             page = 6;
             $("#page").attr("data-index","search");
-            $.mobile.changePage( "search.html", { transition: "slideup", reloadPage: true });
+            $.mobile.changePage( "search.html", { reloadPage: true });
             init();
         });
         

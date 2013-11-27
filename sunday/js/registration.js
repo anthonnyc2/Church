@@ -10,11 +10,6 @@ function onDeviceReady() {
     init();
 }
 
-/*$(document).ready(function() {
- init();
- });*/
-
-
 function init() {
 	existentUser();
     checkConnection();
@@ -46,34 +41,33 @@ function init() {
                 alert(language[$('#language').val()].messageEmail);
             }else{
                 if($("#email").val() != $("#email2").val()){
-                 alert(language[$('#language').val()].sameEmail)                   
-                }else{
+                    alert(language[$('#language').val()].sameEmail)
+                }
+                else{
                     if(Online){
                         if($("#codeActivation").val() != ""){
                             APIRequestCode();
                         }else{
                             APIResquestEmail();
                         }
-                        
                     }else{
                         alert(language[$('#language').val()].noInternet);
                     }
                 }
-                
             }
         }
     });
 }
 
 function existentUser() {
-
     db.transaction(createDB, errorCB, successCB);
     return;
 }
 
 function successInsert() {
     alert(language[$('#language').val()].onSuccess);
-    window.location.href = "home.html";
+    //window.location.href = "home.html";
+    $.mobile.changePage( "home.html", { transition: "flip", reloadPage: true });
 }
 
 function checkConnection() {
