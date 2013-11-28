@@ -24,7 +24,8 @@ window['listLesson'] = false;
 window['dataLesson'] = '';
 window['today'] = false;
 window['idioma'] = '';
-window['changeversion']=false;
+window['namePanel']= 'optionPanel';
+
 
 var months = [{
 "month": "January", "quarter" : "2nd Quarter"},{"month": "February", "quarter" : "2nd Quarter"},{"month": "March", "quarter" : "2nd Quarter"},
@@ -65,6 +66,7 @@ function init() {
     
     if(page == 1){
         console.log("eventos de pagina 1");
+        window['namePanel']= 'optionPanel';
         if(window['dataLesson'] == ''){
             console.log("primera vez para variable sesion consulta de lecciones");
             queryLessons(); 
@@ -76,6 +78,7 @@ function init() {
     else{
         if(page == 2){
           console.log("pagina 2 listado lesson");  
+            window['namePanel']= 'optionPanelLL';
             if(!window['listLesson']){
                 console.log("primera vez para variable sesion de lista de lecciones");
                 queryVersionApp();
@@ -90,6 +93,7 @@ function init() {
         }else{
             if(page == 3){
                 console.log("pagina 3 detalle lesson");
+                window['namePanel']= 'optionPanelLLD';
                 
                 $.mobile.loading( 'show', {
             		text: "",
@@ -103,6 +107,7 @@ function init() {
             }else{
                 if(page == 4){
                     console.log("pagina 4 today");
+                    window['namePanel']= 'optionPanelT';
                     if(!window['today']){
                         queryVersionApp();
                         /*$.mobile.loading( 'show', {
@@ -115,11 +120,13 @@ function init() {
                 }else{
                     if(page == 5){
                         console.log("pagina 5 notes");
+                        window['namePanel']= 'optionPanelN';
                         queryNote();
                         //eventsNotes();
                     }else{
                         if(page == 6){
                             console.log("pagina 6 search");
+                            window['namePanel']= 'optionPanelS';
                             setTimeout(function() {
                             eventssearch();
                             }, 300);
@@ -238,7 +245,31 @@ function eventsCalendar(){
             init();
         });
         
-        eventsPanel()
+        //eventsPanel()
+        
+        fontSize()
+        setFontSize(window['size'])
+        $('.optionsT').tap(openP)
+        $('body').on( "swipeleft", openP );
+        $('body').on( "swiperight", function(){event.preventDefault();$(".optionPanelT").panel("close")});
+    
+        
+        $('.storeT').tap(function(event){
+            event.preventDefault();
+            cargarURl();
+        });
+    
+        $('input#validateT').tap(function(event){
+            event.preventDefault();
+            if($('.payedCodeT').val()=='')
+            {
+                 alert('Please insert code')   
+            }else
+            {
+                 //alert("codigo en Today "+$('.payedCodeT').val());    
+                 APIRequestCode($('.payedCodeT').val())   
+            }
+        });
     
 }
 
@@ -368,7 +399,31 @@ function eventssearch(){
                         }
         });
         
-        eventsPanel()
+        //eventsPanel()
+        
+        fontSize()
+        setFontSize(window['size'])
+        $('.optionsS').tap(openP)
+        $('body').on( "swipeleft", openP );
+        $('body').on( "swiperight", function(){event.preventDefault();$(".optionPanelS").panel("close")});
+    
+        
+        $('.storeS').tap(function(event){
+            event.preventDefault();
+            cargarURl();
+        });
+    
+        $('input#validateS').tap(function(event){
+            event.preventDefault();
+            if($('.payedCodeS').val()=='')
+            {
+                 alert('Please insert code')   
+            }else
+            {
+                 //alert("codigo en Today "+$('.payedCodeS').val());    
+                 APIRequestCode($('.payedCodeS').val())   
+            }
+        });
      
 }
 
@@ -541,11 +596,11 @@ function cargarURl(){
 }
 
 function eventsPanel(){
-    fontSize()
-    setFontSize(window['size'])
-    $('.options').tap(openP)
-    $('body').on( "swipeleft", openP );
-    $('body').on( "swiperight", function(){event.preventDefault();$("#optionPanel").panel("close")});
+    //fontSize()
+    //setFontSize(window['size'])
+    //$('.options').tap(openP)
+    //$('body').on( "swipeleft", openP );
+    //$('body').on( "swiperight", function(){event.preventDefault();$(".optionPanel").panel("close")});
     //------------- validacion del codigo de pago dentro del panel ----------
     /*
     $('input#validate').tap(function(event){
@@ -555,12 +610,14 @@ function eventsPanel(){
         else
             APIRequestCode($('input#payedCode').val())
     })
-    */
+    
     $('.store').tap(function(event){
         event.preventDefault();
         cargarURl();
-    })
+    })*/
 }
+
+
 
 function eventsHome(){
      
@@ -616,11 +673,42 @@ function eventsHome(){
             init();
         });
         
-        eventsPanel()
+        //eventsPanel()
     
+        fontSize()
+        setFontSize(window['size'])
+        $('.options').tap(openP)
+        $('body').on( "swipeleft", openP );
+        $('body').on( "swiperight", function(){event.preventDefault();$(".optionPanel").panel("close")});
+    
+        
+        $('.store').tap(function(event){
+            event.preventDefault();
+            cargarURl();
+        });
+    
+        $('input#validate').tap(function(event){
+            event.preventDefault();
+            if($('.payedCode').val()=='')
+            {
+                 alert('Please insert code')   
+            }else
+            {
+                 //alert("codigo en Home "+$('.payedCode').val());    
+                 APIRequestCode($('.payedCode').val())   
+            }
+            
+        });
         
 
 }
+
+function openP(event){
+    event.preventDefault();
+    versionType()   
+    $("."+window['namePanel']).panel("open");
+}
+    
 function queryLessons(){
 
     db = openDatabase("sundayApp", "1.0", "Sunday School DB", 1000000);
@@ -774,11 +862,15 @@ function queryVersionApp(){
 
 function versionType(){
     if(version == 1){
-        $('input#payedCode').hide()
-        $('input#validate').closest('.ui-btn').hide()
-        $('input#store').closest('.ui-btn').hide()
         $('#verification').html('<h3>Version pro</h3>')
-        $("#optionPanel").panel("close")
+        $('#verificationN').html('<h3>Version pro</h3>')
+        $('#verificationT').html('<h3>Version pro</h3>')
+        $('#verificationS').html('<h3>Version pro</h3>')
+        $('#verificationLL').html('<h3>Version pro</h3>')
+        $('#verificationLLD').html('<h3>Version pro</h3>')
+        
+        $("."+window['namePanel']).panel("close")
+        console.log("modifico el contenido del panel "+window['namePanel']);
     }
 }
 
@@ -991,6 +1083,30 @@ function eventLessonDetail(){
             init();
     	});
     
+    fontSize()
+    setFontSize(window['size'])
+    $('.optionsLLD').tap(openP)
+    $('body').on( "swipeleft", openP );
+    $('body').on( "swiperight", function(){event.preventDefault();$(".optionPanelLLD").panel("close")});
+
+    
+    $('.storeLLD').tap(function(event){
+        event.preventDefault();
+        cargarURl();
+    });
+
+    $('input#validateLLD').tap(function(event){
+        event.preventDefault();
+        if($('.payedCodeLLD').val()=='')
+        {
+             alert('Please insert code')   
+        }else
+        {
+             //alert("codigo en List Lessons "+$('.payedCodeLLD').val());    
+             APIRequestCode($('.payedCodeLLD').val())   
+        }
+    });
+    
 }
 
 function eventDetailLesson(){
@@ -1080,7 +1196,30 @@ function eventDetailLesson(){
             init();
     	});
         
-        eventsPanel()
+        //eventsPanel()
+        fontSize()
+        setFontSize(window['size'])
+        $('.optionsLL').tap(openP)
+        $('body').on( "swipeleft", openP );
+        $('body').on( "swiperight", function(){event.preventDefault();$(".optionPanelLL").panel("close")});
+    
+        
+        $('.storeLL').tap(function(event){
+            event.preventDefault();
+            cargarURl();
+        });
+    
+        $('input#validateLL').tap(function(event){
+            event.preventDefault();
+            if($('.payedCodeLL').val()=='')
+            {
+                 alert('Please insert code')   
+            }else
+            {
+                 //alert("codigo en List Lessons "+$('.payedCodeLL').val());    
+                 APIRequestCode($('.payedCodeLL').val())   
+            }
+        });
     
 }
 
@@ -1142,7 +1281,30 @@ function eventsNotes(){
             init();
         });
         
-        eventsPanel();
+        //eventsPanel();
+        fontSize()
+        setFontSize(window['size'])
+        $('.optionsN').tap(openP)
+        $('body').on( "swipeleft", openP );
+        $('body').on( "swiperight", function(){event.preventDefault();$(".optionPanelN").panel("close")});
+
+        
+        $('.storeN').tap(function(event){
+            event.preventDefault();
+            cargarURl();
+        });
+
+        $('input#validateN').tap(function(event){
+            event.preventDefault();
+            if($('.payedCodeN').val()=='')
+            {
+                 alert('Please insert code')   
+            }else
+            {
+                 //alert("codigo en Notes "+$('.payedCodeN').val());    
+                 APIRequestCode($('.payedCodeN').val())   
+            }
+        });
     
 }
 
@@ -1200,7 +1362,6 @@ function updateClient(){
     window['listLesson'] = false;
     //window['dataLesson'] = '';
     window['today'] = false;
-    window['changeversion'] = true;
     versionType();
 }
 
@@ -1609,11 +1770,7 @@ function editNote(index,title,content){
                     },errorHandler,nullHandler);
 }
 
-function openP(event){
-    event.preventDefault();
-    versionType()   
-    $(".optionPanel").panel("open");
-}
+
 
 function fontSize() {
 	var min=6;
