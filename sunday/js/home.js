@@ -1,3 +1,4 @@
+var originalFont = 12;
 var db; 
 var dataWS = '';
 var IdUsuario = '';
@@ -17,15 +18,13 @@ var API = false;
 var email = '';
 var idDispositivo;
 var valTypeSearch='BW'
-window['size'] = 16
+window['size'] = originalFont
 window['version'] = '';
 window['listLesson'] = false;
 window['dataLesson'] = '';
 window['today'] = false;
 window['idioma'] = '';
 window['changeversion']=false;
-
-
 
 var months = [{
 "month": "January", "quarter" : "2nd Quarter"},{"month": "February", "quarter" : "2nd Quarter"},{"month": "March", "quarter" : "2nd Quarter"},
@@ -43,6 +42,7 @@ function onDeviceReady() {
     db = window.openDatabase("sundayApp", "1.0", "Sunday School DB", 1000000);
     document.addEventListener("resume", onResume, false);
     document.addEventListener("pause", onPause, false);
+    document.addEventListener("backbutton", onBackKeyDown, false);
     idDispositivo == device.uuid;
     init();
 }
@@ -51,28 +51,17 @@ function onPause(){
     console.log("app en pause");
 }
 function onResume(){
-    
     console.log("aplicacion pausada");
 }
 
 
 function init() {
-	
-    document.addEventListener("backbutton", onBackKeyDown, false);
-    document.addEventListener("resume", onResume, false);
-    document.addEventListener("pause", onPause, false);
-    
-    //queryVersionApp()
+    console.log('cerrando panel')
     if(page ==''){
          if($("#page").attr("data-index") == "home"){
             page=1;
         }
     }
-    
-    /*if(window['idioma'] == ''){
-        console.log("no tiene lenguaje definido");
-        queryVersionApp();
-    }*/
     
     if(page == 1){
         console.log("eventos de pagina 1");
@@ -133,7 +122,7 @@ function init() {
                             console.log("pagina 6 search");
                             setTimeout(function() {
                             eventssearch();
-                            }, 500);
+                            }, 300);
                             
                         }
                     }
@@ -203,7 +192,6 @@ function eventsCalendar(){
             page = 2;
             $.mobile.changePage( "lessons.html" );
             $("#page").attr("data-index","lessons");
-    		//window.location='lessons.html';
             init();
     	});  
         
@@ -213,7 +201,6 @@ function eventsCalendar(){
             page = 5;
             $.mobile.changePage( "notes.html", { reloadPage: true });
             $("#page").attr("data-index","notes");
-    		//window.location='lessons.html';
             init();
     	});
         
@@ -228,14 +215,9 @@ function eventsCalendar(){
         
         $('.noAuth').tap(function(event){
     		event.preventDefault();
-    		//alert("Avaliable in the Premion version");
-            //messageGoPro();
             function checkButtonSelection(param){
                  if(param == 2)
                  {
-                     //console.log("Le dio comprar");
-                     //page = 6;
-                     //$.mobile.changePage( "browser.html", { reloadPage: true });
                      cargarURl();
                  }    
              }       
@@ -252,7 +234,7 @@ function eventsCalendar(){
             console.log("evento search desde HOme");
             page = 6;
             $("#page").attr("data-index","search");
-            $.mobile.changePage( "search.html", { reloadPage: true });
+            $.mobile.changePage( "search.html" );
             init();
         });
         
@@ -282,7 +264,6 @@ function eventssearch(){
             page = 2;
             $.mobile.changePage( "lessons.html", { reverse: "true"});
             $("#page").attr("data-index","lessons");
-    		//window.location='lessons.html';
             init();
     	});  
         
@@ -290,9 +271,8 @@ function eventssearch(){
     		event.preventDefault();
             console.log("tap notes desde search");
             page = 5;
-            $.mobile.changePage( "notes.html", { reloadPage: true, reverse: "true" });
+            $.mobile.changePage( "notes.html", { reloadPage: "true", reverse: "true" });
             $("#page").attr("data-index","notes");
-    		//window.location='lessons.html';
             init();
     	});
         
@@ -565,15 +545,19 @@ function eventsPanel(){
     setFontSize(window['size'])
     $('.options').tap(openP)
     $('body').on( "swipeleft", openP );
-    $('body').on( "swiperight", function(){$("#optionPanel").panel("close")});
+    $('body').on( "swiperight", function(){event.preventDefault();$("#optionPanel").panel("close")});
+    //------------- validacion del codigo de pago dentro del panel ----------
+    /*
     $('input#validate').tap(function(event){
         event.preventDefault();
-        if(!$('.payedCode').val())
+        if(!$(this).find('.payedCode').val())
             alert('Please insert code')
         else
             APIRequestCode($('input#payedCode').val())
     })
-    $('.store').tap(function(){
+    */
+    $('.store').tap(function(event){
+        event.preventDefault();
         cargarURl();
     })
 }
@@ -794,7 +778,7 @@ function versionType(){
         $('input#validate').closest('.ui-btn').hide()
         $('input#store').closest('.ui-btn').hide()
         $('#verification').html('<h3>Version pro</h3>')
-        console.log("version paga");
+        $("#optionPanel").panel("close")
     }
 }
 
@@ -1083,7 +1067,7 @@ function eventDetailLesson(){
             console.log("evento search desde HOme");
             page = 6;
             $("#page").attr("data-index","search");
-            $.mobile.changePage( "search.html", { reloadPage: true });
+            $.mobile.changePage( "search.html" );
             init();
         });
         
@@ -1154,7 +1138,7 @@ function eventsNotes(){
             console.log("evento search desde HOme");
             page = 6;
             $("#page").attr("data-index","search");
-            $.mobile.changePage( "search.html", { reloadPage: true });
+            $.mobile.changePage( "search.html" );
             init();
         });
         
@@ -1249,7 +1233,6 @@ function APIRequestUpdateCount(idUser, count) {
     });
 }
 
-
 function queryBlesedWeek(){
    
     
@@ -1292,47 +1275,68 @@ function showLessonWeek(blessedWeek, week){
                              '<li data-role="list-divider">Week-'+week+
                              '<span class="ui-li-count">'+months[fecha.getMonth()].quarter+'</span>'+
                              '</li>');
-                        
+    //----------------------------------------------------------------------------------------------------------------                    
     $('#blessedWeek').append('<li><img src="images/calendar_dates_icons/sunday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).sun+'</p>'+
                              '<p class="ui-li-aside"><strong>Sunday</strong></p></li>'); 
-    
     fecha.setDate(fecha.getDate() + 1);
-    
-    $('#blessedWeek').append('<li><img src="images/calendar_dates_icons/monday.png" />'+
+    //----------------------------------------------------------------------------------------------------------------
+    $('#blessedWeek').append('<li id="mon"><img src="images/calendar_dates_icons/monday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).mon+'</p>'+
                              '<p class="ui-li-aside"><strong>Monday</strong></p></li>'); 
-    
+    $('#mon').tap(function(e){
+        e.preventDefault();
+        alert(blessedWeek.rows.item(0).mon)
+    })
     fecha.setDate(fecha.getDate() + 1);
-    $('#blessedWeek').append('<li><img src="images/calendar_dates_icons/tuesday.png" />'+
+    //----------------------------------------------------------------------------------------------------------------
+    $('#blessedWeek').append('<li id="tue"><img src="images/calendar_dates_icons/tuesday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).tue+'</p>'+
                              '<p class="ui-li-aside"><strong>Tuesday</strong></p></li>'); 
-    
+    $('#tue').tap(function(e){
+        e.preventDefault();
+        alert(blessedWeek.rows.item(0).tue)
+    })
     fecha.setDate(fecha.getDate() + 1);
-    $('#blessedWeek').append('<li><img src="images/calendar_dates_icons/wednesday.png" />'+
+    //----------------------------------------------------------------------------------------------------------------
+    $('#blessedWeek').append('<li  id="wed"><img src="images/calendar_dates_icons/wednesday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).wed+'</p>'+
                              '<p class="ui-li-aside"><strong>Wednesday</strong></p></li>');
-    
+    $('#wed').tap(function(e){
+        e.preventDefault();
+        alert(blessedWeek.rows.item(0).wed)
+    })
     fecha.setDate(fecha.getDate() + 1);
-    $('#blessedWeek').append('<li><img src="images/calendar_dates_icons/thursday.png" />'+
+    //----------------------------------------------------------------------------------------------------------------
+    $('#blessedWeek').append('<li id="thu"><img src="images/calendar_dates_icons/thursday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).thu+'</p>'+
                              '<p class="ui-li-aside"><strong>Thursday</strong></p></li>'); 
-    
+    $('#thu').tap(function(e){
+        e.preventDefault();
+        alert(blessedWeek.rows.item(0).thu)
+    })
     fecha.setDate(fecha.getDate() + 1);
-    $('#blessedWeek').append('<li><img src="images/calendar_dates_icons/friday.png" />'+
+    //----------------------------------------------------------------------------------------------------------------
+    $('#blessedWeek').append('<li id="fri"><img src="images/calendar_dates_icons/friday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).fri+'</p>'+
                              '<p class="ui-li-aside"><strong>Friday</strong></p></li>');
-    
+    $('#fri').tap(function(e){
+        e.preventDefault();
+        alert(blessedWeek.rows.item(0).fri)
+    })
     fecha.setDate(fecha.getDate() + 1);
-    $('#blessedWeek').append('<li><img src="images/calendar_dates_icons/saturday.png" />'+
+    //----------------------------------------------------------------------------------------------------------------
+    $('#blessedWeek').append('<li id="sat"><img src="images/calendar_dates_icons/saturday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).sat+'</p>'+
                              '<p class="ui-li-aside"><strong>Saturday</strong></p></li>'+
                              '<li data-role="list-divider" data-theme="b"></li>');
-    
+    $('#sat').tap(function(e){
+        e.preventDefault();
+        alert(blessedWeek.rows.item(0).sat)
+    })
+    //----------------------------------------------------------------------------------------------------------------
     $('#blessedWeek').listview('refresh');
-    
     eventsCalendar();
-    
 }
 
 function queryOutlineWeek(week, blessedWeek){
@@ -1605,14 +1609,15 @@ function editNote(index,title,content){
                     },errorHandler,nullHandler);
 }
 
-function openP(){
+function openP(event){
+    event.preventDefault();
     versionType()   
     $(".optionPanel").panel("open");
 }
 
 function fontSize() {
-	var min=9;
-	var max=21;
+	var min=6;
+	var max=20;
 	$('.fontSizePlus').tap(function() {
 		if (window['size'] <= max) {
 		    setFontSize(++window['size'])
@@ -1626,7 +1631,7 @@ function fontSize() {
 		return false;	
 	});
 	$('.fontReset').tap(function () {
-		 setFontSize(16)
+		 setFontSize(originalFont)
 	});
 }
 

@@ -23,6 +23,7 @@ function init() {
             $("#email").attr('placeholder', language[$(this).val()].email);
             $("#labelPhone").text(language[$(this).val()].phoneNumber);
             $("#phoneNumber").attr('placeholder', language[$(this).val()].phoneNumber);
+            //$("#phoneNumber").attr('placeholder', language[$(this).val()].phoneNumber);//pais
             $("#labelCode").text(language[$(this).val()].codeActivation);
             $("#codeActivation").attr('placeholder', language[$(this).val()].codeActivation);
             $("#button .ui-btn-text").text(language[$(this).val()].button);
@@ -34,7 +35,7 @@ function init() {
 
     $("#button").on('tap', function(event) {
         event.preventDefault();
-        if ($("#name").val() == "" || $("#email").val() == "" || $("#phoneNumber").val() == "") {
+        if ($("#name").val() == "" || $("#email").val() == "" || $("#phoneNumber").val() == "" || $('#region').val() === -1) {
             alert("" + language[$('#language').val()].messageRequered);
         }else{
             if (!emailValidation($("#email").val())) {
@@ -66,8 +67,8 @@ function existentUser() {
 
 function successInsert() {
     alert(language[$('#language').val()].onSuccess);
-    //window.location.href = "home.html";
-    $.mobile.changePage( "home.html", { transition: "flip", reloadPage: true });
+    window.location.href = "home.html";
+    //$.mobile.changePage( "home.html", { transition: "flip", reloadPage: true });
 }
 
 function checkConnection() {
