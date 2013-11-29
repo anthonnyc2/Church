@@ -122,7 +122,6 @@ function init() {
                         console.log("pagina 5 notes");
                         window['namePanel']= 'optionPanelN';
                         queryNote();
-                        //eventsNotes();
                     }else{
                         if(page == 6){
                             console.log("pagina 6 search");
@@ -336,7 +335,7 @@ function eventssearch(){
                  $('#searchBlessed').hide();
                  $('#listLessonsS').html('');
                  $('#listBlessedWeek').html('');
-                 $('#listNotes').html('');
+                 $('#listNotesSearch').html('');
                 
             }
             
@@ -349,7 +348,7 @@ function eventssearch(){
                 $('#searchNote').hide();
                 $('#listLessonsS').html('');
                 $('#listBlessedWeek').html('');
-                $('#listNotes').html('');
+                $('#listNotesSearch').html('');
             }
             
             if($(this).val() == "BW"){
@@ -361,7 +360,7 @@ function eventssearch(){
                 $('#searchNote').hide();
                 $('#listLessonsS').html('');
                 $('#listBlessedWeek').html('');
-                $('#listNotes').html('');
+                $('#listNotesSearch').html('');
             }
         });
         
@@ -374,7 +373,7 @@ function eventssearch(){
                 console.log("no hay nada")
                 document.getElementById("listLessonsS").innerHTML="";
                 document.getElementById("listBlessedWeek").innerHTML="";
-                document.getElementById("listNotes").innerHTML="";
+                document.getElementById("listNotesSearch").innerHTML="";
              }else
                 if(valTypeSearch == 'BW' && $(".searchInput").val().length > 0) {
                     console.log("incremento y es BW");
@@ -388,7 +387,7 @@ function eventssearch(){
                     if( valTypeSearch == 'NT' && $(".searchInput").val().length > 3) 
                     {
                          console.log("incremento es mayor a 3 y es NT");
-                         $('#listNotes').html('');
+                         $('#listNotesSearch').html('');
                          SearchNotes();
                     }else
                         if (valTypeSearch == 'LS' && $(".searchInput").val().length > 3) 
@@ -530,7 +529,7 @@ function SearchNotes(){
                         var note = '';
                         for(var i=0;i<result.rows.length;i++){
                             note =  result.rows.item(i);
-                            $('#listNotes').prepend('<div data-role="collapsible" id="note'+note.note_id+'" data-collapsed="false">'+
+                            $('#listNotesSearch').prepend('<div data-role="collapsible" id="note'+note.note_id+'" data-collapsed="false">'+
                            '<h3>'+note.title+' - '+note.date+'</h3><label for="noteTitle'+note.note_id+'" class="ui-input-text">Note title</label>'+
                            '<div antes class="ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-d">'+
                            '<input name="noteTitle" id="noteTitle'+note.note_id+'" maxlength="15" placeholder="Less than 15 characters please" type="text" readonly value="'+note.title+'" class="ui-input-text ui-body-d"/></div>'+
@@ -538,10 +537,10 @@ function SearchNotes(){
                            '<textarea id="text'+note.note_id+'" maxlength="750" placeholder="Write your notes here" readonly class="ui-input-text ui-body-d ui-corner-all ui-shadow-inset">'+note.content+'</textarea>').collapsibleset('refresh');
                         }
                         
-                        $('#listNotes').collapsibleset('refresh')
+                        $('#listNotesSearch').collapsibleset('refresh')
                     }else{
                     	
-                        $('#listNotes').append('<h3>No find results</h3>');
+                        $('#listNotesSearch').append('<h3>No find results</h3>');
                         console.log("NO notes for this search "+$(".searchInput").val());
                     }
                    
@@ -1742,7 +1741,7 @@ function queryNote(){
                     }
                     console.log("SI HAY NOTAS EN LA BD "+totalNotes);
                          eventsNotes();
-                    }, 500);  
+                    }, 700);  
                     
                  }else{
                      setTimeout(function() {
