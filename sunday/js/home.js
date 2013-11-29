@@ -798,7 +798,27 @@ function InsertLessons(tx){
 	
     $.each(dataWS, function(k,v){
 			
-            sqlLesson= 'INSERT OR REPLACE INTO lessons (week, title, date, memory_verse, verse, conclusion, question1, question2, out1, out2, intro, bible_pass) VALUES ('+v.week+',"'+ v.title+'","'+v.date+'","'+v.memory_verse+'","'+v.verse+'","'+v.conclusion+'","'+v.questions[0]+'","'+v.questions[1]+'","'+v.outline[0]+'","'+v.outline[1]+'","'+v.introduction+'","'+v.bible_passage+'")';
+            if(v.content.length == 2){
+                sqlLesson= 'INSERT OR REPLACE INTO lessons (week, title, date, memory_verse, verse, conclusion, question1, question2, out1, out2, intro, bible_pass, numberOutLines) VALUES ('+v.week+',"'+ v.title+'","'+v.date+'","'+v.memory_verse+'","'+v.verse+'","'+v.conclusion+'","'+v.questions[0]+'","'+v.questions[1]+'","'+v.outline[0]+'","'+v.outline[1]+'","'+v.introduction+'","'+v.bible_passage+'", 2)';    
+            }
+            if(v.content.length == 3){
+                sqlLesson= 'INSERT OR REPLACE INTO lessons (week, title, date, memory_verse, verse, conclusion, question1, question2, out1, out2, out3, intro, bible_pass, numberOutLines) VALUES ('+v.week+',"'+ v.title+'","'+v.date+'","'+v.memory_verse+'","'+v.verse+'","'+v.conclusion+'","'+v.questions[0]+'","'+v.questions[1]+'","'+v.outline[0]+'","'+v.outline[1]+'","'+v.outline[2]+'","'+v.introduction+'","'+v.bible_passage+'", 3)';    
+            }
+            if(v.content.length == 4){
+                sqlLesson= 'INSERT OR REPLACE INTO lessons (week, title, date, memory_verse, verse, conclusion, question1, question2, out1, out2, out3, out4, intro, bible_pass, numberOutLines) VALUES ('+v.week+',"'+ v.title+'","'+v.date+'","'+v.memory_verse+'","'+v.verse+'","'+v.conclusion+'","'+v.questions[0]+'","'+v.questions[1]+'","'+v.outline[0]+'","'+v.outline[1]+'","'+v.outline[2]+'","'+v.outline[3]+'","'+v.introduction+'","'+v.bible_passage+'", 4)';    
+            }
+            if(v.content.length == 5){
+                sqlLesson= 'INSERT OR REPLACE INTO lessons (week, title, date, memory_verse, verse, conclusion, question1, question2, out1, out2, out3, out4, out5, intro, bible_pass, numberOutLines) VALUES ('+v.week+',"'+ v.title+'","'+v.date+'","'+v.memory_verse+'","'+v.verse+'","'+v.conclusion+'","'+v.questions[0]+'","'+v.questions[1]+'","'+v.outline[0]+'","'+v.outline[1]+'","'+v.outline[2]+'","'+v.outline[3]+'","'+v.outline[4]+'","'+v.introduction+'","'+v.bible_passage+'", 5)';    
+            }
+            if(v.content.length == 6){
+                sqlLesson= 'INSERT OR REPLACE INTO lessons (week, title, date, memory_verse, verse, conclusion, question1, question2, out1, out2, out3, out4, out5, out6, intro, bible_pass, numberOutLines) VALUES ('+v.week+',"'+ v.title+'","'+v.date+'","'+v.memory_verse+'","'+v.verse+'","'+v.conclusion+'","'+v.questions[0]+'","'+v.questions[1]+'","'+v.outline[0]+'","'+v.outline[1]+'","'+v.outline[2]+'","'+v.outline[3]+'","'+v.outline[4]+'","'+v.outline[5]+'","'+v.introduction+'","'+v.bible_passage+'", 6)';    
+            }
+            if(v.content.length == 7){
+                sqlLesson= 'INSERT OR REPLACE INTO lessons (week, title, date, memory_verse, verse, conclusion, question1, question2, out1, out2, out3, out4, out5, out6, out7, intro, bible_pass, numberOutLines) VALUES ('+v.week+',"'+ v.title+'","'+v.date+'","'+v.memory_verse+'","'+v.verse+'","'+v.conclusion+'","'+v.questions[0]+'","'+v.questions[1]+'","'+v.outline[0]+'","'+v.outline[1]+'","'+v.outline[2]+'","'+v.outline[3]+'","'+v.outline[4]+'","'+v.outline[5]+'","'+v.outline[6]+'","'+v.introduction+'","'+v.bible_passage+'", 7)';    
+            }
+            if(v.content.length == 8){
+                sqlLesson= 'INSERT OR REPLACE INTO lessons (week, title, date, memory_verse, verse, conclusion, question1, question2, out1, out2, out3, out4, out5, out6, out7, out8, intro, bible_pass, numberOutLines) VALUES ('+v.week+',"'+ v.title+'","'+v.date+'","'+v.memory_verse+'","'+v.verse+'","'+v.conclusion+'","'+v.questions[0]+'","'+v.questions[1]+'","'+v.outline[0]+'","'+v.outline[1]+'","'+v.outline[2]+'","'+v.outline[3]+'","'+v.outline[4]+'","'+v.outline[5]+'","'+v.outline[6]+'","'+v.outline[7]+'","'+v.introduction+'","'+v.bible_passage+'", 8)';    
+            }
             
 			sqlBlessedWeek = 'INSERT OR REPLACE INTO blessed_week(week_id, mon, tue, wed, thu, fri, sat, sun) VALUES('+v.week+',"'+v.blessed_week[0]+'","'+v.blessed_week[1]+'","'+v.blessed_week[2]+'","'+v.blessed_week[3]+'","'+v.blessed_week[4]+'","'+v.blessed_week[5]+'","'+v.blessed_week[6]+'" )';
 			
@@ -919,7 +939,7 @@ function queryFindLessons(){
 							'<img src="images/calendar_dates_icons/sep_01.png" />'+
 							'<h3>' + result.rows.item(semana).title  + '</h3>' +
 							'<p>' + result.rows.item(semana).out1 + '</p>' +
-							'<p>' + result.rows.item(semana).out1 + '</p>' +
+							'<p>' + result.rows.item(semana).out2 + '</p>' +
 							'<p class="ui-li-aside"><strong>Lesson ' + (countLesson) + '</strong></p></a></li>');
                             
                             
@@ -1035,7 +1055,6 @@ function queryLesson(id, resultConsult){
                     if (result.rows.length == 1) {
 	                    var row = result.rows.item(0);
                         var htmlOut1 ='';
-                        var htmlOut2 = '';
                         $('#lesson').text('LESSON 0'+titleLesson);
 	                    $('#quarter').text(lessonQuarter);
                         $('#title').text(row.title);
@@ -1047,19 +1066,69 @@ function queryLesson(id, resultConsult){
                         $('#question').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p>');
                         $('#conclusion').html('<b>CONCLUSION</b><hr><p style="white-space:pre-line">'+row.conclusion+'</p>');
 				    
-                        for(var i=0; i<resultConsult.rows.length; i++){
-	                    	var content = resultConsult.rows.item(i);
-                            if(content.out == 1)
-                            {
-                                htmlOut1+='<p style="white-space:pre-line">'+content.content+'</p>';
-                            
-                            }else{
-                                htmlOut2+='<p style="white-space:pre-line">'+content.content+'</p>';        
-                            }
+                        if(row.numberOutLines == 2){
+                            $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>')    
+                        }
+                        if(row.numberOutLines == 3){
+                            $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>');    
+                        }
+                        if(row.numberOutLines == 4){
+                             $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>');   
+                        }
+                        if(row.numberOutLines == 5){
+                             $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>');      
+                        }
+                        if(row.numberOutLines == 6){
+                             $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>');         
+                        }
+                        if(row.numberOutLines == 7){
+                             $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>'+'<br><b>7.'+row.out7+'</b>');       
+                        }
+                        if(row.numberOutLines == 8){
+                             $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>'+'<br><b>7.'+row.out7+'</b>'+'<br><b>8.'+row.out8+'</b>');          
                         }
                         
-                        $('#outline1').html('<b>'+row.out1+'</b><hr>'+htmlOut1);
-                        $('#outline2').html('<b>'+row.out2+'</b><hr>'+htmlOut2);
+                        for(var j=0;j<row.numberOutLines; j++)
+                        {
+                            for(var i=0; i<resultConsult.rows.length; i++){ 
+                                var content = resultConsult.rows.item(i);
+                                if(content.out == (j+1)){
+                                    htmlOut1+='<p style="white-space:pre-line">'+content.content+'</p>';        
+                                }
+                            }
+                            
+                            if(j==0){
+                                $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out1+'</b><hr>'+htmlOut1+'</p></li>');    
+                            }
+                            if(j==1){
+                                $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out2+'</b><hr>'+htmlOut1+'</p></li>');
+                            }
+                            if(j==2){
+                               $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out3+'</b><hr>'+htmlOut1+'</p></li>');   
+                            }
+                            if(j==3){
+                                $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out4+'</b><hr>'+htmlOut1+'</p></li>');
+                            }
+                            if(j==4){
+                                $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out5+'</b><hr>'+htmlOut1+'</p></li>');
+                            }
+                            if(j==5){
+                                $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out6+'</b><hr>'+htmlOut1+'</p></li>');
+                            }
+                            if(j==6){
+                                $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out7+'</b><hr>'+htmlOut1+'</p></li>');
+                            }
+                            if(j==7){
+                                $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out8+'</b><hr>'+htmlOut1+'</p></li>');
+                            }
+                            htmlOut1='';
+                            
+                        }
+                        
+                        $('#detail').listview('refresh');
+	                       
+                        //$('#outline1').html('<b>'+row.out1+'</b><hr>'+htmlOut1);
+                        //$('#outline2').html('<b>'+row.out2+'</b><hr>'+htmlOut2);
     
                         eventLessonDetail();
                     }else{

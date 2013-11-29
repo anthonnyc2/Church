@@ -40,7 +40,7 @@
             <a data-icon="gear" class="optionsLLD" data-iconpos="right">Options</a>
         </div>
         <div data-role="content" >
-    	    <ul data-role="listview" data-theme="d" data-divider-theme="d" data-inset="true" >
+    	    <ul data-role="listview" id ="detail" data-theme="d" data-divider-theme="d" data-inset="true" >
                 <li data-role="list-divider" data-theme="b"></li>
                 <li data-role="list-divider">
                     <h3 id="lesson"></h3>
@@ -73,14 +73,20 @@
         	    <img src="images/outline.png" />
         	    <p id="out" style="white-space:pre-line"></p>
         	  </li>
-    	  
-        	  <li>
-        	    <p id="outline1" style="white-space:pre-line"></p>       
-        	  </li>
+    	      <br>
+        	<div id="outlines" data-inset="false">
+                  
+                  <!-- <li>
+        	        <p id="outline1" style="white-space:pre-line"></p>       
+        	      </li>
+                  
+                  <li>
+        	        <p id="outline2" style="white-space:pre-line"></p>       
+        	      </li>-->
+               </div>
+               
         	  
-              <li>
-        	    <p id="outline2" style="white-space:pre-line"></p>       
-        	  </li>
+              
         	  
               <li>
     	        <p id="conclusion" style="white-space:pre-line"></p>       
