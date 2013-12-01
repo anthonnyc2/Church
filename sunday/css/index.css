@@ -70,6 +70,15 @@ div[data-role="content"]{
     background-image: none !important
 }
 
+.dateLesson{
+    background: url(../images/date.png) no-repeat;
+    background-size:10%
+}
+
+.dateDay{
+    font-size: 1.75em    
+}
+
 div[id="notepad"], div[id="searching"]{
     min-height: 40em;
 }
