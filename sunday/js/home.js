@@ -426,25 +426,6 @@ function eventssearch(){
      
 }
 
-function getDateOfWeek(week){
-    
-    var date =  new Date();
-    var d= new Date(date.getFullYear(), 0, 1);
-    var mes = d.getMonth();
-    d.setDate(d.getDate() - (d.getDay() + 7) % 7);
-    var numberWeek = week;
-    numberWeek--;
-    if(mes != d.getMonth())
-    {
-        d.setDate(d.getDate() + 7);
-        numberWeek--;
-    }
-    d.setDate(d.getDate() + 7*numberWeek);
-    
-    
-    return d;
-}
-
 function SearchBW(){
     
     db = window.openDatabase("sundayApp", "1.0", "Sunday School DB", 1000000);
@@ -454,14 +435,17 @@ function SearchBW(){
                     if (result.rows.length > 0) {
                         
                      var weekBlessed = result.rows.item(0);
-                     var date =  new Date(getDateOfWeek($(".searchInput").val()));
+                     var date =  new Date(getWeekIni());
+                     var weekSearch = $(".searchInput").val();
+                     weekSearch--;
+                     date.setDate(date.getDate() + 7*weekSearch);    
                      var mes = date.getMonth();   
                      console.log(""+months[mes].month);   
                      //console.log("si hay resultados y la fecha de la semana "+$(".searchInput").val()+" es ");
                         
                     $('#listBlessedWeek').append('<li data-role="list-divider" data-theme="b"></li>'+
                                              '<li data-role="list-divider">Week-'+$(".searchInput").val()+
-                                             '<span class="ui-li-count"></span>'+
+                                             '<span class="ui-li-count">'+months[mes].quarter+'</span>'+
 	                                         '</li>');
                     
                     $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/sunday.png" />'+
@@ -558,14 +542,21 @@ function SearchLesson(){
                 $('#searchLessons').show();    
                 if (result.rows.length > 0) {
                         console.log("hay resultados para "+$(".searchInput").val());
+                        var date = new Date(getWeekIni());
+                        var numberWeek;
                         for(var i=0; i<result.rows.length; i++){
-                           
-                          $('#listLessonsS').append('<li id="'+result.rows.item(i).week+'" ><a href="#"'+
+                           date = new Date(getWeekIni());
+                           numberWeek = result.rows.item(i).week;
+                           numberWeek--;
+                           date.setDate(date.getDate() + (7*numberWeek));
+                           //fecha de la leccion mostrada (date)
+                                
+                          $('#listLessonsS').append('<li id="'+result.rows.item(i).week+'" ><a '+
 							'>'+
 							'<img src="images/calendar_dates_icons/sep_01.png" />'+
 							'<h3>' + result.rows.item(i).title  + '</h3>' +
 							'<p>' + result.rows.item(i).out1 + '</p>' +
-							'<p>' + result.rows.item(i).out1 + '</p>' +
+							'<p>' + result.rows.item(i).out2 + '</p>' +
                             '<p>' + result.rows.item(i).intro + '</p>' +
 							'</a></li>');
                       }
@@ -903,22 +894,15 @@ function queryFindLessons(){
                     if (result.rows.length > 0) {
                         console.log("cantidad de semanas "+result.rows.length);
                         
-                        Date.prototype.getWeek = function() {
-                        var onejan = new Date(this.getFullYear(), 0, 1);
-                        return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 0) / 7);
-                        }
-                        
-                        var fecha = new Date();
+                        var fecha = new Date(getWeekIni());
                         var i=0;
                         var dias = 7;
-                        fecha.setDate(fecha.getDate() - (fecha.getDay() + 7) % 7);
-                        //console.log(fecha);
-                        var lastweekDate = new Date("2013-12-31");
-                        var lastweek = lastweekDate.getWeek();
-                        var semana = fecha.getWeek()-1;
-                        console.log("semana inicial "+semana);
-                        console.log("semana ultima "+lastweek);
-                        var countLesson = getWeekOfMonth();
+                        
+                        var lastweek = weeksOfYear(fecha);
+                        var countLesson = getWeekOfYear(fecha);
+                        countLesson = countLesson -1;
+                        fecha.setDate(fecha.getDate() + (dias*countLesson));
+                        countLesson++;
                         var mesActual='';
                         var anoActual ='';
                         
@@ -926,6 +910,7 @@ function queryFindLessons(){
 	                    	
                             mesActual = fecha.getMonth()+1;
                             anoActual = fecha.getYear();
+                             
                             
                             if(i==0){
                                 $('#listLessons').append('<li data-role="list-divider" data-theme="b"></li>');
@@ -934,30 +919,30 @@ function queryFindLessons(){
                                                          '</li>');
                             }
 	                    	
-                            $('#listLessons').append('<li id="'+result.rows.item(semana).week+'" class="'+classApp+'" data-lesson="'+countLesson+'" data-date="'+months[mesActual-1].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'" data-quarter="'+months[mesActual-1].quarter+'" ><a href="#"'+
+                            $('#listLessons').append('<li id="'+result.rows.item(countLesson-1).week+'" class="'+classApp+'" data-lesson="'+countLesson+'" data-date="'+months[mesActual-1].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'" data-quarter="'+months[mesActual-1].quarter+'" ><a href="#"'+
 							'>'+
 							'<img src="images/calendar_dates_icons/sep_01.png" />'+
-							'<h3>' + result.rows.item(semana).title  + '</h3>' +
-							'<p>' + result.rows.item(semana).out1 + '</p>' +
-							'<p>' + result.rows.item(semana).out2 + '</p>' +
+							'<h3>' + result.rows.item(countLesson-1).title  + '</h3>' +
+							'<p>' + result.rows.item(countLesson-1).out1 + '</p>' +
+							'<p>' + result.rows.item(countLesson-1).out2 + '</p>' +
 							'<p class="ui-li-aside"><strong>Lesson ' + (countLesson) + '</strong></p></a></li>');
                             
                             
                             fecha.setDate(fecha.getDate() + dias);
-                            if(mesActual == fecha.getMonth()+1){
-                                countLesson++;
-                            }else{
-                                countLesson = 1;
+                            countLesson++;
+                            if(mesActual != fecha.getMonth()+1){
                                 var n = fecha.getMonth();
                                 $('#listLessons').append('<li data-role="list-divider" data-theme="b"></li>');
                                 $('#listLessons').append('<li data-role="list-divider">'+months[n].month+', '+fecha.getFullYear()+' - '+months[n].quarter+
                                                          '<span class="ui-li-count">'+weeksinMonth(n,fecha.getFullYear())+' Lessons</span>'+
                                                          '</li>');
-                                if(anoActual != fecha.getYear()){
-                                    semana = 0;
+                                 
+                                if(mesActual == 8 && fecha.getMonth()+1 == 9){
+                                    countLesson = 1;
                                 }
                             }
-                            semana++;
+                              
+                                
                             i++;
     	                }
     	                $('#listLessons').listview('refresh');
@@ -969,6 +954,98 @@ function queryFindLessons(){
 
                 },errorHandler);
             },errorHandler,nullHandler);
+}
+
+function getWeekIni(){
+
+  Date.prototype.getWeek = function() {
+        var onejan = new Date(this.getFullYear(), 0, 1);
+        return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 0) / 7);
+        //where "0" represents Sunday for the Sunday School Lessons to load automatically on app launch and "7" represents the days of the week
+  }
+
+  var today = new Date();
+  var YearIni;
+  var weekIni;
+  today.setDate(today.getDate() - (today.getDay() + 7) % 7);
+  var week = today.getWeek();
+
+  if(week < 36){
+      YearIni = today.getFullYear()-1;
+  }else{
+    YearIni = today.getFullYear(); 
+  }
+
+  weekIni =  new Date(YearIni, 8, 1);
+  weekIni.setDate(weekIni.getDate() - (weekIni.getDay() + 7) % 7);
+  if(weekIni.getMonth() != 8)
+      weekIni.setDate(weekIni.getDate() + 7);
+
+
+  //console.log("semana iniciar "+weekIni);
+    return weekIni;  
+}
+
+function getWeekOfYear(WIni) {
+  
+  Date.prototype.getWeek = function() {
+        var onejan = new Date(this.getFullYear(), 0, 1);
+        return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 0) / 7);
+        //where "0" represents Sunday for the Sunday School Lessons to load automatically on app launch and "7" represents the days of the week
+  }
+  
+  //console.log(" A#o "+WIni.getFullYear());
+  var today = new Date();
+  today.setDate(today.getDate() - (today.getDay() + 7) % 7);
+  var numberWeek = 1;
+  var weekIni = new Date (WIni);
+  var flag = true;
+
+  if(WIni.getFullYear() == today.getFullYear())
+  {
+    numberWeek = ( today.getWeek() - WIni.getWeek() );
+    if(numberWeek == 0){
+      numberWeek++;
+    }
+  }else{
+    while(flag){
+      weekIni.setDate(weekIni.getDate() + 7);
+      numberWeek++; 
+      if( (weekIni.getDate() == today.getDate()) && (weekIni.getMonth() == today.getMonth()) && (weekIni.getFullYear() == today.getFullYear()) ){
+        flag = false;
+      }
+    }
+
+  }
+
+  return numberWeek;
+
+}
+
+function weeksOfYear(WIni){
+
+  firstWeekNextYear =  new Date(WIni.getFullYear()+1, 8, 1);
+  firstWeekNextYear.setDate(firstWeekNextYear.getDate() - (firstWeekNextYear.getDay() + 7) % 7);
+  if(firstWeekNextYear.getMonth() != 8)
+    firstWeekNextYear.setDate(firstWeekNextYear.getDate() + 7);
+
+  //console.log("semana inicial next year "+firstWeekNextYear);
+  var weekIterativa =  new Date(WIni);
+  var cont = 1;
+  var flag = true;
+  while(flag)
+  {
+      weekIterativa.setDate(weekIterativa.getDate() + 7);    
+
+      
+      if( (weekIterativa.getDate() == firstWeekNextYear.getDate()) && (weekIterativa.getMonth() == firstWeekNextYear.getMonth()) && (weekIterativa.getFullYear() == firstWeekNextYear.getFullYear()) ){
+        flag = false;
+      }else
+      cont++;
+
+  }
+
+  return cont;
 }
 
 function getWeekOfMonth(){
@@ -1142,6 +1219,7 @@ function queryLesson(id, resultConsult){
 
 function eventLessonDetail(){
     
+    console.log("cargo los eventos del detalle de la leccion");
     $('.backLessons').tap(function(event){
     		event.preventDefault();
     		console.log("evento del back desde detalle lesson");
@@ -1179,7 +1257,7 @@ function eventLessonDetail(){
 
 function eventDetailLesson(){
 
-    console.log("entro en eventos detailLesson");
+    console.log("entro en eventos del listado de lesson");
     
     $('.homeLesson').tap(function(event){
     		event.preventDefault();
@@ -1293,7 +1371,7 @@ function eventDetailLesson(){
 
 function eventsNotes(){
     
-       
+       console.log("cargo los eventos de notes");
         $('.homeNotes').tap(function(event){
     		event.preventDefault();
     		console.log("evento del home desde notes");
@@ -1426,11 +1504,15 @@ function updateClient(){
                         transaction.executeSql(sql, [],function(transaction, result) {},errorHandler);
                     },errorHandler,nullHandler);
     version = 1;
-    window['version'] = '';
+    window['version'] = '1';
     window['listLesson'] = false;
     //window['dataLesson'] = '';
     window['today'] = false;
     versionType();
+    page = 1;
+    $.mobile.changePage( "home.html" );
+    $("#page").attr("data-index","home");
+    init();
 }
 
 function APIRequestUpdateCount(idUser, count) {
@@ -1453,7 +1535,7 @@ function APIRequestUpdateCount(idUser, count) {
              alert("Device registered successfully");
              dataWS = data;
              updateClient();
-            //insertClient(1);
+             
         },
         error: function(xhr, status, error) {
             //alert(language[window['idioma']].errorUpdatePro); 
@@ -1470,9 +1552,8 @@ function queryBlesedWeek(){
         var onejan = new Date(this.getFullYear(), 0, 1);
         return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 0) / 7);
     }
-    var fecha = new Date();
-    fecha.setDate(fecha.getDate() - (fecha.getDay() + 7) % 7);
-    var semana = fecha.getWeek();
+    var fecha = new Date(getWeekIni());
+    var semana = getWeekOfYear(fecha);
     
     db.transaction(function(transaction) {
       var sql = 'SELECT * FROM blessed_week where week_id='+semana;
@@ -1837,7 +1918,6 @@ function editNote(index,title,content){
                         transaction.executeSql(sql, [],function(transaction, result) {},errorHandler);
                     },errorHandler,nullHandler);
 }
-
 
 
 function fontSize() {
