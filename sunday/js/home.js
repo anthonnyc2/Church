@@ -26,7 +26,7 @@ window['today'] = false;
 window['idioma'] = '';
 window['namePanel']= 'optionPanel';
 
-
+var monthN = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 var months = [{
 "month": "January", "quarter" : "2nd Quarter"},{"month": "February", "quarter" : "2nd Quarter"},{"month": "March", "quarter" : "2nd Quarter"},
 {"month": "April", "quarter" : "2nd Quarter"},{"month": "May", "quarter" : "3rd Quarter"},{"month": "June", "quarter" : "3rd Quarter"},
@@ -922,13 +922,13 @@ function queryFindLessons(){
 	                    	
                             $('#listLessons').append('<li id="'+result.rows.item(countLesson-1).week+'" class="'+classApp+'" data-lesson="'+countLesson+'" data-date="'+months[mesActual-1].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'" data-quarter="'+months[mesActual-1].quarter+'" ><a href="#"'+
 							'>'+
-                            /*
+                            //aqui
                             '<section class="dateLesson">'+
-                                '<p>'+'SEP 2015'+'</p>'+'<br>'+
-                                '<p class="dateDay">'+'21'+'</p>'+
+                                '<p class="monthYear">'+monthN[fecha.getMonth()]+' '+fecha.getFullYear()+'</p>'+
+                                '<p class="dateDay">'+fecha.getDate()+'</p>'+
                             '</section>'+
-                            */
-							'<img src="images/calendar_dates_icons/sep_01.png" />'+
+                           
+							//'<img src="images/calendar_dates_icons/sep_01.png" />'+
 							'<h3>' + result.rows.item(countLesson-1).title  + '</h3>' +
 							'<p>' + result.rows.item(countLesson-1).out1 + '</p>' +
 							'<p>' + result.rows.item(countLesson-1).out2 + '</p>' +
