@@ -3,7 +3,7 @@
     <head>
     </head>
     <body>
-        <div data-role="page" id="page" style="background-image:url(images/page_bg.jpg); background-position:0px 180px, center; background-size:100%; background-repeat:no-repeat">
+        <div data-role="page" id="page">
             <div data-theme="c" data-content-theme="c" data-role="panel" class="optionPanelS" data-position-fixed="true" data-position="right" data-role="button" data-display="push">
                 <ul data-role="listview" data-theme="c" data-content-theme="c" >
                     <li data-role="list-divider">
@@ -32,15 +32,15 @@
                     </li>
                 </ul>
             </div>
-            <div data-role="header" id="header">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false" data-id="myHeader">
                 <a class="backHomeSearch" href="#" data-icon="arrow-l">Back</a>
-                <h1>NOTES</h1>
+                <h1>SEARCH</h1>
                 <div align="center">
-                    <img src="images/RCCG_DCE_App_Banner3.jpg" style="max-height:100%; max-width:100%; min-width:100px; size:100%, auto">
+                    <img src="images/RCCG_DCE_App_Banner3.jpg" class="header">
                 </div>
                 <a data-icon="gear" class="optionsS" data-iconpos="right">Options</a>
             </div>
-            <div data-role="content" align="center" id="notepad">
+            <div data-role="content" align="center" id="searching">
                 
                 <fieldset data-role="controlgroup" data-type="horizontal">
                     <legend>Options:</legend>
@@ -72,16 +72,15 @@
                         
                     </div>
                 </div>
-                
             </div>
-            <div data-role="footer" data-position="fixed">
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-id="myFooter">
                 <div data-role="navbar" class="nav-images" data-grid="d">
                     <ul id="listFooter">
-                        <li><a href="#" id="calendar" class="calendarSearch" data-icon="custom">Today</a></li>
-                        <li><a href="#" id="content" class="contentSearch" data-icon="custom">Lessons</a></li>
-                        <li><a href="" id="home" class="homeSearch" data-icon="custom">Home</a></li>
-                        <li><a href="#" id="note" class="notesSearch" data-icon="custom">Notes</a></li>
-                        <li><a href="#" id="search" class="search" data-icon="custom">Search</a></li>
+                        <li><a id="calendar" class="calendarSearch" data-icon="custom">Today</a></li>
+                        <li><a id="content" class="contentSearch" data-icon="custom">Lessons</a></li>
+                        <li><a id="home" class="homeSearch" data-icon="custom">Home</a></li>
+                        <li><a id="note" class="notesSearch" data-icon="custom">Notes</a></li>
+                        <li><a id="search" class="search" data-icon="custom">Search</a></li>
                     </ul>
                 </div>
             </div>

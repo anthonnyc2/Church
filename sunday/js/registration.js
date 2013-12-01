@@ -27,9 +27,9 @@ function init() {
             $("#labelCode").text(language[$(this).val()].codeActivation);
             $("#codeActivation").attr('placeholder', language[$(this).val()].codeActivation);
             $("#button .ui-btn-text").text(language[$(this).val()].button);
-            $("#form_register").show();
+            $("#form_register").css('visibility', 'visible')
         } else {
-            $("#form_register").hide();
+            $("#form_register").css('visibility', 'hidden')
         }
     });
 

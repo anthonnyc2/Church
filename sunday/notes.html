@@ -3,9 +3,9 @@
     <head>
     </head>
     <body>
-        <div data-role="page" id="page" style="background-image:url(images/page_bg.jpg); background-position:0px 180px, center; background-size:100%; background-repeat:no-repeat">
+        <div data-role="page" id="page">
             <div data-theme="c" data-content-theme="c" data-role="panel" class="optionPanelN" data-position-fixed="true" data-position="right" data-role="button" data-display="push">
-                <ul data-role="listview" data-theme="c" data-content-theme="c" >
+                <ul data-role="listview" data-theme="c" data-content-theme="c">
                     <li data-role="list-divider">
                         <h2>Activation code</h2>
                     </li>
@@ -32,7 +32,7 @@
                     </li>
                 </ul>
             </div>
-            <div data-role="header" id="header">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false" data-id="myHeader">
                 <a class="backHomeNotes" href="#" data-icon="arrow-l">Back</a>
                 <h1>NOTES</h1>
                 <div align="center">
@@ -57,17 +57,17 @@
             <div data-role="panel" id="optionPanel" data-position="right" data-display="push">
                 <p>Lorem ipsum</p>
             </div>
-            <div data-role="footer" data-position="fixed">
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-id="myFooter">
                 <div data-role="navbar" class="nav-images" data-grid="d">
                     <ul id="listFooter">
-                        <li><a href="#" id="calendar" class="calendarNotes" data-direction="reverse" data-icon="custom">Today</a></li>
-                        <li><a href="#" id="content" class="contentNotes" data-icon="custom">Lessons</a></li>
-                        <li><a href="" id="home" class="homeNotes" data-icon="custom">Home</a></li>
-                        <li><a href="#" id="note" data-icon="custom">Notes</a></li>
-                        <li><a href="#" id="search" class="searchNotes" data-icon="custom">Search</a></li>
+                        <li><a id="calendar" class="calendarNotes" data-icon="custom">Today</a></li>
+                        <li><a id="content" class="contentNotes" data-icon="custom">Lessons</a></li>
+                        <li><a id="home" class="homeNotes" data-icon="custom">Home</a></li>
+                        <li><a id="note" data-icon="custom">Notes</a></li>
+                        <li><a id="search" class="searchNotes" data-icon="custom">Search</a></li>
                     </ul>
                 </div>
-            </div> <!-- /footer -->
+            </div>
         </div>
     </body>
 </html>
