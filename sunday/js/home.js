@@ -851,10 +851,12 @@ function queryVersionApp(){
                         
                         email = row.email;
                         if(page == 2){
-                            if(version == 0){
+                            if(window['version'] == 0){
                                 classApp = 'free';
+                                console.log("version free");
                     	    }else{
                                 classApp = 'pro';   
+                                console.log("version pro");
                     	    }
                             window['listLesson'] = true;
                             queryFindLessons();
@@ -1278,23 +1280,37 @@ function eventDetailLesson(){
     
         $('.free').tap(function(event){
     		event.preventDefault();
-            function checkButtonSelection(param){
-                 if(param == 2)
-                 {
-                     console.log("Le dio comprar");
-                     page = 1;
-                     $("#page").attr("data-index","lessons");
-                     $.mobile.changePage( "home.html", {reverse: "true"} );
-                     init();
-                     cargarURl();
-                 }   
-             }       
+            if(window['version'] == 0){
+                function checkButtonSelection(param){
+                     if(param == 2)
+                     {
+                         console.log("Le dio comprar");
+                         page = 1;
+                         $("#page").attr("data-index","lessons");
+                         $.mobile.changePage( "home.html", {reverse: "true"} );
+                         init();
+                         cargarURl();
+                     }   
+                 }       
               
               navigator.notification.confirm(
               "Sorry, but the content must be purchased in order to have access to lessons and other information",
               checkButtonSelection,
               ' Oops!',
-              'Cancel,Buy Now');
+              'Cancel,Buy Now');    
+            }
+            if(window['version'] == 1){
+                event.preventDefault();
+        		console.log("SI tienes acceso a este contenido");
+                idLesson = $(this).attr('id');
+                titleLesson = $(this).attr('data-lesson');
+                lessonQuarter = $(this).attr('data-quarter');
+                lessonDate = $(this).attr('data-date');
+                page = 3;
+                $.mobile.changePage( "detailLesson.html", {reloadPage: true });
+                init();
+            }
+            
     	});
             
 
@@ -1553,7 +1569,7 @@ function APIRequestUpdateCount(idUser, count) {
 
 function queryBlesedWeek(){
    
-    
+    console.log("bessed week");
     db = openDatabase("sundayApp", "1.0", "Sunday School DB", 1000000);
     Date.prototype.getWeek = function() {
         var onejan = new Date(this.getFullYear(), 0, 1);
