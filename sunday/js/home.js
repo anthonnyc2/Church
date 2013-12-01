@@ -1285,10 +1285,10 @@ function eventDetailLesson(){
              }       
               
               navigator.notification.confirm(
-              "Not avaliable in FREE version, you want to buy the app? ",
+              "Sorry, but the content must be purchased in order to have access to lessons and other information",
               checkButtonSelection,
-              'Information',
-              'Cancel,Buy');
+              ' Oops!',
+              'Cancel,Buy Now');
     	});
             
 
