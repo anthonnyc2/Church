@@ -903,7 +903,7 @@ function queryFindLessons(){
                         var countLesson = getWeekOfYear(fecha);
                         //countLesson = countLesson -1;
                         dateGo.setDate(dateGo.getDate() + (dias*countLesson));
-                        var elem = $('#lesson'+countLesson);
+                        var elem = getWeekOfYear(fecha) - 1;
                         //countLesson++;
                         var mesActual='';
                         var anoActual ='';
@@ -922,7 +922,7 @@ function queryFindLessons(){
                                                          '</li>');
                             }
 	                    	
-                            $('#listLessons').append('<li id="'+result.rows.item(i).week+'" class="'+classApp+'" data-lesson="'+countLesson+'" data-date="'+months[mesActual-1].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'" data-quarter="'+months[mesActual-1].quarter+'" ><a href="#"'+
+                            $('#listLessons').append('<li id="'+result.rows.item(i).week+'" data-nro="week'+result.rows.item(i).week+'" class="'+classApp+' '+result.rows.item(i).week+'" data-lesson="'+countLesson+'" data-date="'+months[mesActual-1].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'" data-quarter="'+months[mesActual-1].quarter+'" ><a href="#"'+
 							'>'+
                             //aqui
                             '<section class="dateLesson">'+
@@ -951,9 +951,9 @@ function queryFindLessons(){
                      
     	                }
     	                $('#listLessons').listview('refresh');
-    	                eventDetailLesson();
+                        eventDetailLesson();
+                        $.mobile.silentScroll($('.'+elem).offset().top - 50)
     	                $.mobile.loading( 'hide' );
-//                        $('#lesson13').scrollTop();
                     }else{
                     	console.log("No lessons");
                     }
