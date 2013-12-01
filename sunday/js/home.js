@@ -245,8 +245,6 @@ function eventsCalendar(){
             init();
         });
         
-        //eventsPanel()
-        
         fontSize()
         setFontSize(window['size'])
         $('.optionsT').tap(openP)
@@ -898,31 +896,33 @@ function queryFindLessons(){
                         console.log("cantidad de semanas "+result.rows.length);
                         
                         var fecha = new Date(getWeekIni());
-                        var i=0;
+                        var dateGo = new Date(getWeekIni());
                         var dias = 7;
                         
                         var lastweek = weeksOfYear(fecha);
                         var countLesson = getWeekOfYear(fecha);
-                        countLesson = countLesson -1;
-                        fecha.setDate(fecha.getDate() + (dias*countLesson));
-                        countLesson++;
+                        //countLesson = countLesson -1;
+                        dateGo.setDate(dateGo.getDate() + (dias*countLesson));
+                        var elem = $('#lesson'+countLesson);
+                        //countLesson++;
                         var mesActual='';
                         var anoActual ='';
                         
-	                    while(i<lastweek){
+	                    for(var i=0;i<lastweek; i++)
+                        {
 	                    	
                             mesActual = fecha.getMonth()+1;
                             anoActual = fecha.getYear();
-                             
+                             countLesson = (i+1);
                             
                             if(i==0){
                                 $('#listLessons').append('<li data-role="list-divider" data-theme="b"></li>');
                                 $('#listLessons').append('<li data-role="list-divider">'+months[mesActual-1].month+', '+fecha.getFullYear()+' - '+months[mesActual-1].quarter+
-                                                         '<span class="ui-li-count">'+weeksinMonth(mesActual-1,anoActual)+' Lessons</span>'+
+                                                         '<span class="ui-li-count">'+weeksinMonth(mesActual,anoActual)+' Lessons</span>'+
                                                          '</li>');
                             }
 	                    	
-                            $('#listLessons').append('<li id="'+result.rows.item(countLesson-1).week+'" class="'+classApp+'" data-lesson="'+countLesson+'" data-date="'+months[mesActual-1].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'" data-quarter="'+months[mesActual-1].quarter+'" ><a href="#"'+
+                            $('#listLessons').append('<li id="'+result.rows.item(i).week+'" class="'+classApp+'" data-lesson="'+countLesson+'" data-date="'+months[mesActual-1].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'" data-quarter="'+months[mesActual-1].quarter+'" ><a href="#"'+
 							'>'+
                             //aqui
                             '<section class="dateLesson">'+
@@ -931,32 +931,29 @@ function queryFindLessons(){
                             '</section>'+
                            
 							//'<img src="images/calendar_dates_icons/sep_01.png" />'+
-							'<h3>' + result.rows.item(countLesson-1).title  + '</h3>' +
-							'<p>' + result.rows.item(countLesson-1).out1 + '</p>' +
-							'<p>' + result.rows.item(countLesson-1).out2 + '</p>' +
+							'<h3>' + result.rows.item(i).title  + '</h3>' +
+							'<p>' + result.rows.item(i).out1 + '</p>' +
+							'<p>' + result.rows.item(i).out2 + '</p>' +
 							'<p class="ui-li-aside"><strong>Lesson ' + (countLesson) + '</strong></p></a></li>');
                             
                             
                             fecha.setDate(fecha.getDate() + dias);
-                            countLesson++;
+                            //countLesson++;
                             if(mesActual != fecha.getMonth()+1){
                                 var n = fecha.getMonth();
+                                if(mesActual != 8 && fecha.getMonth()+1 != 9){
                                 $('#listLessons').append('<li data-role="list-divider" data-theme="b"></li>');
                                 $('#listLessons').append('<li data-role="list-divider">'+months[n].month+', '+fecha.getFullYear()+' - '+months[n].quarter+
                                                          '<span class="ui-li-count">'+weeksinMonth(n,fecha.getFullYear())+' Lessons</span>'+
                                                          '</li>');
-                                 
-                                if(mesActual == 8 && fecha.getMonth()+1 == 9){
-                                    countLesson = 1;
-                                }
+                                } 
                             }
-                              
-                                
-                            i++;
+                     
     	                }
     	                $('#listLessons').listview('refresh');
     	                eventDetailLesson();
     	                $.mobile.loading( 'hide' );
+//                        $('#lesson13').scrollTop();
                     }else{
                     	console.log("No lessons");
                     }
@@ -1717,8 +1714,9 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
     var LessonNumber = '';
     var fecha = new Date();
     fecha.setDate(fecha.getDate() - (fecha.getDay() + 7) % 7);
-    LessonNumber = fecha.getWeekOfMonth();
     var today = new Date();
+    var semanaInicial =  new Date(getWeekIni());
+    LessonNumber = getWeekOfYear(semanaInicial);
     
     db.transaction(function(transaction) {
       
@@ -1731,7 +1729,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         }
                         var htmlOut1='';
                         var htmlOut2='';
-                        $('#lessonBW').text('LESSON 0'+LessonNumber);
+                        $('#lessonBW').text('LESSON '+LessonNumber);
 	                    $('#quarterBW').text(months[fecha.getMonth()].quarter);
                         $('#titleBW').text(row.title);
                         $('#dateBW').html('<strong>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</strong>');
