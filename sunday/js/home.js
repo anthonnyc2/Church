@@ -922,6 +922,12 @@ function queryFindLessons(){
 	                    	
                             $('#listLessons').append('<li id="'+result.rows.item(countLesson-1).week+'" class="'+classApp+'" data-lesson="'+countLesson+'" data-date="'+months[mesActual-1].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'" data-quarter="'+months[mesActual-1].quarter+'" ><a href="#"'+
 							'>'+
+                            /*
+                            '<section class="dateLesson">'+
+                                '<p>'+'SEP 2015'+'</p>'+'<br>'+
+                                '<p class="dateDay">'+'21'+'</p>'+
+                            '</section>'+
+                            */
 							'<img src="images/calendar_dates_icons/sep_01.png" />'+
 							'<h3>' + result.rows.item(countLesson-1).title  + '</h3>' +
 							'<p>' + result.rows.item(countLesson-1).out1 + '</p>' +
