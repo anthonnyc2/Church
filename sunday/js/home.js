@@ -81,8 +81,9 @@ function init() {
         if(page == 2){
           console.log("pagina 2 listado lesson");  
             window['namePanel']= 'optionPanelLL';
-            if(window['currentL'])
+            if(window['currentL']!== undefined){
                 $.mobile.silentScroll($('.'+window['currentL']).offset().top - 50)
+            }
             if(!window['listLesson']){
                 console.log("primera vez para variable sesion de lista de lecciones");
                 queryVersionApp();
