@@ -73,23 +73,23 @@ div[data-role="content"]{
 .dateLesson{
     background: url(../images/date.png) no-repeat;
     background-size:100%;
-    width: 35%;
-    height: 3em;
+    width: 30%;
+    height: 2.75em;
     float: left;
     text-align: center;
-    padding-top: 1.65em;
+    padding-top: 1.5em;
     font-family: sans-serif
 }
 
 .dateDay{
-    font-size: 1.75em !important;
+    font-size: 1.5em !important;
     margin-top: 0;
     font-weight: bold
 }
 
 .monthYear{
     color: White;
-    font-size: .6em !important;    
+    font-size: .5em !important;    
 }
 
 div[id="notepad"], div[id="searching"]{

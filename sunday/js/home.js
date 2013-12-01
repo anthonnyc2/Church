@@ -18,6 +18,7 @@ var API = false;
 var email = '';
 var idDispositivo;
 var valTypeSearch='BW'
+window['currentL'];
 window['size'] = originalFont
 window['version'] = '';
 window['listLesson'] = false;
@@ -80,6 +81,8 @@ function init() {
         if(page == 2){
           console.log("pagina 2 listado lesson");  
             window['namePanel']= 'optionPanelLL';
+            if(window['currentL'])
+                $.mobile.silentScroll($('.'+window['currentL']).offset().top - 50)
             if(!window['listLesson']){
                 console.log("primera vez para variable sesion de lista de lecciones");
                 queryVersionApp();
@@ -197,9 +200,11 @@ function eventsCalendar(){
     		event.preventDefault();
             console.log("tap lessons desde calendar");
             page = 2;
+            $.mobile.silentScroll($('.'+window['currentL']).offset().top - 50)
             $.mobile.changePage( "lessons.html" );
             $("#page").attr("data-index","lessons");
             init();
+            
     	});  
         
         $('.notesCalendar').tap(function(event){
@@ -215,7 +220,7 @@ function eventsCalendar(){
     		event.preventDefault();
     		console.log("evento del back desde lessonsssss");
             page = 1;
-            $("#page").attr("data-index","lessons");
+            $("#page").attr("data-index","home");
             $.mobile.changePage( "home.html" );
             init();
     	});
@@ -903,7 +908,7 @@ function queryFindLessons(){
                         var countLesson = getWeekOfYear(fecha);
                         //countLesson = countLesson -1;
                         dateGo.setDate(dateGo.getDate() + (dias*countLesson));
-                        var elem = getWeekOfYear(fecha) - 1;
+                        window['currentL'] = getWeekOfYear(fecha) - 1;
                         //countLesson++;
                         var mesActual='';
                         var anoActual ='';
@@ -952,7 +957,7 @@ function queryFindLessons(){
     	                }
     	                $('#listLessons').listview('refresh');
                         eventDetailLesson();
-                        $.mobile.silentScroll($('.'+elem).offset().top - 50)
+                        $.mobile.silentScroll($('.'+window['currentL']).offset().top - 50)
     	                $.mobile.loading( 'hide' );
                     }else{
                     	console.log("No lessons");
@@ -1233,6 +1238,7 @@ function eventLessonDetail(){
             $("#page").attr("data-index","lessons");
             $.mobile.changePage( "lessons.html", {reverse: "true"} );
             init();
+            $.mobile.silentScroll($('.'+window['currentL']).offset().top - 50)
     	});
     
     fontSize()
@@ -1338,7 +1344,7 @@ function eventDetailLesson(){
     		event.preventDefault();
     		console.log("evento del back desde lessonsssss");
             page = 1;
-            $("#page").attr("data-index","lessons");
+            $("#page").attr("data-index","home");
             $.mobile.changePage( "home.html" );
             init();
     	});
@@ -1360,6 +1366,7 @@ function eventDetailLesson(){
             $.mobile.changePage( "notes.html", { reloadPage: true });
             $("#page").attr("data-index","notes");
             init();
+            $.mobile.silentScroll($('.'+window['currentL']).offset().top - 50)
     	});
         
         //eventsPanel()
@@ -1396,7 +1403,7 @@ function eventsNotes(){
     		event.preventDefault();
     		console.log("evento del home desde notes");
             page = 1;
-            $("#page").attr("data-index","lessons");
+            $("#page").attr("data-index","home");
             $.mobile.changePage( "home.html", {reverse: "true"} );
             init();
     	});
@@ -1427,6 +1434,7 @@ function eventsNotes(){
             $("#page").attr("data-index","lessons");
             $.mobile.changePage( "lessons.html", {reverse: "true"} );
             init();
+            $.mobile.silentScroll($('.'+window['currentL']).offset().top - 50)
     	});
         
         $('.backHomeNotes').tap(function(event){
