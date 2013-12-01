@@ -48,6 +48,8 @@ function onDeviceReady() {
     idDispositivo == device.uuid;
     $.mobile.getMaxScrollForTransition = function () { return 6553674667; } 
     init();
+    $(".content-body p").fitText(1.5, { minFontSize: '14px', maxFontSize: '34px' });
+    $(".content-header h1").fitText(1.5, { minFontSize: '16px', maxFontSize: '22px' });
     
 }
 
@@ -70,6 +72,8 @@ function init() {
     if(page == 1){
         console.log("eventos de pagina 1");
         window['namePanel']= 'optionPanel';
+        miAudio.pause();
+        miAudio.currentTime = 0;
         if(window['dataLesson'] == ''){
             console.log("primera vez para variable sesion consulta de lecciones");
             queryLessons(); 
@@ -81,6 +85,8 @@ function init() {
     else{
         if(page == 2){
           console.log("pagina 2 listado lesson");  
+            miAudio.pause();
+            miAudio.currentTime = 0;
             window['namePanel']= 'optionPanelLL';
             if(window['currentL']!== undefined){
                 $('body').animate({scrollTop: $('.'+window['currentL']).position().top - 50 }, 50, function(){ $('body').clearQueue(); return false;});
@@ -100,6 +106,8 @@ function init() {
             if(page == 3){
                 console.log("pagina 3 detalle lesson");
                 window['namePanel']= 'optionPanelLLD';
+                miAudio.pause();
+                miAudio.currentTime = 0;
                 
                 $.mobile.loading( 'show', {
             		text: "",
@@ -114,6 +122,8 @@ function init() {
                 if(page == 4){
                     console.log("pagina 4 today");
                     window['namePanel']= 'optionPanelT';
+                    miAudio.pause();
+                    miAudio.currentTime = 0;
                     if(!window['today']){
                         queryVersionApp();
                         /*$.mobile.loading( 'show', {
@@ -127,10 +137,14 @@ function init() {
                     if(page == 5){
                         console.log("pagina 5 notes");
                         window['namePanel']= 'optionPanelN';
+                        miAudio.pause();
+                        miAudio.currentTime = 0;
                         queryNote();
                     }else{
                         if(page == 6){
                             console.log("pagina 6 search");
+                            miAudio.pause();
+                            miAudio.currentTime = 0;
                             window['namePanel']= 'optionPanelS';
                             setTimeout(function() {
                             eventssearch();
