@@ -46,6 +46,7 @@ function onDeviceReady() {
     document.addEventListener("pause", onPause, false);
     document.addEventListener("backbutton", onBackKeyDown, false);
     idDispositivo == device.uuid;
+    $.mobile.getMaxScrollForTransition = function () { return 6553674667; } 
     init();
     
 }
@@ -82,7 +83,7 @@ function init() {
           console.log("pagina 2 listado lesson");  
             window['namePanel']= 'optionPanelLL';
             if(window['currentL']!== undefined){
-                $.mobile.silentScroll($('.'+window['currentL']).offset().top - 50)
+                $('body').animate({scrollTop: $('.'+window['currentL']).position().top - 50 }, 50, function(){ $('body').clearQueue(); return false;});
             }
             if(!window['listLesson']){
                 console.log("primera vez para variable sesion de lista de lecciones");
@@ -201,7 +202,6 @@ function eventsCalendar(){
     		event.preventDefault();
             console.log("tap lessons desde calendar");
             page = 2;
-            $.mobile.silentScroll($('.'+window['currentL']).offset().top - 50)
             $.mobile.changePage( "lessons.html" );
             $("#page").attr("data-index","lessons");
             init();
@@ -958,7 +958,7 @@ function queryFindLessons(){
     	                }
     	                $('#listLessons').listview('refresh');
                         eventDetailLesson();
-                        $.mobile.silentScroll($('.'+window['currentL']).offset().top - 50)
+                        $('body').animate({scrollTop: $('.'+window['currentL']).position().top - 50 }, 50, function(){ $('body').clearQueue(); });
     	                $.mobile.loading( 'hide' );
                     }else{
                     	console.log("No lessons");
@@ -1239,7 +1239,6 @@ function eventLessonDetail(){
             $("#page").attr("data-index","lessons");
             $.mobile.changePage( "lessons.html", {reverse: "true"} );
             init();
-            $.mobile.silentScroll($('.'+window['currentL']).offset().top - 50)
     	});
     
     fontSize()
@@ -1367,7 +1366,6 @@ function eventDetailLesson(){
             $.mobile.changePage( "notes.html", { reloadPage: true });
             $("#page").attr("data-index","notes");
             init();
-            $.mobile.silentScroll($('.'+window['currentL']).offset().top - 50)
     	});
         
         //eventsPanel()
@@ -1435,7 +1433,6 @@ function eventsNotes(){
             $("#page").attr("data-index","lessons");
             $.mobile.changePage( "lessons.html", {reverse: "true"} );
             init();
-            $.mobile.silentScroll($('.'+window['currentL']).offset().top - 50)
     	});
         
         $('.backHomeNotes').tap(function(event){
