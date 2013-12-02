@@ -4,12 +4,13 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="css/jquery.mobile.css" type="text/css"/>
         <link rel="stylesheet" href="css/index.css" type="text/css"/>
-        <script src="js/cordova.js" type="text/javascript"></script>
+        <script src="cordova.js" type="text/javascript"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery.mobile.js" type="text/javascript"></script>
         <script src="js/lenguage.js" type="text/javascript"></script>
         <script src="js/base.js" type="text/javascript"></script>
         <script src="js/home.js" type="text/javascript"></script>
+        <script src="js/html5ext.js" type="text/javascript"></script>
         <script src="js/lenguage.js" type="text/javascript"></script>
     </head>
     <body>
@@ -104,175 +105,11 @@
                     </div>
                     <div data-role="collapsible"  data-collapsed="false" style="background-color:#000000">
                         <h3>RCCG SUNDAY SCHOOL HYMN</h3>
-                            <div class="contenedor">
-                                <div class="top-controls">
-                                    <div class="controles">
-                                        <audio controls="controls" id="miAudio">
-                                            <source src="audio.mp3" type="audio/mpeg" />
-                                        </audio>
-                                    </div>
-                                    <div class="clr"></div>
-                                </div><!--/ Codrops top bar -->
-                                
-                                <div id="d_01" class="panel">
-                                    <div class="content" >
-                                        <div class="content-header">
-                                            <img src="images/logo.png" width="30" alt="Logo Sunday School" style="float:left;">
-                                            <h1 class="text-center">SUNDAY SCHOOL</h1>
-                                        </div>
-                                        <div class="content-body">
-                                            <img src="images/bible.jpg" class="img_bible">
-                                            <p>RCCG</p>
-                                            <p>SUNDAY SCHOOL</p>
-                                            <p>HYMN</p>
-                                        </div>
-                                        <div class="content-footer">
-                                            <p class="text-center">DIRECTORATE OF CHRISTIAN EDUCATION, WORLD WIDE</p>
-
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-
-                                <div id="d_02" class="panel hidden">
-                                    <div class="content">
-                                        <div class="content-header">
-                                            <img src="images/logo.png" width="30" alt="Logo Sunday School" style="float:left;">
-                                            <h1 class="text-center">VERSE - 1</h1>
-                                        </div>
-                                        <div class="content-body">
-                                            <p>O Sunday School,</p>
-                                            <p>on the Lord’s day,</p>
-                                            <p>O How I love Thee well… </p>
-                                            <p>I am happy, it makes me glad</p>
-                                            <p>To rejoice at Thy birth. </p>
-                                        </div>
-                                        <div class="content-footer">
-                                            <p class="text-center">DIRECTORATE OF CHRISTIAN EDUCATION</p>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-
-
-                                <div id="d_03" class="panel hidden">
-                                    <div class="content">
-                                        <div class="content-header">
-                                            <img src="images/logo.png" width="30" alt="Logo Sunday School" style="float:left;">
-                                            <h1 class="text-center">VERSE - 2</h1>
-                                        </div>
-                                        <div class="content-body">
-                                            <p>O Sunday School,</p>
-                                            <p>on the Lord’s day,</p>
-                                            <p>Thy friendship suits me well…</p>
-                                            <p>Both young and old,</p>
-                                            <p>will sing Thy song,</p>
-                                            <p>We long for Sunday School.</p>
-                                        </div>
-                                        <div class="content-footer">
-                                            <p class="text-center">DIRECTORATE OF CHRISTIAN EDUCATION</p>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-
-                                <div id="d_04" class="panel hidden">
-                                    <div class="content">
-                                        <div class="content-header">
-                                            <img src="images/logo.png" width="30" alt="Logo Sunday School" style="float:left;">
-                                            <h1 class="text-center">VERSE - 3</h1>
-                                        </div>
-                                        <div class="content-body">
-                                            <p>O Sunday School,</p>
-                                            <p>on the Lord’s day,</p>
-                                            <p>Christ was Thy first teacher…</p>
-                                            <p>The Holy Spirit, great teacher,</p>
-                                            <p>Does manifest in thee.</p>
-                                        </div>
-                                        <div class="content-footer">
-                                            <p class="text-center">DIRECTORATE OF CHRISTIAN EDUCATION</p>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-
-                                <div id="d_05" class="panel hidden">
-                                    <div class="content">
-                                        <div class="content-header">
-                                            <img src="images/logo.png" width="30" alt="Logo Sunday School" style="float:left;">
-                                            <h1 class="text-center">VERSE - 4</h1>
-                                        </div>
-                                        <div class="content-body">
-                                            <p>O Sunday School,</p>
-                                            <p>on the Lord’s day,</p>
-                                            <p>This testimony is sure…</p>
-                                            <p>That God the Father Almighty,</p>
-                                            <p>Poured His blessing on Thee.</p>
-                                        </div>
-                                        <div class="content-footer">
-                                            <p class="text-center">DIRECTORATE OF CHRISTIAN EDUCATION</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="d_06" class="panel hidden">
-                                    <div class="content">
-                                        <div class="content-header">
-                                            <img src="images/logo.png" width="30" alt="Logo Sunday School" style="float:left;">
-                                            <h1 class="text-center">VERSE - 5</h1>
-                                        </div>
-                                        <div class="content-body">
-                                            <p>O Sunday School,</p>
-                                            <p>on the Lord’s day,</p>
-                                            <p>Though the sun be so bright…</p>
-                                            <p>Or if the clouds…</p>
-                                            <p>be black with rain,</p>
-                                            <p>I’ll be in Sunday School.</p>
-                                        </div>
-                                        <div class="content-footer">
-                                            <p class="text-center">DIRECTORATE OF CHRISTIAN EDUCATION</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="d_07" class="panel hidden">
-                                    <div class="content">
-                                        <div class="content-header">
-                                            <img src="images/logo.png" width="30" alt="Logo Sunday School" style="float:left;">
-                                            <h1 class="text-center">VERSE - 6</h1>
-                                        </div>
-                                        <div class="content-body">
-                                            <p>O Sunday School,</p>
-                                            <p>on the Lord’s day,</p>
-                                            <p>I rejoice to see Thee…</p>
-                                            <p>Will thou pass over me today?</p>
-                                            <p>Without my being blest?</p>
-                                        </div>
-                                        <div class="content-footer">
-                                            <p class="text-center">DIRECTORATE OF CHRISTIAN EDUCATION</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="d_08" class="panel hidden">
-                                    <div class="content">
-                                        <div class="content-header">
-                                            <img src="images/logo.png" width="30" alt="Logo Sunday School" style="float:left;">
-                                            <h1 class="text-center">SUNDAY SCHOOL</h1>
-                                        </div>
-                                        <div class="content-body">
-                                            <img src="images/bible.jpg" class="img_bible">
-                                            <p>RCCG</p>
-                                            <p>SUNDAY SCHOOL</p>
-                                            <p>HYMN</p>
-                                        </div>
-                                        <div class="content-footer">
-                                            <p class="text-center">DIRECTORATE OF CHRISTIAN EDUCATION</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        
+                        <div align="center" class="easyhtml5video">
+                            <video controls="controls" class="hymn" poster="images/poster.jpg">
+                              <source src="images/Hymn.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+                            </video>
+                        </div>
                     </div>
                     <div data-role="collapsible" style="background-color:#FFFFFF">
                         <h3>OTHER RCCG-DCE PUBLICATION</h3>
@@ -290,7 +127,7 @@
             </div>
             
             <!-- footer -->
-            <div data-role="footer" data-tap-toggle="false" data-id="myFooter">
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-id="myFooter">
                 <div data-role="navbar" class="nav-images" data-grid="d">
                     <ul>
                         <li><a id="calendar" class="calendar" data-icon="custom">Today</a></li>
@@ -303,126 +140,4 @@
             </div> 
         </div>
     </body>
-    <script>
-    /*global jQuery */
-    /*!
-    * FitText.js 1.1
-    *
-    * Copyright 2011, Dave Rupert http://daverupert.com
-    * Released under the WTFPL license
-    * http://sam.zoy.org/wtfpl/
-    *
-    * Date: Thu May 05 14:23:00 2011 -0600
-    */
-
-(function( $ ){
-
-  $.fn.fitText = function( kompressor, options ) {
-
-    // Setup options
-    var compressor = kompressor || 1,
-        settings = $.extend({
-          'minFontSize' : Number.NEGATIVE_INFINITY,
-          'maxFontSize' : Number.POSITIVE_INFINITY
-        }, options);
-
-    return this.each(function(){
-
-      // Store the object
-      var $this = $(this);
-
-      // Resizer() resizes items based on the object width divided by the compressor * 10
-      var resizer = function () {
-        $this.css('font-size', Math.max(Math.min($this.width() / (compressor*10), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)));
-      };
-
-      // Call once to set.
-      resizer();
-
-      // Call on resize. Opera debounces their resize by default.
-      $(window).on('resize.fittext orientationchange.fittext', resizer);
-
-    });
-
-  };
-
-})( jQuery );
-</script>
-<script>
-
-
-    function duracion(){
-    var actual   = parseInt(miAudio.currentTime);   
-    console.log(actual);
-    var segundos; 
-    var minutos;
-            
-    segundos = actual%60;
-    minutos  = parseInt(actual/60);
-            
-    if(segundos <10) segundos = '0' +  actual%60;
-    if(minutos <10) minutos = '0' +  parseInt(actual/60);
-            
-    
-
-    if (actual > 0 && actual < 20){
-        $('.panel').addClass('hidden');
-        $('#d_01').removeClass('hidden');
-        
-            
-    } 
-
-    if (actual > 21 && actual < 55){
-        $('.panel').addClass('hidden');
-        $('#d_02').removeClass('hidden');
-        
-    }
-
-    if (actual > 56 && actual < 82){
-        $('.panel').addClass('hidden');
-        $('#d_03').removeClass('hidden');
-        
-    }  
-
-    if (actual > 83 && actual < 112){
-        $('.panel').addClass('hidden');
-        $('#d_04').removeClass('hidden');
-        
-            
-    }  
-
-    if (actual > 113 && actual < 140){
-        $('.panel').addClass('hidden');
-        $('#d_05').removeClass('hidden');
-        
-    } 
-
-    if (actual > 141 && actual < 165){
-        $('.panel').addClass('hidden');
-        $('#d_06').removeClass('hidden');
-        
-    } 
-
-    if (actual > 166 && actual < 200){
-        $('.panel').addClass('hidden');
-        $('#d_07').removeClass('hidden');
-        
-    } 
-
-    if (actual > 201 && actual < 213){
-        $('.panel').addClass('hidden');
-        $('#d_08').removeClass('hidden');
-        
-    }  
-
-    $(".content-body p").fitText(1.5, { minFontSize: '14px', maxFontSize: '34px' });
-    $(".content-header h1").fitText(1.5, { minFontSize: '16px', maxFontSize: '22px' });
-
-
-}
-
-setInterval("duracion()", 1000);
-
-
-</script>
 </html>
