@@ -59,7 +59,7 @@ div[data-role=navbar] .ui-btn .ui-icon {
 
 div[data-role="content"]{
     display: block;
-    background:url(../images/page_bg.jpg) no-repeat;
+    background:url(../images/pagebg.jpg) no-repeat;
     background-size:100%;
     background-color: white;
     min-height: 100%
