@@ -450,43 +450,43 @@ function SearchBW(){
                                              '<span class="ui-li-count">'+months[mes].quarter+'</span>'+
 	                                         '</li>');
                     
-                    $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/sunday.png" />'+
+                    $('#listBlessedWeek').append('<li><img src="img/calendar_dates_icons/sunday.png" />'+
                                              '<h3>'+months[mes].month+'-'+date.getDate()+'-'+date.getFullYear()+'</h3><p>'+weekBlessed.sun+'</p>'+
                                              '<p class="ui-li-aside"><strong>Sunday</strong></p></li>'); 
                         
                     date.setDate(date.getDate() + 1);
                     mes = date.getMonth();
-                    $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/monday.png" />'+
+                    $('#listBlessedWeek').append('<li><img src="img/calendar_dates_icons/monday.png" />'+
                                              '<h3>'+months[mes].month+'-'+date.getDate()+'-'+date.getFullYear()+'</h3><p>'+weekBlessed.mon+'</p>'+
                                              '<p class="ui-li-aside"><strong>Monday</strong></p></li>'); 
 			        
                     date.setDate(date.getDate() + 1);
                     mes = date.getMonth();
-                    $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/tuesday.png" />'+
+                    $('#listBlessedWeek').append('<li><img src="img/calendar_dates_icons/tuesday.png" />'+
                                              '<h3>'+months[mes].month+'-'+date.getDate()+'-'+date.getFullYear()+'</h3><p>'+weekBlessed.tue+'</p>'+
                                              '<p class="ui-li-aside"><strong>Tuesday</strong></p></li>'); 
                     
                     date.setDate(date.getDate() + 1);
                     mes = date.getMonth();
-                    $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/wednesday.png" />'+
+                    $('#listBlessedWeek').append('<li><img src="img/calendar_dates_icons/wednesday.png" />'+
                                              '<h3>'+months[mes].month+'-'+date.getDate()+'-'+date.getFullYear()+'</h3><p>'+weekBlessed.wed+'</p>'+
                                              '<p class="ui-li-aside"><strong>Wednesday</strong></p></li>');
                     
                     date.setDate(date.getDate() + 1);
                     mes = date.getMonth();
-                    $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/thursday.png" />'+
+                    $('#listBlessedWeek').append('<li><img src="img/calendar_dates_icons/thursday.png" />'+
                                              '<h3>'+months[mes].month+'-'+date.getDate()+'-'+date.getFullYear()+'</h3><p>'+weekBlessed.thu+'</p>'+
                                              '<p class="ui-li-aside"><strong>Thursday</strong></p></li>'); 
                     
                     date.setDate(date.getDate() + 1);
                     mes = date.getMonth();
-                    $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/friday.png" />'+
+                    $('#listBlessedWeek').append('<li><img src="img/calendar_dates_icons/friday.png" />'+
                                              '<h3>'+months[mes].month+'-'+date.getDate()+'-'+date.getFullYear()+'</h3><p>'+weekBlessed.fri+'</p>'+
                                              '<p class="ui-li-aside"><strong>Friday</strong></p></li>');
                     
                     date.setDate(date.getDate() + 1);
                     mes = date.getMonth();
-                    $('#listBlessedWeek').append('<li><img src="images/calendar_dates_icons/saturday.png" />'+
+                    $('#listBlessedWeek').append('<li><img src="img/calendar_dates_icons/saturday.png" />'+
                                              '<h3>'+months[mes].month+'-'+date.getDate()+'-'+date.getFullYear()+'</h3><p>'+weekBlessed.sat+'</p>'+
                                              '<p class="ui-li-aside"><strong>Saturday</strong></p></li>'+
                                              '<li data-role="list-divider" data-theme="b"></li>');
@@ -555,7 +555,7 @@ function SearchLesson(){
                                 
                           $('#listLessonsS').append('<li id="'+result.rows.item(i).week+'" ><a '+
 							'>'+
-							'<img src="images/calendar_dates_icons/sep_01.png" />'+
+							'<img src="img/calendar_dates_icons/sep_01.png" />'+
 							'<h3>' + result.rows.item(i).title  + '</h3>' +
 							'<p>' + result.rows.item(i).out1 + '</p>' +
 							'<p>' + result.rows.item(i).out2 + '</p>' +
@@ -1141,7 +1141,7 @@ function queryLesson(id, resultConsult){
                         $('#title').text(row.title);
                         $('#date').html('<strong>'+lessonDate+'</strong>');
                         $('#memory_verse').html('<b>MEMORY VERSE TEXT</b><br>"'+row.memory_verse+'"- <strong>'+row.verse+'</strong>');
-                        $('#bible_pass').html('<span class="ui-li-aside"><img src="images/Bible_small.png" /></span><br><b>BIBLE PASSAGE:</b><br>'+row.bible_pass);
+                        $('#bible_pass').html('<span class="ui-li-aside"><img src="img/Bible_small.png" /></span><br><b>BIBLE PASSAGE:</b><br>'+row.bible_pass);
                         $('#introducion').html('<b><u>INTRODUCTION</u></b><br>'+row.intro);
                         $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>')    
                         $('#question').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p>');
@@ -1607,7 +1607,7 @@ function showLessonWeek(blessedWeek, week){
                              '<span class="ui-li-count">'+months[fecha.getMonth()].quarter+'</span>'+
                              '</li>');
     //----------------------------------------------------------------------------------------------------------------                    
-    $('#blessedWeek').append('<li id="sun"><img src="images/calendar_dates_icons/sunday.png" />'+
+    $('#blessedWeek').append('<li id="sun"><img src="img/calendar_dates_icons/sunday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).sun+'</p>'+
                              '<p class="ui-li-aside"><strong>Sunday</strong></p></li>'); 
     $('#sun').tap(function(e){
@@ -1616,7 +1616,7 @@ function showLessonWeek(blessedWeek, week){
     })
     fecha.setDate(fecha.getDate() + 1);
     //----------------------------------------------------------------------------------------------------------------
-    $('#blessedWeek').append('<li id="mon"><img src="images/calendar_dates_icons/monday.png" />'+
+    $('#blessedWeek').append('<li id="mon"><img src="img/calendar_dates_icons/monday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).mon+'</p>'+
                              '<p class="ui-li-aside"><strong>Monday</strong></p></li>'); 
     $('#mon').tap(function(e){
@@ -1625,7 +1625,7 @@ function showLessonWeek(blessedWeek, week){
     })
     fecha.setDate(fecha.getDate() + 1);
     //----------------------------------------------------------------------------------------------------------------
-    $('#blessedWeek').append('<li id="tue"><img src="images/calendar_dates_icons/tuesday.png" />'+
+    $('#blessedWeek').append('<li id="tue"><img src="img/calendar_dates_icons/tuesday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).tue+'</p>'+
                              '<p class="ui-li-aside"><strong>Tuesday</strong></p></li>'); 
     $('#tue').tap(function(e){
@@ -1634,7 +1634,7 @@ function showLessonWeek(blessedWeek, week){
     })
     fecha.setDate(fecha.getDate() + 1);
     //----------------------------------------------------------------------------------------------------------------
-    $('#blessedWeek').append('<li  id="wed"><img src="images/calendar_dates_icons/wednesday.png" />'+
+    $('#blessedWeek').append('<li  id="wed"><img src="img/calendar_dates_icons/wednesday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).wed+'</p>'+
                              '<p class="ui-li-aside"><strong>Wednesday</strong></p></li>');
     $('#wed').tap(function(e){
@@ -1643,7 +1643,7 @@ function showLessonWeek(blessedWeek, week){
     })
     fecha.setDate(fecha.getDate() + 1);
     //----------------------------------------------------------------------------------------------------------------
-    $('#blessedWeek').append('<li id="thu"><img src="images/calendar_dates_icons/thursday.png" />'+
+    $('#blessedWeek').append('<li id="thu"><img src="img/calendar_dates_icons/thursday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).thu+'</p>'+
                              '<p class="ui-li-aside"><strong>Thursday</strong></p></li>'); 
     $('#thu').tap(function(e){
@@ -1652,7 +1652,7 @@ function showLessonWeek(blessedWeek, week){
     })
     fecha.setDate(fecha.getDate() + 1);
     //----------------------------------------------------------------------------------------------------------------
-    $('#blessedWeek').append('<li id="fri"><img src="images/calendar_dates_icons/friday.png" />'+
+    $('#blessedWeek').append('<li id="fri"><img src="img/calendar_dates_icons/friday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).fri+'</p>'+
                              '<p class="ui-li-aside"><strong>Friday</strong></p></li>');
     $('#fri').tap(function(e){
@@ -1661,7 +1661,7 @@ function showLessonWeek(blessedWeek, week){
     })
     fecha.setDate(fecha.getDate() + 1);
     //----------------------------------------------------------------------------------------------------------------
-    $('#blessedWeek').append('<li id="sat"><img src="images/calendar_dates_icons/saturday.png" />'+
+    $('#blessedWeek').append('<li id="sat"><img src="img/calendar_dates_icons/saturday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).sat+'</p>'+
                              '<p class="ui-li-aside"><strong>Saturday</strong></p></li>'+
                              '<li data-role="list-divider" data-theme="b"></li>');
@@ -1735,7 +1735,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         $('#titleBW').text(row.title);
                         $('#dateBW').html('<strong>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</strong>');
                         $('#memory_verseBW').html('<b>MEMORY VERSE TEXT</b><br>"'+row.memory_verse+'"- <strong>'+row.verse+'</strong>');
-                        $('#bible_passBW').html('<span class="ui-li-aside"><img src="images/Bible_small.png" /></span><br><b>BIBLE PASSAGE:</b><br>'+row.bible_pass);
+                        $('#bible_passBW').html('<span class="ui-li-aside"><img src="img/Bible_small.png" /></span><br><b>BIBLE PASSAGE:</b><br>'+row.bible_pass);
                         $('#introducionBW').html('<b><u>INTRODUCTION</u></b><br>'+row.intro);
                         $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>')    
                         $('#questionBW').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p>');
@@ -1760,7 +1760,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                                                  '<span class="ui-li-count">'+months[fecha.getMonth()].quarter+'</span>'+
     	                                         '</li>');
                         
-                        $('#blessedWeek').append('<li id="sun"><img src="images/calendar_dates_icons/sunday.png" />'+
+                        $('#blessedWeek').append('<li id="sun"><img src="img/calendar_dates_icons/sunday.png" />'+
                                                  '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).sun+'</p>'+
                                                  '<p class="ui-li-aside"><strong>Sunday</strong></p></li>'); 
                         
@@ -1771,7 +1771,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         
                         fecha.setDate(fecha.getDate() + 1);
                         
-                        $('#blessedWeek').append('<li id="mon"><img src="images/calendar_dates_icons/monday.png" />'+
+                        $('#blessedWeek').append('<li id="mon"><img src="img/calendar_dates_icons/monday.png" />'+
                                                  '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).mon+'</p>'+
                                                  '<p class="ui-li-aside"><strong>Monday</strong></p></li>'); 
     			        
@@ -1781,7 +1781,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         })
                         
                         fecha.setDate(fecha.getDate() + 1);
-                        $('#blessedWeek').append('<li id="tue"><img src="images/calendar_dates_icons/tuesday.png" />'+
+                        $('#blessedWeek').append('<li id="tue"><img src="img/calendar_dates_icons/tuesday.png" />'+
                                                  '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).tue+'</p>'+
                                                  '<p class="ui-li-aside"><strong>Tuesday</strong></p></li>'); 
                         
@@ -1791,7 +1791,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         })
                         
                         fecha.setDate(fecha.getDate() + 1);
-                        $('#blessedWeek').append('<li id="wed"><img src="images/calendar_dates_icons/wednesday.png" />'+
+                        $('#blessedWeek').append('<li id="wed"><img src="img/calendar_dates_icons/wednesday.png" />'+
                                                  '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).wed+'</p>'+
                                                  '<p class="ui-li-aside"><strong>Wednesday</strong></p></li>');
                         
@@ -1801,7 +1801,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         })
                         
                         fecha.setDate(fecha.getDate() + 1);
-                        $('#blessedWeek').append('<li id="thu"><img src="images/calendar_dates_icons/thursday.png" />'+
+                        $('#blessedWeek').append('<li id="thu"><img src="img/calendar_dates_icons/thursday.png" />'+
                                                  '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).thu+'</p>'+
                                                  '<p class="ui-li-aside"><strong>Thursday</strong></p></li>'); 
                         
@@ -1811,7 +1811,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         })
                         
                         fecha.setDate(fecha.getDate() + 1);
-                        $('#blessedWeek').append('<li id="fri"><img src="images/calendar_dates_icons/friday.png" />'+
+                        $('#blessedWeek').append('<li id="fri"><img src="img/calendar_dates_icons/friday.png" />'+
                                                  '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).fri+'</p>'+
                                                  '<p class="ui-li-aside"><strong>Friday</strong></p></li>');
                         
@@ -1821,7 +1821,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         })
                         
                         fecha.setDate(fecha.getDate() + 1);
-                        $('#blessedWeek').append('<li id="sat"><img src="images/calendar_dates_icons/saturday.png" />'+
+                        $('#blessedWeek').append('<li id="sat"><img src="img/calendar_dates_icons/saturday.png" />'+
                                                  '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).sat+'</p>'+
                                                  '<p class="ui-li-aside"><strong>Saturday</strong></p></li>'+
                                                  '<li data-role="list-divider" data-theme="b"></li>');
