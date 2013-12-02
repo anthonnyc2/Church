@@ -81,9 +81,6 @@ function init() {
         if(page == 2){
           console.log("pagina 2 listado lesson");  
             window['namePanel']= 'optionPanelLL';
-            if(window['currentL']!== undefined){
-                $('body').animate({scrollTop: $('.'+window['currentL']).position().top - 50 }, 50, function(){ $('body').clearQueue();});
-            }
             if(!window['listLesson']){
                 console.log("primera vez para variable sesion de lista de lecciones");
                 queryVersionApp();
@@ -954,7 +951,6 @@ function queryFindLessons(){
     	                }
     	                $('#listLessons').listview('refresh');
                         eventDetailLesson();
-                        $('body').animate({scrollTop: $('.'+window['currentL']).position().top - 50 }, 50, function(){ $('body').clearQueue();});
     	                $.mobile.loading( 'hide' );
                     }else{
                     	console.log("No lessons");
@@ -1616,7 +1612,7 @@ function showLessonWeek(blessedWeek, week){
                              '<p class="ui-li-aside"><strong>Sunday</strong></p></li>'); 
     $('#sun').tap(function(e){
         e.preventDefault();
-        alert(blessedWeek.rows.item(0).sun)
+        navigator.notification.alert(blessedWeek.rows.item(0).sun,function(){},'Blessed Day','Ok');
     })
     fecha.setDate(fecha.getDate() + 1);
     //----------------------------------------------------------------------------------------------------------------
@@ -1625,7 +1621,7 @@ function showLessonWeek(blessedWeek, week){
                              '<p class="ui-li-aside"><strong>Monday</strong></p></li>'); 
     $('#mon').tap(function(e){
         e.preventDefault();
-        alert(blessedWeek.rows.item(0).mon)
+        navigator.notification.alert(blessedWeek.rows.item(0).mon,function(){},'Blessed Day','Ok');
     })
     fecha.setDate(fecha.getDate() + 1);
     //----------------------------------------------------------------------------------------------------------------
@@ -1634,7 +1630,7 @@ function showLessonWeek(blessedWeek, week){
                              '<p class="ui-li-aside"><strong>Tuesday</strong></p></li>'); 
     $('#tue').tap(function(e){
         e.preventDefault();
-        alert(blessedWeek.rows.item(0).tue)
+        navigator.notification.alert(blessedWeek.rows.item(0).tue,function(){},'Blessed Day','Ok');
     })
     fecha.setDate(fecha.getDate() + 1);
     //----------------------------------------------------------------------------------------------------------------
@@ -1643,7 +1639,7 @@ function showLessonWeek(blessedWeek, week){
                              '<p class="ui-li-aside"><strong>Wednesday</strong></p></li>');
     $('#wed').tap(function(e){
         e.preventDefault();
-        alert(blessedWeek.rows.item(0).wed)
+        navigator.notification.alert(blessedWeek.rows.item(0).wed,function(){},'Blessed Day','Ok');
     })
     fecha.setDate(fecha.getDate() + 1);
     //----------------------------------------------------------------------------------------------------------------
@@ -1652,7 +1648,7 @@ function showLessonWeek(blessedWeek, week){
                              '<p class="ui-li-aside"><strong>Thursday</strong></p></li>'); 
     $('#thu').tap(function(e){
         e.preventDefault();
-        alert(blessedWeek.rows.item(0).thu)
+        navigator.notification.alert(blessedWeek.rows.item(0).thu,function(){},'Blessed Day','Ok');
     })
     fecha.setDate(fecha.getDate() + 1);
     //----------------------------------------------------------------------------------------------------------------
@@ -1661,7 +1657,7 @@ function showLessonWeek(blessedWeek, week){
                              '<p class="ui-li-aside"><strong>Friday</strong></p></li>');
     $('#fri').tap(function(e){
         e.preventDefault();
-        alert(blessedWeek.rows.item(0).fri)
+        navigator.notification.alert(blessedWeek.rows.item(0).fri,function(){},'Blessed Day','Ok');
     })
     fecha.setDate(fecha.getDate() + 1);
     //----------------------------------------------------------------------------------------------------------------
@@ -1671,7 +1667,7 @@ function showLessonWeek(blessedWeek, week){
                              '<li data-role="list-divider" data-theme="b"></li>');
     $('#sat').tap(function(e){
         e.preventDefault();
-        alert(blessedWeek.rows.item(0).sat)
+        navigator.notification.alert(blessedWeek.rows.item(0).sat,function(){},'Blessed Day','Ok');
     })
     //----------------------------------------------------------------------------------------------------------------
     $('#blessedWeek').listview('refresh');
