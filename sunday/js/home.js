@@ -1136,7 +1136,7 @@ function queryLesson(id, resultConsult){
                     if (result.rows.length == 1) {
 	                    var row = result.rows.item(0);
                         var htmlOut1 ='';
-                        $('#lesson').text('LESSON 0'+titleLesson);
+                        $('#lesson').text('LESSON '+titleLesson);
 	                    $('#quarter').text(lessonQuarter);
                         $('#title').text(row.title);
                         $('#date').html('<strong>'+lessonDate+'</strong>');
@@ -1607,12 +1607,32 @@ function showLessonWeek(blessedWeek, week){
                              '<span class="ui-li-count">'+months[fecha.getMonth()].quarter+'</span>'+
                              '</li>');
     //----------------------------------------------------------------------------------------------------------------                    
-    $('#blessedWeek').append('<li id="sun"><img src="images/calendar_dates_icons/sunday.png" />'+
+    $('#blessedWeek').append('<li id="sun"><a><img src="images/calendar_dates_icons/sunday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).sun+'</p>'+
-                             '<p class="ui-li-aside"><strong>Sunday</strong></p></li>'); 
+                             '<p class="ui-li-aside"><strong>Sunday</strong></p></a></li>'); 
     $('#sun').tap(function(e){
         e.preventDefault();
-        navigator.notification.alert(blessedWeek.rows.item(0).sun,function(){},'Blessed Day','Ok');
+           if(window['version'] == 0){
+            function checkButtonSelection(param){
+                 if(param == 2)
+                 {
+                     console.log("Le dio comprar");
+                     page = 1;
+                     $("#page").attr("data-index","lessons");
+                     $.mobile.changePage( "lessons.html", {reverse: "true"} );
+                     init();
+                     cargarURl();
+                 }   
+             }       
+          
+          navigator.notification.confirm(
+          "Sorry, but the content must be purchased in order to have access to lessons and other information",
+          checkButtonSelection,
+          ' Oops!',
+          'Cancel,Buy Now');    
+        }
+        //alert(blessedWeek.rows.item(0).sun)
+        
     })
     fecha.setDate(fecha.getDate() + 1);
     //----------------------------------------------------------------------------------------------------------------
@@ -1737,11 +1757,70 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         $('#memory_verseBW').html('<b>MEMORY VERSE TEXT</b><br>"'+row.memory_verse+'"- <strong>'+row.verse+'</strong>');
                         $('#bible_passBW').html('<span class="ui-li-aside"><img src="images/Bible_small.png" /></span><br><b>BIBLE PASSAGE:</b><br>'+row.bible_pass);
                         $('#introducionBW').html('<b><u>INTRODUCTION</u></b><br>'+row.intro);
-                        $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>')    
                         $('#questionBW').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p>');
                         $('#conclusionBW').html('<b>CONCLUSION</b><hr><p style="white-space:pre-line">'+row.conclusion+'</p>');
 				    
-                        for(var i=0; i<resultConsult.rows.length; i++){
+                        if(row.numberOutLines == 2){
+                            $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>')    
+                        }
+                        
+                        if(row.numberOutLines == 3){
+                            $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>');    
+                        }
+                        if(row.numberOutLines == 4){
+                             $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>');   
+                        }
+                        if(row.numberOutLines == 5){
+                             $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>');      
+                        }
+                        if(row.numberOutLines == 6){
+                             $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>');         
+                        }
+                        if(row.numberOutLines == 7){
+                             $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>'+'<br><b>7.'+row.out7+'</b>');       
+                        }
+                        if(row.numberOutLines == 8){
+                             $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>'+'<br><b>7.'+row.out7+'</b>'+'<br><b>8.'+row.out8+'</b>');          
+                        }
+                        
+                        for(var j=0;j<row.numberOutLines; j++)
+                        {
+                            for(var i=0; i<resultConsult.rows.length; i++){ 
+                                var content = resultConsult.rows.item(i);
+                                if(content.out == (j+1)){
+                                    htmlOut1+='<p style="white-space:pre-line">'+content.content+'</p>';        
+                                }
+                            }
+                            
+                            if(j==0){
+                                $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out1+'</b><hr>'+htmlOut1+'</p></li>');    
+                            }
+                            if(j==1){
+                                $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out2+'</b><hr>'+htmlOut1+'</p></li>');
+                            }
+                            if(j==2){
+                               $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out3+'</b><hr>'+htmlOut1+'</p></li>');   
+                            }
+                            if(j==3){
+                                $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out4+'</b><hr>'+htmlOut1+'</p></li>');
+                            }
+                            if(j==4){
+                                $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out5+'</b><hr>'+htmlOut1+'</p></li>');
+                            }
+                            if(j==5){
+                                $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out6+'</b><hr>'+htmlOut1+'</p></li>');
+                            }
+                            if(j==6){
+                                $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out7+'</b><hr>'+htmlOut1+'</p></li>');
+                            }
+                            if(j==7){
+                                $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out8+'</b><hr>'+htmlOut1+'</p></li>');
+                            }
+                            htmlOut1='';
+                            
+                        }
+                        $('#LessonBW').listview('refresh');
+                        /*for(var i=0; i<resultConsult.rows.length; i++){
 	                    	var content = resultConsult.rows.item(i);
                             if(content.out == 1)
                             {
@@ -1754,19 +1833,52 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         
                         $('#outline1BW').html('<b>'+row.out1+'</b><hr>'+htmlOut1);
                         $('#outline2BW').html('<b>'+row.out2+'</b><hr>'+htmlOut2);
-    
+                        */
+                        
+                        
                         $('#blessedWeek').append('<li data-role="list-divider" data-theme="b"></li>'+
                                                  '<li data-role="list-divider">Week-'+week+
                                                  '<span class="ui-li-count">'+months[fecha.getMonth()].quarter+'</span>'+
     	                                         '</li>');
                         
-                        $('#blessedWeek').append('<li id="sun"><img src="images/calendar_dates_icons/sunday.png" />'+
+                        $('#blessedWeek').append('<li id="sun" data-id="'+week+'" data-lesson="'+row.title+'" data-quarter="'+months[fecha.getMonth()].quarter+'" data-date="'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'"><a><img src="images/calendar_dates_icons/sunday.png" />'+
                                                  '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).sun+'</p>'+
-                                                 '<p class="ui-li-aside"><strong>Sunday</strong></p></li>'); 
+                                                 '<p class="ui-li-aside"><strong>Sunday</strong></p></a></li>'); 
                         
                         $('#sun').tap(function(e){
                             e.preventDefault();
-                            alert(blessedWeek.rows.item(0).sun)
+                               if(window['version'] == 0){
+                                function checkButtonSelection(param){
+                                     if(param == 2)
+                                     {
+                                         console.log("Le dio comprar");
+                                         page = 1;
+                                         $("#page").attr("data-index","lessons");
+                                         $.mobile.changePage( "lessons.html", {reverse: "true"} );
+                                         init();
+                                         cargarURl();
+                                     }   
+                                 }       
+                              
+                              navigator.notification.confirm(
+                              "Sorry, but the content must be purchased in order to have access to lessons and other information",
+                              checkButtonSelection,
+                              ' Oops!',
+                              'Cancel,Buy Now');    
+                            }
+                            if(window['version'] == 1){
+                                event.preventDefault();
+                        		console.log("SI tienes acceso a este contenido");
+                                idLesson = $(this).attr('data-id');
+                                titleLesson = $(this).attr('data-lesson');
+                                lessonQuarter = $(this).attr('data-quarter');
+                                lessonDate = $(this).attr('data-date');
+                                page = 3;
+                                $.mobile.changePage( "detailLesson.html", {reloadPage: true });
+                                init();
+                            }
+                            //alert(blessedWeek.rows.item(0).sun)
+                            
                         })
                         
                         fecha.setDate(fecha.getDate() + 1);
