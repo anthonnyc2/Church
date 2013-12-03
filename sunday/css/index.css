@@ -42,24 +42,24 @@ div[data-role=navbar] .ui-btn .ui-icon {
 
 }
 #home .ui-icon { 
-    background:  url(../img/footer/home.png) 50% 50% no-repeat; 
+    background:  url(../images/home.png) 50% 50% no-repeat; 
 }
 #content .ui-icon { 
-    background:  url(../img/footer/book2.png) 50% 50% no-repeat; 
+    background:  url(../images/book2.png) 50% 50% no-repeat; 
 }
 #calendar .ui-icon { 
-    background:  url(../img/footer/calendar2.png) 50% 50% no-repeat;
+    background:  url(../images/calendar2.png) 50% 50% no-repeat;
 }
 #note .ui-icon { 
-    background:  url(../img/footer/note2.png) 50% 50% no-repeat;
+    background:  url(../images/note2.png) 50% 50% no-repeat;
 }
 #search .ui-icon { 
-    background:  url(../img/footer/search.png) 50% 50% no-repeat;
+    background:  url(../images/search.png) 50% 50% no-repeat;
 }
 
 div[data-role="content"]{
     display: block;
-    background:url(../img/pageBg.jpg) no-repeat;
+    background:url(../images/page_bg.jpg) no-repeat;
     background-size:100%;
     background-color: white;
     min-height: 100%
@@ -71,7 +71,7 @@ div[data-role="content"]{
 }
 
 .dateLesson{
-    background: url(../img/date.png) no-repeat;
+    background: url(../images/date.png) no-repeat;
     background-size:100%;
     width: 30%;
     height: 2.75em;
