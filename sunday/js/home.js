@@ -27,7 +27,7 @@ window['today'] = false;
 window['idioma'] = '';
 window['namePanel']= 'optionPanel';
 
-var monthN = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+var monthN = [ "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" ];
 var months = [{
 "month": "January", "quarter" : "2nd Quarter"},{"month": "February", "quarter" : "2nd Quarter"},{"month": "March", "quarter" : "2nd Quarter"},
 {"month": "April", "quarter" : "2nd Quarter"},{"month": "May", "quarter" : "3rd Quarter"},{"month": "June", "quarter" : "3rd Quarter"},
@@ -916,6 +916,8 @@ function queryFindLessons(){
                             anoActual = fecha.getYear();
                              countLesson = (i+1);
                             
+                            
+                            
                             if(i==0){
                                 $('#listLessons').append('<li data-role="list-divider" data-theme="b"></li>');
                                 $('#listLessons').append('<li data-role="list-divider">'+months[mesActual-1].month+', '+fecha.getFullYear()+' - '+months[mesActual-1].quarter+
@@ -924,11 +926,7 @@ function queryFindLessons(){
                             }
 	                    	
                             $('#listLessons').append('<li id="'+result.rows.item(i).week+'" data-nro="week'+result.rows.item(i).week+'" class="'+classApp+' '+result.rows.item(i).week+'" data-lesson="'+countLesson+'" data-date="'+months[mesActual-1].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'" data-quarter="'+months[mesActual-1].quarter+'" ><a>'+
-                            
-                            '<section class="dateLesson">'+
-                                '<p class="monthYear">'+monthN[fecha.getMonth()]+' '+fecha.getFullYear()+'</p>'+
-                                '<p class="dateDay">'+fecha.getDate()+'</p>'+
-                            '</section>'+
+                            '<img src="images/'+monthN[fecha.getMonth()]+''+fecha.getDate()+'.png" />'+
                            
 							'<h3>' + result.rows.item(i).title  + '</h3>' +
 							'<p>' + result.rows.item(i).out1 + '</p>' +
