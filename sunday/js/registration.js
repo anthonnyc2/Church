@@ -6,6 +6,7 @@ var Online = '';
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
+    $('#reg').hide()
     db = window.openDatabase("sundayApp", "1.0", "Sunday School DB", 1000000);
     init();
 }
@@ -23,7 +24,6 @@ function init() {
             $("#email").attr('placeholder', language[$(this).val()].email);
             $("#labelPhone").text(language[$(this).val()].phoneNumber);
             $("#phoneNumber").attr('placeholder', language[$(this).val()].phoneNumber);
-            //$("#phoneNumber").attr('placeholder', language[$(this).val()].phoneNumber);//pais
             $("#labelCode").text(language[$(this).val()].codeActivation);
             $("#codeActivation").attr('placeholder', language[$(this).val()].codeActivation);
             $("#button .ui-btn-text").text(language[$(this).val()].button);
@@ -104,7 +104,8 @@ function queryClient(){
                         window.location.href = "home.html";
                     }
                     else{
-                     console.log("NO hay un cliente registrado");                         
+                        console.log("NO hay un cliente registrado");
+                        $('#reg').show()
                     }
                 },errorHandler);
             },errorHandler,nullHandler);
@@ -187,7 +188,6 @@ function APIRequestUpdateCount(idUser, count) {
         }
     });
 }
-
 
 function APIResquestEmail() {
 
