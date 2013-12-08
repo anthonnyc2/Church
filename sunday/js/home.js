@@ -1610,26 +1610,7 @@ function showLessonWeek(blessedWeek, week){
                              '<p class="ui-li-aside"><strong>Sunday</strong></p></a></li>'); 
     $('#sun').tap(function(e){
         e.preventDefault();
-           if(window['version'] == 0){
-            function checkButtonSelection(param){
-                 if(param == 2)
-                 {
-                     console.log("Le dio comprar");
-                     page = 1;
-                     $("#page").attr("data-index","lessons");
-                     $.mobile.changePage( "lessons.html", {reverse: "true"} );
-                     init();
-                     cargarURl();
-                 }   
-             }       
-          
-          navigator.notification.confirm(
-          "Sorry, but the content must be purchased in order to have access to lessons and other information",
-          checkButtonSelection,
-          ' Oops!',
-          'Cancel,Buy Now');    
-        }
-        //alert(blessedWeek.rows.item(0).sun)
+        alert(blessedWeek.rows.item(0).sun)
         
     })
     fecha.setDate(fecha.getDate() + 1);
@@ -1845,7 +1826,8 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         
                         $('#sun').tap(function(e){
                             e.preventDefault();
-                               if(window['version'] == 0){
+                            alert(blessedWeek.rows.item(0).sun);
+                               /*if(window['version'] == 0){
                                 function checkButtonSelection(param){
                                      if(param == 2)
                                      {
@@ -1874,8 +1856,8 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                                 page = 3;
                                 $.mobile.changePage( "detailLesson.html", {reloadPage: true });
                                 init();
-                            }
-                            //alert(blessedWeek.rows.item(0).sun)
+                            }*/
+                            
                             
                         })
                         
