@@ -69,13 +69,22 @@ function init() {
     if(page == 1){
         console.log("eventos de pagina 1");
         window['namePanel']= 'optionPanel';
+        
         if(window['dataLesson'] == ''){
+            setTimeout(function() {
+                 console.log("The lessson is already syncronizadas");
+                 window['dataLesson'] = '1';
+                eventsHome();
+            }, 500);
+        }
+        
+        /*if(window['dataLesson'] == ''){
             console.log("primera vez para variable sesion consulta de lecciones");
             queryLessons(); 
             if(window['version']==''){
                  queryVersionApp();           
             }
-        }
+        }*/
     }
     else{
         if(page == 2){

@@ -55,7 +55,7 @@ function existentUser() {
 
 function successInsert() {
     alert(language[$('#language').val()].onSuccess);
-    //window.location.href = "home.html";
+    window.location.href = "home.html";
     //$.mobile.changePage( "home.html", { transition: "flip", reloadPage: true });
 }
 
@@ -89,7 +89,7 @@ function queryClient(){
         transaction.executeSql(sql, [],function(transaction, result) {
                     if (result.rows.length > 0) {
                         console.log("hay un cliente registrado");                      
-                        //window.location.href = "home.html";
+                        window.location.href = "home.html";
                     }
                     else{
                         console.log("NO hay un cliente registrado");
