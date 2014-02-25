@@ -17,7 +17,9 @@ var gateway = false;
 var API = false;
 var email = '';
 var idDispositivo;
-var valTypeSearch='BW'
+var valTypeSearch='BW';
+var publicKey='FrfuSF7Hnuf7';
+var privateKey='YbeusYXc60c1V1';
 window['currentL'];
 window['size'] = originalFont
 window['version'] = '';
@@ -74,7 +76,8 @@ function init() {
             setTimeout(function() {
                  console.log("The lessson is already syncronizadas");
                  window['dataLesson'] = '1';
-                eventsHome();
+                 queryVersionApp(); 
+                 eventsHome();
             }, 500);
         }
         
@@ -188,11 +191,23 @@ function onBackKeyDown(e) {
                 }
             }
 }
+
+function makeRandomKey()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 5; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
  
 
 function eventsCalendar(){
     
     console.log("cargo los eventos del calendar");
+    
         
         $('.homeCalendar').tap(function(event){
     		event.preventDefault();
@@ -260,7 +275,6 @@ function eventsCalendar(){
         fontSize()
         setFontSize(window['size'])
         $('.optionsT').tap(openP)
-        $('body').on( "swipeleft", openP );
         $('body').on( "swiperight", function(){event.preventDefault();$(".optionPanelT").panel("close")});
     
         
@@ -280,6 +294,8 @@ function eventsCalendar(){
                  APIRequestCode($('.payedCodeT').val())   
             }
         });
+        
+        
     
 }
 
@@ -409,12 +425,9 @@ function eventssearch(){
                         }
         });
         
-        //eventsPanel()
-        
         fontSize()
         setFontSize(window['size'])
         $('.optionsS').tap(openP)
-        $('body').on( "swipeleft", openP );
         $('body').on( "swiperight", function(){event.preventDefault();$(".optionPanelS").panel("close")});
     
         
@@ -564,7 +577,7 @@ function SearchLesson(){
                                 
                           $('#listLessonsS').append('<li id="'+result.rows.item(i).week+'" ><a '+
 							'>'+
-							'<img src="images/dateIcons/sep_01.png" />'+
+                            '<img src="images/'+monthN[date.getMonth()]+''+date.getDate()+'.png" />'+
 							'<h3>' + result.rows.item(i).title  + '</h3>' +
 							'<p>' + result.rows.item(i).out1 + '</p>' +
 							'<p>' + result.rows.item(i).out2 + '</p>' +
@@ -583,7 +596,7 @@ function SearchLesson(){
 }
 
 function cargarURl(){
-    url = 'http://lesson.galeriasmall.com/?email='+email;
+    url = 'https://rccgetour.org/rccgetour/products/product.php';
     console.log("la url es "+url);
     var ref = window.open(encodeURI(url), '_system', 'location=no');
     ref.addEventListener('loadstart', function(event) { });
@@ -595,30 +608,6 @@ function cargarURl(){
         window.location="home.html";
     });
 }
-
-function eventsPanel(){
-    //fontSize()
-    //setFontSize(window['size'])
-    //$('.options').tap(openP)
-    //$('body').on( "swipeleft", openP );
-    //$('body').on( "swiperight", function(){event.preventDefault();$(".optionPanel").panel("close")});
-    //------------- validacion del codigo de pago dentro del panel ----------
-    /*
-    $('input#validate').tap(function(event){
-        event.preventDefault();
-        if(!$(this).find('.payedCode').val())
-            alert('Please insert code')
-        else
-            APIRequestCode($('input#payedCode').val())
-    })
-    
-    $('.store').tap(function(event){
-        event.preventDefault();
-        cargarURl();
-    })*/
-}
-
-
 
 function eventsHome(){
      
@@ -672,7 +661,6 @@ function eventsHome(){
             init();
         });
         
-        //eventsPanel()
     
         fontSize()
         setFontSize(window['size'])
@@ -693,18 +681,15 @@ function eventsHome(){
                  alert('Please insert code')   
             }else
             {
-                 //alert("codigo en Home "+$('.payedCode').val());    
                  APIRequestCode($('.payedCode').val())   
             }
             
         });
-        
-
 }
 
 function openP(event){
     event.preventDefault();
-    versionType()   
+    versionType();
     $("."+window['namePanel']).panel("open");
 }
     
@@ -725,7 +710,6 @@ function queryLessons(){
 							theme: "b",
 							html: ""
 							});
-
                            queryDataUser();
                     }else{
                     	
@@ -734,8 +718,6 @@ function queryLessons(){
                          window['dataLesson'] = '1';
                         eventsHome();
                       }, 500);
-                        
-                        
                     }
                 },errorHandler);
             },errorHandler,nullHandler);
@@ -753,13 +735,13 @@ function queryDataUser(){
                     if (result.rows.length == 1) {
                           
                            var row = result.rows.item(0);
-                           IdUsuario = row.id;
                            selectedL = row.language;
                            window['idioma'] =  row.language;
-                           console.log("usuario "+IdUsuario+"  languaje es"+window['idioma']);
-                           email = row.email;
+                           console.log("languaje es "+window['idioma']);
                            window['version']=row.version;
-                           ApiRequestLessons(window['idioma']);
+                           var randomKey = makeRandomKey();
+                           var hash = CryptoJS.SHA1(publicKey+privateKey+randomKey);
+                           ApiRequestLessonsPRO(window['idioma'],randomKey,hash);
 
                     }else{
                     	console.log("Error in the query of userData");
@@ -769,28 +751,66 @@ function queryDataUser(){
             },errorHandler,nullHandler);
 }
 
-function ApiRequestLessons(selectedL){
+function ApiRequestLessonsPRO(selectedL,randomKey,hash){
 
-	var url = "http://dry-dawn-9293.herokuapp.com/lessons/language/"+selectedL;
+	var url = "http://sunday.galeriasmall.com/api/pro-content/language/"+selectedL;
     $.ajaxSetup({
         type: "GET",
-        dataType: "json"
+        dataType: "json",
+        headers: { 'AccessKey': hash,
+                   'RandomKey': randomKey}
     });
 
     $.ajax({
-    	
     	url: url,
         success: function(data) {
-           dataWS = data;
-           db = openDatabase("sundayApp", "1.0", "Sunday School DB", 1000000);
-           console.log("success API lessons");
-           db.transaction(InsertLessons, errorCB, successCB);
+           
+            if(!data.error){
+                //Hago al insersion del contenido pro    
+                $.mobile.loading( 'show', {
+    				text: "Downloading data",
+    				textVisible: "false",
+    				theme: "b",
+    				html: ""
+    			});
+            
+                dataWS = data.lessons;
+                db = openDatabase("sundayApp", "1.0", "Sunday School DB", 1000000);
+                db.transaction(InsertContentPro, errorCB, successCB);
+            }
 
         },
-        error: function(xhr, status, error) {
-            console.log("error en la consulta de lessons");
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.status);
+            if(jqXHR.status == 401){
+                alert('Bad Resquest, contact the administrator');
+                //Access Denied. Invalid AccessKey & RandomKey
+            }
+            if(jqXHR.status == 404){
+                alert('Language without data, please try with other one');
+            }
+            if(jqXHR.status == 400){
+                alert('Unknow Error, please contact the administrator');
+            }
         }
     });
+}
+
+function InsertContentPro(tx){
+     
+    var sqlContenOutline ='';
+    console.log("insercionj contenido pro");
+    $.each(dataWS, function(k,v){
+         for(var i=0; i<v.content.length; i++){
+			    for(var j=0; j<v.content[i].length; j++){
+					sqlContenOutline = 'INSERT INTO content_outline(week_id, out, content) VALUES('+v.week+","+(i+1)+',"'+v.content[i][j]+'")';
+					//console.log(sqlContenOutline);
+                    tx.executeSql(sqlContenOutline);		
+				}
+			}
+     });
+    console.log("termino el ciclo");
+    updateClient();
 }
 
 function InsertLessons(tx){
@@ -936,7 +956,6 @@ function queryFindLessons(){
 	                    	
                             $('#listLessons').append('<li id="'+result.rows.item(i).week+'" data-nro="week'+result.rows.item(i).week+'" class="'+classApp+' '+result.rows.item(i).week+'" data-lesson="'+countLesson+'" data-date="'+months[mesActual-1].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'" data-quarter="'+months[mesActual-1].quarter+'" ><a>'+
                             '<img src="images/'+monthN[fecha.getMonth()]+''+fecha.getDate()+'.png" />'+
-                           
 							'<h3>' + result.rows.item(i).title  + '</h3>' +
 							'<p>' + result.rows.item(i).out1 + '</p>' +
 							'<p>' + result.rows.item(i).out2 + '</p>' +
@@ -1148,7 +1167,7 @@ function queryLesson(id, resultConsult){
                         $('#title').text(row.title);
                         $('#date').html('<strong>'+lessonDate+'</strong>');
                         $('#memory_verse').html('<b>MEMORY VERSE TEXT</b><br>"'+row.memory_verse+'"- <strong>'+row.verse+'</strong>');
-                        $('#bible_pass').html('<span class="ui-li-aside"><img src="images/Bible_small.png" /></span><br><b>BIBLE PASSAGE:</b><br>'+row.bible_pass);
+                        $('#bible_pass').html('<span class="ui-li-aside"><img src="images/biblesmall.png" /></span><br><b>BIBLE PASSAGE:</b><br>'+row.bible_pass);
                         $('#introducion').html('<b><u>INTRODUCTION</u></b><br>'+row.intro);
                         $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>')    
                         $('#question').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p>');
@@ -1244,7 +1263,6 @@ function eventLessonDetail(){
     fontSize()
     setFontSize(window['size'])
     $('.optionsLLD').tap(openP)
-    $('body').on( "swipeleft", openP );
     $('body').on( "swiperight", function(){event.preventDefault();$(".optionPanelLLD").panel("close")});
 
     
@@ -1369,11 +1387,9 @@ function eventDetailLesson(){
             
     	});
         
-        //eventsPanel()
         fontSize()
         setFontSize(window['size'])
         $('.optionsLL').tap(openP)
-        $('body').on( "swipeleft", openP );
         $('body').on( "swiperight", function(){event.preventDefault();$(".optionPanelLL").panel("close")});
     
         
@@ -1455,11 +1471,9 @@ function eventsNotes(){
             init();
         });
         
-        //eventsPanel();
         fontSize()
         setFontSize(window['size'])
         $('.optionsN').tap(openP)
-        $('body').on( "swipeleft", openP );
         $('body').on( "swiperight", function(){event.preventDefault();$(".optionPanelN").panel("close")});
 
         
@@ -1475,7 +1489,6 @@ function eventsNotes(){
                  alert('Please insert code')   
             }else
             {
-                 //alert("codigo en Notes "+$('.payedCodeN').val());    
                  APIRequestCode($('.payedCodeN').val())   
             }
         });
@@ -1484,40 +1497,44 @@ function eventsNotes(){
 
 function APIRequestCode(code) {
     console.log("revisando el codigo de activacion ");
-    if(code == 'none')
-        alert('Insert valide code please')
+    if(code == 'none'){
+            //alert('Insert valide code please');
+            queryDataUser();
+    }
     else{
+        var xmlMessage ='<?xml version="1.0" encoding="utf-8"?><CustomerActivationRequest><Request>'+
+        '<AccessKey>eFVhXX316tqks2bhYmufbbnyd5fHayj9schogol</AccessKey>'+
+        '<ActivationCode>'+code+'</ActivationCode>'+
+        '<DeviceMacAddress>xxxxxxxxxxxxxxxxxx</DeviceMacAddress>'+
+        '<DeviceNo>'+device.uuid+'</DeviceNo>'+
+        '<DeviceBlueToothAddress>NULL</DeviceBlueToothAddress>'+
+        '</Request>'+
+        '</CustomerActivationRequest>';
+        
         $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: "http://dry-dawn-9293.herokuapp.com/user/active_code/" + code,
-            success: function(data) {
-                idDispositivo = device.uuid;
-                if (data.uuid_1 == idDispositivo || data.uuid_2 == idDispositivo){
-                    // El dispositivo se le borro la informacion
-                    dataWS = data;
-                    alert("The application is registered in two devices, it will be activate as free version");
-                    updateClient();
-                    //Actualizar cliente
-                } else {
-                    if (data.count_device < 2) {
-                        if (data.count_device == 0) {
-                            APIRequestUpdateCount(data._id, 1);
-                        } else {
-                            APIRequestUpdateCount(data._id, 2);
-                        }
-                    } else {
-                        //alert(language[window['idioma']].twoDevices);
-                        alert("The application is registered in two devices, it will be activate as free version");
-                        //APIRequestInsert();
-                    }
+            type: "POST",
+            contentType: "text/xml",
+            dataType: "xml",
+            url: "https://rccgetour.org/rccgetour/API/activation_request.php",
+            data: xmlMessage,
+            success: function(response) {
+                var messageResponse = ($(response).find('Message').text());
+                var statusResponse = ($(response).find('Status').text());
+                if(messageResponse == 'ACTIVATION CODE SUCCESSFULL')
+                {
+                    queryDataUser();
                 }
+                if(messageResponse == 'INVALID ACTIVATION CODE'){
+                    alert('Invalid Code');
+                }
+                if(messageResponse == 'ACTIVATION CODE USED BY ANOTHER DEVICE'){
+                    alert('Activation Code used by other device');
+                }
+                console.log("Message "+messageResponse+" status "+statusResponse);
             },
             error: function(xhr, status, error) {
-                //console.log(""+language[selectedL].badCodeActivation+" "+selectedL);
-                //alert(language[selectedL].badCodeActivation);
-                alert("Invalid activation code");
-                //console.log("codigo de acivacion incorrecto");
+                alert('Unknow Error, please contact the administrator');
+                console.log("status "+status);
             }
         });
     }
@@ -1527,13 +1544,15 @@ function updateClient(){
     console.log("Actualizando el cliente");
     db = openDatabase("sundayApp", "1.0", "Sunday School DB", 1000000);
     db.transaction(function(transaction) {
-                        var sql = "UPDATE userData SET version = 1 WHERE id = '"  + dataWS._id+"'";
+                        var sql = "UPDATE userData SET version = 1 WHERE version = '0' ";
                         console.log("sql "+sql);
                         transaction.executeSql(sql, [],function(transaction, result) {},errorHandler);
                     },errorHandler,nullHandler);
+    $.mobile.loading( 'hide' );
+    alert('Activated successfully');
     version = 1;
     window['version'] = '1';
-    window['listLesson'] = false;
+    //window['listLesson'] = false;
     //window['dataLesson'] = '';
     window['today'] = false;
     versionType();
@@ -1541,35 +1560,6 @@ function updateClient(){
     $.mobile.changePage( "home.html" );
     $("#page").attr("data-index","home");
     init();
-}
-
-function APIRequestUpdateCount(idUser, count) {
-    console.log("Aumentando numero de dispositivos");
-    var url = "http://dry-dawn-9293.herokuapp.com/user/" + idUser + "/" + count;
-    console.log("contador a actualizar es " + count);
-    idDispositivo = device.uuid;
-    $.ajaxSetup({
-        contentType: "application/json; charset=utf-8",
-        type: "PUT",
-        dataType: "json",
-        url: url
-    });
-
-    $.ajax({
-        
-        data: JSON.stringify({"count_device": count, "uuid": idDispositivo}),
-        success: function(data) {
-            //alert(language[window['idioma']].successUpdatePro);
-             alert("Device registered successfully");
-             dataWS = data;
-             updateClient();
-             
-        },
-        error: function(xhr, status, error) {
-            //alert(language[window['idioma']].errorUpdatePro); 
-            alert("Error registering the device");
-        }
-    });
 }
 
 function queryBlesedWeek(){
@@ -1743,7 +1733,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         $('#titleBW').text(row.title);
                         $('#dateBW').html('<strong>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</strong>');
                         $('#memory_verseBW').html('<b>MEMORY VERSE TEXT</b><br>"'+row.memory_verse+'"- <strong>'+row.verse+'</strong>');
-                        $('#bible_passBW').html('<span class="ui-li-aside"><img src="images/Bible_small.png" /></span><br><b>BIBLE PASSAGE:</b><br>'+row.bible_pass);
+                        $('#bible_passBW').html('<span class="ui-li-aside"><img src="images/biblesmall.png" /></span><br><b>BIBLE PASSAGE:</b><br>'+row.bible_pass);
                         $('#introducionBW').html('<b><u>INTRODUCTION</u></b><br>'+row.intro);
                         $('#questionBW').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p>');
                         $('#conclusionBW').html('<b>CONCLUSION</b><hr><p style="white-space:pre-line">'+row.conclusion+'</p>');
@@ -1871,6 +1861,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         })
                         
                         fecha.setDate(fecha.getDate() + 1);
+                        $('#blessedWeek').html('');
                         
                         $('#blessedWeek').append('<li id="mon"><img src="images/dateIcons/monday.png" />'+
                                                  '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).mon+'</p>'+
@@ -1949,19 +1940,6 @@ function getFormatD(d) {
     var day = d.getDate();
     var month = d.getMonth() + 1;
     var y = d.getFullYear();
-    /*var hh = d.getHours();
-    var m = d.getMinutes();
-    var dd = "AM";
-    if (hh >= 12) {
-        hh -= 12;
-        dd = "PM";
-    }
-    if (hh == 0) {
-        hh = 12;
-    }
-    m = m<10?"0"+m:m;
-    hh = hh<10?"0"+hh:hh;*/
-    //return (month <= 9 ? '0' + month : month) + '/' + (day <= 9 ? '0' + day : day) + '/' + y + ' - ' + hh +':'+ m +' ' + dd;
     return (month <= 9 ? '0' + month : month) + '/' + (day <= 9 ? '0' + day : day) + '/' + y
 }
 

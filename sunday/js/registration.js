@@ -3,6 +3,10 @@ var dataWS = '';
 var idDispositivo = '';
 var Online = '';
 var dataWS = '';
+window['activation']= false;
+var hash = '';
+var randomKey = '';
+window['test']= false;
 
 document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -32,19 +36,24 @@ function init() {
         event.preventDefault();
        
         if(Online){
+            randomKey = makeRandomKey();
+            hash = CryptoJS.SHA1(publicKey+privateKey+randomKey);
+            $.mobile.loading( 'show', {
+    				text: "Downloading data",
+    				textVisible: "false",
+    				theme: "b",
+    				html: ""
+    			});
+            
             if($("#codeActivation").val() != ""){
-                APIRequestCode();
+                APIRequestCode($("#codeActivation").val());
             }else{
-                var randomKey = makeRandomKey();
-                var hash = CryptoJS.SHA1(publicKey+privateKey+'findAllLessonsByLanguageGET'+randomKey);
+                
                 APILessonsByLenguage(hash, randomKey);
             }
         }else{
             alert(language[$('#language').val()].noInternet);
         }
-                
-            
-        
     });
 }
 
@@ -54,9 +63,9 @@ function existentUser() {
 }
 
 function successInsert() {
+    $.mobile.loading( 'hide' );
     alert(language[$('#language').val()].onSuccess);
     window.location.href = "home.html";
-    //$.mobile.changePage( "home.html", { transition: "flip", reloadPage: true });
 }
 
 function checkConnection() {
@@ -108,84 +117,128 @@ function insertClient(version) {
     });
     
 }
-function APIRequestCode() {
-    var url = "http://dry-dawn-9293.herokuapp.com/user/active_code/" + $("#codeActivation").val();
-    $.ajaxSetup({
-        type: "GET",
-        dataType: "json",
-        url: url
-    });
-
-    $.ajax({
-        success: function(data) {
-            
-            if (data.uuid_1 == idDispositivo || data.uuid_2 == idDispositivo){
-                // El dispositivo se le borro la informacion
-                dataWS = data;
-                insertClient(1);
-                //Lo guardo como version paga y no aumenta el contador
-            } else {
-                if (data.count_device < 2) {
-                    if (data.count_device == 0) {
-                        APIRequestUpdateCount(data._id, 1);
-                    } else {
-                        APIRequestUpdateCount(data._id, 2);
-                    }
-                } else {
-                    alert(language[$('#language').val()].twoDevices);
-                    APIRequestInsert();
-                }
-            }
-        },
-        error: function(xhr, status, error) {
-            alert(language[$('#language').val()].badCodeActivation);
-        }
-    });
-}
 
 function APILessonsByLenguage(hash, randomKey) {
-
-    var url = "http://sunday.galeriasmall.com/api/lessons/language/"+$('#language').val()+"?accessKey="+hash+"&randomKey="+randomKey;
+    console.log("descargando contenido free");
+    var url = "http://sunday.galeriasmall.com/api/lessons/language/"+$('#language').val();
     $.ajaxSetup({
         type: "GET",
         dataType: "json",
-        url: url
+        url: url,
+        headers: { 'AccessKey': hash,
+                   'RandomKey': randomKey}
     });
 
     $.ajax({
         success: function(data) {
-            console.log(data.status);
-            if(data.status == '200'){
+            
+            if(!data.error){
                 //Hago al insersion de las lecciones    
-                //alert('Guardar');
-                dataWS = data.data;
+                dataWS = data.lessons;
                 db = openDatabase("sundayApp", "1.0", "Sunday School DB", 1000000);
-                $.mobile.loading( 'show', {
-    				text: "Downloading data",
-    				textVisible: "false",
-    				theme: "b",
-    				html: ""
-    			});
                 db.transaction(InsertLessons, errorCB, successCB);
             }
-            if(data.message == 'no_data'){
-                alert('No hay lecciones para este idioma, intenta con otro por favor');    
-            }
-            
-            if(data.message == 'accessk_key_invalid' || data.message == 'no_paramenters'){
-                alert('Peticion invalida');        
-            }
-            
-            //alert(language[$('#language').val()].userRegistrated);
-            //dataWS = data;
-            //insertClient(0);// Usuario free
         },
-        error: function(xhr, status, error) {
-            console.log("error en el servidor");
-            
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.status);
+            if(jqXHR.status == 401){
+                alert('Bad Resquest, contact the administrator');
+                //Access Denied. Invalid AccessKey & RandomKey
+            }
+            if(jqXHR.status == 404){
+                alert('Language without data, please try with other one');
+            }
+            if(jqXHR.status == 400){
+                alert('Unknow Error, please contact the administrator');
+            }
         }
     });
     
+}
+
+function APIRequestCode(code) {
+    console.log("revisando el codigo de activacion ");
+    if(code == 'none'){
+        //alert('Insert valide code please');
+        window['activation']= true;
+        APILessonsByLenguage(hash, randomKey);
+        
+    }else{
+        var xmlMessage ='<?xml version="1.0" encoding="utf-8"?><CustomerActivationRequest><Request>'+
+        '<AccessKey>eFVhXX316tqks2bhYmufbbnyd5fHayj9schogol</AccessKey>'+
+        '<ActivationCode>'+code+'</ActivationCode>'+
+        '<DeviceMacAddress>xxxxxxxxxxxxxxxxxx</DeviceMacAddress>'+
+        '<DeviceNo>'+device.uuid+'</DeviceNo>'+
+        '<DeviceBlueToothAddress>NULL</DeviceBlueToothAddress>'+
+        '</Request>'+
+        '</CustomerActivationRequest>';
+        
+        $.ajax({
+            type: "POST",
+            contentType: "text/xml",
+            dataType: "xml",
+            url: "https://rccgetour.org/rccgetour/API/activation_request.php",
+            data: xmlMessage,
+            success: function(response) {
+                var messageResponse = ($(response).find('Message').text());
+                var statusResponse = ($(response).find('Status').text());
+                if(messageResponse == 'ACTIVATION CODE SUCCESSFULL')
+                {
+                    window['activation']= true;
+                    APILessonsByLenguage(hash, randomKey);
+                }
+                if(messageResponse == 'INVALID ACTIVATION CODE'){
+                    alert('Invalid Code');
+                }
+                if(messageResponse == 'ACTIVATION CODE USED BY ANOTHER DEVICE'){
+                    alert('Activation Code used by other device');
+                }
+                console.log("Message "+messageResponse+" status "+statusResponse);
+            },
+            error: function(xhr, status, error) {
+                alert('Unknow Error, please contact the administrator');
+                console.log("status "+status);
+            }
+        });
+    }
+}
+
+function ApiRequestLessonsPRO(selectedL,randomKey,hash){
+    console.log("descargando contenido PRO");
+	var url = "http://sunday.galeriasmall.com/api/pro-content/language/"+selectedL;
+    $.ajaxSetup({
+        type: "GET",
+        dataType: "json",
+        headers: { 'AccessKey': hash,
+                   'RandomKey': randomKey}
+    });
+
+    $.ajax({
+    	url: url,
+        success: function(data) {
+           
+            if(!data.error){
+                //Hago al insersion del contenido pro    
+                dataWS = data.lessons;
+                db = openDatabase("sundayApp", "1.0", "Sunday School DB", 1000000);
+                db.transaction(InsertContentPro, errorCB, successCB);
+            }
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.status);
+            if(jqXHR.status == 401){
+                alert('Bad Resquest, contact the administrator');
+                //Access Denied. Invalid AccessKey & RandomKey
+            }
+            if(jqXHR.status == 404){
+                alert('Language without data, please try with other one');
+            }
+            if(jqXHR.status == 400){
+                alert('Unknow Error, please contact the administrator');
+            }
+        }
+    });
 }
 
 function insertClient(version) {
