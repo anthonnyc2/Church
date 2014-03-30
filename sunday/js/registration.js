@@ -3,6 +3,7 @@ var dataWS = '';
 var idDispositivo = '';
 var Online = '';
 var dataWS = '';
+var dataWS2 = '';
 window['activation']= false;
 var hash = '';
 var randomKey = '';
@@ -219,7 +220,7 @@ function ApiRequestLessonsPRO(selectedL,randomKey,hash){
            
             if(!data.error){
                 //Hago al insersion del contenido pro    
-                dataWS = data.lessons;
+                dataWS2 = data.lessons;
                 db = openDatabase("sundayApp", "1.0", "Sunday School DB", 1000000);
                 db.transaction(InsertContentPro, errorCB, successCB);
             }

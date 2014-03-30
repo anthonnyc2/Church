@@ -15,7 +15,6 @@ var lessonDate = '';
 var blessedWeek = '';
 var gateway = false;
 var API = false;
-var email = '';
 var idDispositivo;
 var valTypeSearch='BW';
 var publicKey='FrfuSF7Hnuf7';
@@ -547,14 +546,12 @@ function SearchNotes(){
                         
                         $('#listNotesSearch').collapsibleset('refresh')
                     }else{
-                    	
                         $('#listNotesSearch').append('<h3>No find results</h3>');
                         console.log("NO notes for this search "+$(".searchInput").val());
                     }
                    
                 },errorHandler);
             },errorHandler,nullHandler);
-    
 }
 
 function SearchLesson(){
@@ -876,8 +873,6 @@ function queryVersionApp(){
                         selectedL = row.language;
                         window['version'] = row.version;
                         window['idioma']= row.language;
-                        
-                        email = row.email;
                         if(page == 2){
                             if(window['version'] == 0){
                                 classApp = 'free';
@@ -930,6 +925,7 @@ function queryFindLessons(){
                         var dias = 7;
                         
                         var lastweek = weeksOfYear(fecha);
+                        console.log("ultima semana "+lastweek);
                         var countLesson = getWeekOfYear(fecha);
                         //countLesson = countLesson -1;
                         dateGo.setDate(dateGo.getDate() + (dias*countLesson));
@@ -1166,71 +1162,98 @@ function queryLesson(id, resultConsult){
 	                    $('#quarter').text(lessonQuarter);
                         $('#title').text(row.title);
                         $('#date').html('<strong>'+lessonDate+'</strong>');
-                        $('#memory_verse').html('<b>MEMORY VERSE TEXT</b><br>"'+row.memory_verse+'"- <strong>'+row.verse+'</strong>');
-                        $('#bible_pass').html('<span class="ui-li-aside"><img src="images/biblesmall.png" /></span><br><b>BIBLE PASSAGE:</b><br>'+row.bible_pass);
-                        $('#introducion').html('<b><u>INTRODUCTION</u></b><br>'+row.intro);
-                        $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>')    
-                        $('#question').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p>');
-                        $('#conclusion').html('<b>CONCLUSION</b><hr><p style="white-space:pre-line">'+row.conclusion+'</p>');
-				    
-                        if(row.numberOutLines == 2){
+                        if(row.memory_verse == 'no'){
+                            console.log("semanas iteractivas");
+                            if(row.intro == 'no'){
+                                	$('#introducion').html(row.question1+'<br />- '+row.question2+'<br />- '+row.question3+'<br />- '+row.question4+'<br />- ETC...');
+                            }else{
+                            	$('#introducion').html('<b><u>'+row.intro+'</u></b><br />- '+row.question1+'<br />- '+row.question2+'<br />- '+row.question3+'<br />- '+row.question4+'<br />- ETC...');    
+                            }
+                            
+                        	$('.memory_verse').hide();
+                            $('#bible_pass').hide();
+                            $('#out').hide();
+                            $('#question').hide();
+                            $('#conclusion').hide();
+                            $('#outlines').hide();
+                            $('.outlines').hide();
+                        }else{
+                            $('#memory_verse').html('<b>MEMORY VERSE TEXT</b><br>"'+row.memory_verse+'"- <strong>'+row.verse+'</strong>');
+                            $('#bible_pass').html('<span class="ui-li-aside"><img src="images/biblesmall.png" /></span><br><b>BIBLE PASSAGE:</b><br>'+row.bible_pass);
+                            $('#introducion').html('<b><u>INTRODUCTION</u></b><br>'+row.intro);
                             $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>')    
-                        }
-                        if(row.numberOutLines == 3){
-                            $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>');    
-                        }
-                        if(row.numberOutLines == 4){
-                             $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>');   
-                        }
-                        if(row.numberOutLines == 5){
-                             $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>');      
-                        }
-                        if(row.numberOutLines == 6){
-                             $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>');         
-                        }
-                        if(row.numberOutLines == 7){
-                             $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>'+'<br><b>7.'+row.out7+'</b>');       
-                        }
-                        if(row.numberOutLines == 8){
-                             $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>'+'<br><b>7.'+row.out7+'</b>'+'<br><b>8.'+row.out8+'</b>');          
+                            if(row.numberOfQuestions == 2){
+                            	$('#question').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p>');    
+                            }
+                            if(row.numberOfQuestions == 3){
+                                $('#question').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p><hr><p>'+row.question3+'</p>');
+                            }
+                            if(row.numberOfQuestions == 4){
+                                $('#question').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p><hr><p>'+row.question3+'</p><hr><p>'+row.question4+'</p>');
+                            }
+                            $('#conclusion').html('<b>CONCLUSION</b><hr><p style="white-space:pre-line">'+row.conclusion+'</p>');
+    				    
+                            if(row.numberOutLines == 2){
+                                $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>')    
+                            }
+                            if(row.numberOutLines == 3){
+                                $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>');    
+                            }
+                            if(row.numberOutLines == 4){
+                                 $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>');   
+                            }
+                            if(row.numberOutLines == 5){
+                                 $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>');      
+                            }
+                            if(row.numberOutLines == 6){
+                                 $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>');         
+                            }
+                            if(row.numberOutLines == 7){
+                                 $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>'+'<br><b>7.'+row.out7+'</b>');       
+                            }
+                            if(row.numberOutLines == 8){
+                                 $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>'+'<br><b>7.'+row.out7+'</b>'+'<br><b>8.'+row.out8+'</b>');          
+                            }
+                            
+                            for(var j=0;j<row.numberOutLines; j++)
+                            {
+                                for(var i=0; i<resultConsult.rows.length; i++){ 
+                                    var content = resultConsult.rows.item(i);
+                                    if(content.out == (j+1)){
+                                        htmlOut1+='<p style="white-space:pre-line">'+content.content+'</p>';        
+                                    }
+                                }
+                                
+                                if(j==0){
+                                    $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out1+'</b><hr>'+htmlOut1+'</p></li>');    
+                                }
+                                if(j==1){
+                                    $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out2+'</b><hr>'+htmlOut1+'</p></li>');
+                                }
+                                if(j==2){
+                                   $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out3+'</b><hr>'+htmlOut1+'</p></li>');   
+                                }
+                                if(j==3){
+                                    $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out4+'</b><hr>'+htmlOut1+'</p></li>');
+                                }
+                                if(j==4){
+                                    $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out5+'</b><hr>'+htmlOut1+'</p></li>');
+                                }
+                                if(j==5){
+                                    $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out6+'</b><hr>'+htmlOut1+'</p></li>');
+                                }
+                                if(j==6){
+                                    $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out7+'</b><hr>'+htmlOut1+'</p></li>');
+                                }
+                                if(j==7){
+                                    $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out8+'</b><hr>'+htmlOut1+'</p></li>');
+                                }
+                                htmlOut1='';
+                                
+                            }
                         }
                         
-                        for(var j=0;j<row.numberOutLines; j++)
-                        {
-                            for(var i=0; i<resultConsult.rows.length; i++){ 
-                                var content = resultConsult.rows.item(i);
-                                if(content.out == (j+1)){
-                                    htmlOut1+='<p style="white-space:pre-line">'+content.content+'</p>';        
-                                }
-                            }
-                            
-                            if(j==0){
-                                $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out1+'</b><hr>'+htmlOut1+'</p></li>');    
-                            }
-                            if(j==1){
-                                $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out2+'</b><hr>'+htmlOut1+'</p></li>');
-                            }
-                            if(j==2){
-                               $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out3+'</b><hr>'+htmlOut1+'</p></li>');   
-                            }
-                            if(j==3){
-                                $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out4+'</b><hr>'+htmlOut1+'</p></li>');
-                            }
-                            if(j==4){
-                                $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out5+'</b><hr>'+htmlOut1+'</p></li>');
-                            }
-                            if(j==5){
-                                $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out6+'</b><hr>'+htmlOut1+'</p></li>');
-                            }
-                            if(j==6){
-                                $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out7+'</b><hr>'+htmlOut1+'</p></li>');
-                            }
-                            if(j==7){
-                                $('#outlines').append('<li><p style="white-space:pre-line"><b>'+row.out8+'</b><hr>'+htmlOut1+'</p></li>');
-                            }
-                            htmlOut1='';
-                            
-                        }
+                        
                         
                         $('#detail').listview('refresh');
 	                       
@@ -1604,13 +1627,21 @@ function showLessonWeek(blessedWeek, week){
                              '<span class="ui-li-count">'+months[fecha.getMonth()].quarter+'</span>'+
                              '</li>');
     //----------------------------------------------------------------------------------------------------------------                    
-    $('#blessedWeek').append('<li id="sun"><a><img src="images/dateIcons/sunday.png" />'+
+    /*$('#blessedWeek').append('<li id="sun"><a><img src="images/dateIcons/sunday.png" />'+
                              '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).sun+'</p>'+
                              '<p class="ui-li-aside"><strong>Sunday</strong></p></a></li>'); 
     $('#sun').tap(function(e){
         e.preventDefault();
         alert(blessedWeek.rows.item(0).sun)
         
+    })*/
+    //fecha.setDate(fecha.getDate() + 1);
+    $('#blessedWeek').append('<li id="sun"><img src="images/dateIcons/sunday.png" />'+
+                             '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).sun+'</p>'+
+                             '<p class="ui-li-aside"><strong>Sunday</strong></p></li>'); 
+    $('#sun').tap(function(e){
+        e.preventDefault();
+        navigator.notification.alert(blessedWeek.rows.item(0).mon,function(){},'Blessed Day','Ok');
     })
     fecha.setDate(fecha.getDate() + 1);
     //----------------------------------------------------------------------------------------------------------------
@@ -1732,71 +1763,90 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
 	                    $('#quarterBW').text(months[fecha.getMonth()].quarter);
                         $('#titleBW').text(row.title);
                         $('#dateBW').html('<strong>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</strong>');
-                        $('#memory_verseBW').html('<b>MEMORY VERSE TEXT</b><br>"'+row.memory_verse+'"- <strong>'+row.verse+'</strong>');
-                        $('#bible_passBW').html('<span class="ui-li-aside"><img src="images/biblesmall.png" /></span><br><b>BIBLE PASSAGE:</b><br>'+row.bible_pass);
-                        $('#introducionBW').html('<b><u>INTRODUCTION</u></b><br>'+row.intro);
-                        $('#questionBW').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p>');
-                        $('#conclusionBW').html('<b>CONCLUSION</b><hr><p style="white-space:pre-line">'+row.conclusion+'</p>');
-				    
-                        if(row.numberOutLines == 2){
-                            $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>')    
-                        }
-                        
-                        if(row.numberOutLines == 3){
-                            $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>');    
-                        }
-                        if(row.numberOutLines == 4){
-                             $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>');   
-                        }
-                        if(row.numberOutLines == 5){
-                             $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>');      
-                        }
-                        if(row.numberOutLines == 6){
-                             $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>');         
-                        }
-                        if(row.numberOutLines == 7){
-                             $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>'+'<br><b>7.'+row.out7+'</b>');       
-                        }
-                        if(row.numberOutLines == 8){
-                             $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>'+'<br><b>7.'+row.out7+'</b>'+'<br><b>8.'+row.out8+'</b>');          
-                        }
-                        
-                        for(var j=0;j<row.numberOutLines; j++)
-                        {
-                            for(var i=0; i<resultConsult.rows.length; i++){ 
-                                var content = resultConsult.rows.item(i);
-                                if(content.out == (j+1)){
-                                    htmlOut1+='<p style="white-space:pre-line">'+content.content+'</p>';        
+                        if(row.memory_verse == 'no'){
+                            console.log("semanas iteractivas");
+                            $('#introducionBW').html('<b><u>'+row.intro+'</u></b><br />- '+row.question1+'<br />- '+row.question2+'<br />- '+row.question3+'<br />- '+row.question4+'<br />- ETC...');
+                        	$('.memory_verseBW').hide();
+                            $('#bible_passBW').hide();
+                            $('#outBW').hide();
+                            $('#questionBW').hide();
+                            $('#conclusionBW').hide();
+                            $('#outBW').hide();
+                            $('.outBW').hide();
+                        }else{
+                            $('#memory_verseBW').html('<b>MEMORY VERSE TEXT</b><br>"'+row.memory_verse+'"- <strong>'+row.verse+'</strong>');
+                            $('#bible_passBW').html('<span class="ui-li-aside"><img src="images/biblesmall.png" /></span><br><b>BIBLE PASSAGE:</b><br>'+row.bible_pass);
+                            $('#introducionBW').html('<b><u>INTRODUCTION</u></b><br>'+row.intro);
+                            if(row.numberOfQuestions == 2){
+                            	$('#questionBW').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p>');    
+                            }
+                            if(row.numberOfQuestions == 3){
+                                $('#questionBW').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p><hr><p>'+row.question3+'</p>');
+                            }
+                            if(row.numberOfQuestions == 4){
+                                $('#questionBW').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p><hr><p>'+row.question3+'</p><hr><p>'+row.question4+'</p>');
+                            }
+                            
+                            $('#conclusionBW').html('<b>CONCLUSION</b><hr><p style="white-space:pre-line">'+row.conclusion+'</p>');
+                            if(row.numberOutLines == 2){
+                                $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>')    
+                            }
+                            if(row.numberOutLines == 3){
+                                $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>');    
+                            }
+                            if(row.numberOutLines == 4){
+                                 $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>');   
+                            }
+                            if(row.numberOutLines == 5){
+                                 $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>');      
+                            }
+                            if(row.numberOutLines == 6){
+                                 $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>');         
+                            }
+                            if(row.numberOutLines == 7){
+                                 $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>'+'<br><b>7.'+row.out7+'</b>');       
+                            }
+                            if(row.numberOutLines == 8){
+                                 $('#outBW').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>'+'<br><b>3.'+row.out3+'</b>'+'<br><b>4.'+row.out4+'</b>'+'<br><b>5.'+row.out5+'</b>'+'<br><b>6.'+row.out6+'</b>'+'<br><b>7.'+row.out7+'</b>'+'<br><b>8.'+row.out8+'</b>');          
+                            }
+                            for(var j=0;j<row.numberOutLines; j++)
+                            {
+                                for(var i=0; i<resultConsult.rows.length; i++){ 
+                                    var content = resultConsult.rows.item(i);
+                                    if(content.out == (j+1)){
+                                        htmlOut1+='<p style="white-space:pre-line">'+content.content+'</p>';        
+                                    }
                                 }
+                                
+                                if(j==0){
+                                    $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out1+'</b><hr>'+htmlOut1+'</p></li>');    
+                                }
+                                if(j==1){
+                                    $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out2+'</b><hr>'+htmlOut1+'</p></li>');
+                                }
+                                if(j==2){
+                                   $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out3+'</b><hr>'+htmlOut1+'</p></li>');   
+                                }
+                                if(j==3){
+                                    $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out4+'</b><hr>'+htmlOut1+'</p></li>');
+                                }
+                                if(j==4){
+                                    $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out5+'</b><hr>'+htmlOut1+'</p></li>');
+                                }
+                                if(j==5){
+                                    $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out6+'</b><hr>'+htmlOut1+'</p></li>');
+                                }
+                                if(j==6){
+                                    $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out7+'</b><hr>'+htmlOut1+'</p></li>');
+                                }
+                                if(j==7){
+                                    $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out8+'</b><hr>'+htmlOut1+'</p></li>');
+                                }
+                                htmlOut1='';
+                                
                             }
-                            
-                            if(j==0){
-                                $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out1+'</b><hr>'+htmlOut1+'</p></li>');    
-                            }
-                            if(j==1){
-                                $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out2+'</b><hr>'+htmlOut1+'</p></li>');
-                            }
-                            if(j==2){
-                               $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out3+'</b><hr>'+htmlOut1+'</p></li>');   
-                            }
-                            if(j==3){
-                                $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out4+'</b><hr>'+htmlOut1+'</p></li>');
-                            }
-                            if(j==4){
-                                $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out5+'</b><hr>'+htmlOut1+'</p></li>');
-                            }
-                            if(j==5){
-                                $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out6+'</b><hr>'+htmlOut1+'</p></li>');
-                            }
-                            if(j==6){
-                                $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out7+'</b><hr>'+htmlOut1+'</p></li>');
-                            }
-                            if(j==7){
-                                $('#outlinesBW').append('<li><p style="white-space:pre-line"><b>'+row.out8+'</b><hr>'+htmlOut1+'</p></li>');
-                            }
-                            htmlOut1='';
-                            
                         }
+                        
                         $('#LessonBW').listview('refresh');
                         /*for(var i=0; i<resultConsult.rows.length; i++){
 	                    	var content = resultConsult.rows.item(i);
@@ -1825,7 +1875,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         
                         $('#sun').tap(function(e){
                             e.preventDefault();
-                            alert(blessedWeek.rows.item(0).sun);
+                            navigator.notification.alert(blessedWeek.rows.item(0).sun,function(){},'Blessed Day','Ok');
                                /*if(window['version'] == 0){
                                 function checkButtonSelection(param){
                                      if(param == 2)
@@ -1858,18 +1908,16 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                             }*/
                             
                             
-                        })
+                        });
                         
                         fecha.setDate(fecha.getDate() + 1);
-                        $('#blessedWeek').html('');
-                        
                         $('#blessedWeek').append('<li id="mon"><img src="images/dateIcons/monday.png" />'+
                                                  '<h3>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</h3><p>'+blessedWeek.rows.item(0).mon+'</p>'+
                                                  '<p class="ui-li-aside"><strong>Monday</strong></p></li>'); 
     			        
                         $('#mon').tap(function(e){
                             e.preventDefault();
-                            alert(blessedWeek.rows.item(0).mon)
+                            navigator.notification.alert(blessedWeek.rows.item(0).mon,function(){},'Blessed Day','Ok');
                         })
                         
                         fecha.setDate(fecha.getDate() + 1);
@@ -1879,7 +1927,8 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         
                         $('#tue').tap(function(e){
                             e.preventDefault();
-                            alert(blessedWeek.rows.item(0).tue)
+                            navigator.notification.alert(blessedWeek.rows.item(0).tue,function(){},'Blessed Day','Ok');
+                            
                         })
                         
                         fecha.setDate(fecha.getDate() + 1);
@@ -1889,7 +1938,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         
                         $('#wed').tap(function(e){
                             e.preventDefault();
-                            alert(blessedWeek.rows.item(0).wed)
+                            navigator.notification.alert(blessedWeek.rows.item(0).wed,function(){},'Blessed Day','Ok');
                         })
                         
                         fecha.setDate(fecha.getDate() + 1);
@@ -1899,7 +1948,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         
                         $('#thu').tap(function(e){
                             e.preventDefault();
-                            alert(blessedWeek.rows.item(0).thu)
+                            navigator.notification.alert(blessedWeek.rows.item(0).thu,function(){},'Blessed Day','Ok');
                         })
                         
                         fecha.setDate(fecha.getDate() + 1);
@@ -1909,7 +1958,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         
                         $('#fri').tap(function(e){
                             e.preventDefault();
-                            alert(blessedWeek.rows.item(0).fri)
+                            navigator.notification.alert(blessedWeek.rows.item(0).fri,function(){},'Blessed Day','Ok');
                         })
                         
                         fecha.setDate(fecha.getDate() + 1);
@@ -1920,12 +1969,10 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
                         
                         $('#sat').tap(function(e){
                             e.preventDefault();
-                            alert(blessedWeek.rows.item(0).sat)
+                            navigator.notification.alert(blessedWeek.rows.item(0).sat,function(){},'Blessed Day','Ok');
                         })
                         
                         $('#blessedWeek').listview('refresh');
-                        
-                        
                         
                         eventsCalendar();
                     }else{
@@ -2058,7 +2105,6 @@ function editNote(index,title,content){
                         transaction.executeSql(sql, [],function(transaction, result) {},errorHandler);
                     },errorHandler,nullHandler);
 }
-
 
 function fontSize() {
 	var min=6;
