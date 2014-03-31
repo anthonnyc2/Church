@@ -1162,9 +1162,9 @@ function queryLesson(id, resultConsult){
 	                    $('#quarter').text(lessonQuarter);
                         $('#title').text(row.title);
                         $('#date').html('<strong>'+lessonDate+'</strong>');
-                        if(row.memory_verse == 'no'){
+                        if(row.memory_verse == 'no' || row.memory_verse.toUpperCase() == 'NO'){
                             console.log("semanas iteractivas");
-                            if(row.intro == 'no'){
+                            if(row.intro == 'no' || row.introtoUpperCase() == 'NO'){
                                 	$('#introducion').html(row.question1+'<br />- '+row.question2+'<br />- '+row.question3+'<br />- '+row.question4+'<br />- ETC...');
                             }else{
                             	$('#introducion').html('<b><u>'+row.intro+'</u></b><br />- '+row.question1+'<br />- '+row.question2+'<br />- '+row.question3+'<br />- '+row.question4+'<br />- ETC...');    
@@ -1180,8 +1180,8 @@ function queryLesson(id, resultConsult){
                         }else{
                             $('#memory_verse').html('<b>MEMORY VERSE TEXT</b><br>"'+row.memory_verse+'"- <strong>'+row.verse+'</strong>');
                             $('#bible_pass').html('<span class="ui-li-aside"><img src="images/biblesmall.png" /></span><br><b>BIBLE PASSAGE:</b><br>'+row.bible_pass);
+                            if(row.intro != 'no' || row.intro.toUpperCase() == 'NO');
                             $('#introducion').html('<b><u>INTRODUCTION</u></b><br>'+row.intro);
-                            $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>')    
                             if(row.numberOfQuestions == 2){
                             	$('#question').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p>');    
                             }
@@ -1191,7 +1191,10 @@ function queryLesson(id, resultConsult){
                             if(row.numberOfQuestions == 4){
                                 $('#question').html('<b>QUESTIONS</b><hr><p>'+row.question1+'</p><hr><p>'+row.question2+'</p><hr><p>'+row.question3+'</p><hr><p>'+row.question4+'</p>');
                             }
-                            $('#conclusion').html('<b>CONCLUSION</b><hr><p style="white-space:pre-line">'+row.conclusion+'</p>');
+                            if(row.conclusion != 'no' || row.conclusion.toUpperCase() == 'NO'){
+                            	$('#conclusion').html('<b>CONCLUSION</b><hr><p style="white-space:pre-line">'+row.conclusion+'</p>');    
+                            }
+                            
     				    
                             if(row.numberOutLines == 2){
                                 $('#out').html('<br><b>1. '+row.out1+'</b><br><b>2.'+row.out2+'</b>')    
@@ -1253,13 +1256,7 @@ function queryLesson(id, resultConsult){
                             }
                         }
                         
-                        
-                        
                         $('#detail').listview('refresh');
-	                       
-                        //$('#outline1').html('<b>'+row.out1+'</b><hr>'+htmlOut1);
-                        //$('#outline2').html('<b>'+row.out2+'</b><hr>'+htmlOut2);
-    
                         eventLessonDetail();
                     }else{
                     	console.log("No lessons "+idLesson);
@@ -1763,7 +1760,7 @@ function queryLessonWeek(week, blessedWeek, resultConsult){
 	                    $('#quarterBW').text(months[fecha.getMonth()].quarter);
                         $('#titleBW').text(row.title);
                         $('#dateBW').html('<strong>'+months[fecha.getMonth()].month+'-'+fecha.getDate()+'-'+fecha.getFullYear()+'</strong>');
-                        if(row.memory_verse == 'no'){
+                        if(row.memory_verse == 'no' || row.memory_verse.toUpperCase() == 'NO'){
                             console.log("semanas iteractivas");
                             $('#introducionBW').html('<b><u>'+row.intro+'</u></b><br />- '+row.question1+'<br />- '+row.question2+'<br />- '+row.question3+'<br />- '+row.question4+'<br />- ETC...');
                         	$('.memory_verseBW').hide();

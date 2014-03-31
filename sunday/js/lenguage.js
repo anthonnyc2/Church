@@ -176,6 +176,42 @@ var language = [{
 "successUpdatePro" : "Device registered successfully",
 "userRegistrated" : "The user is already registered",
 "sameEmail" : "Email does not match"
+},
+{
+"name": "Name",
+"email": "Email",
+"phoneNumber": "Phone Number",
+"codeActivation": "Code Activation (optional)",
+"button":"Accept",
+"messageRequered": "Required Fields",
+"messageEmail": "The email is not valid",
+"noInternet": "No network connection detected",
+"onSuccess" : "Successfully registered",
+"onError" : "Unable to connect to the web service",
+"twoDevices": "The application is registered in two devices, it will be activate as free version",
+"badCodeActivation" : "Invalid activation code",
+"errorUpdatePro": "Error registering the device",
+"successUpdatePro" : "Device registered successfully",
+"userRegistrated" : "The user is already registered",
+"sameEmail" : "Email does not match"
+},
+{
+"name": "Name",
+"email": "Email",
+"phoneNumber": "Phone Number",
+"codeActivation": "Code Activation (optional)",
+"button":"Accept",
+"messageRequered": "Required Fields",
+"messageEmail": "The email is not valid",
+"noInternet": "No network connection detected",
+"onSuccess" : "Successfully registered",
+"onError" : "Unable to connect to the web service",
+"twoDevices": "The application is registered in two devices, it will be activate as free version",
+"badCodeActivation" : "Invalid activation code",
+"errorUpdatePro": "Error registering the device",
+"successUpdatePro" : "Device registered successfully",
+"userRegistrated" : "The user is already registered",
+"sameEmail" : "Email does not match"
 }
 ]
 

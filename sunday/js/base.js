@@ -164,7 +164,7 @@ function InsertLessons(tx){
 		
 		console.log("number of lessons "+countLesson);
         if(!window['activation']){
-            //insertClient(0);    
+            insertClient(0);    
         }else{
             console.log("va por el contenido pro");
             ApiRequestLessonsPRO($('#language').val(),randomKey,hash);   
