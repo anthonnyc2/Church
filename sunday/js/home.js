@@ -30,10 +30,10 @@ window['namePanel']= 'optionPanel';
 
 var monthN = [ "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" ];
 var months = [{
-"month": "January", "quarter" : "2nd Quarter"},{"month": "February", "quarter" : "2nd Quarter"},{"month": "March", "quarter" : "2nd Quarter"},
-{"month": "April", "quarter" : "2nd Quarter"},{"month": "May", "quarter" : "3rd Quarter"},{"month": "June", "quarter" : "3rd Quarter"},
-{"month": "July", "quarter" : "3er Quarter"},{"month": "August", "quarter" : "3rd Quarter"},{"month" : "September", "quarter" : "1st Quarter"},
-{"month" : "October", "quarter" : "1st Quarter"},{"month": "November", "quarter" : "1st Quarter"},{"month" : "December", "quarter" : "1st Quarter"}];
+"month": "January", "quarter" : "2nd Quarter"},{"month": "February", "quarter" : "2nd Quarter"},{"month": "March", "quarter" : "3rd Quarter"},
+{"month": "April", "quarter" : "3rd Quarter"},{"month": "May", "quarter" : "3rd Quarter"},{"month": "June", "quarter" : "4th Quarter"},
+{"month": "July", "quarter" : "4th Quarter"},{"month": "August", "quarter" : "4th Quarter"},{"month" : "September", "quarter" : "1st Quarter"},
+{"month" : "October", "quarter" : "1st Quarter"},{"month": "November", "quarter" : "1st Quarter"},{"month" : "December", "quarter" : "2nd Quarter"}];
 
 var currentDate, totalNotes = 0;
 var options = {collapsible: true, event: "tap", activate: accFocus,heightStyle: "content", icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" }}
@@ -592,6 +592,8 @@ function SearchLesson(){
     
 }
 
+
+	
 function cargarURl(){
     url = 'https://rccgetour.org/rccgetour/products/product.php';
     console.log("la url es "+url);
@@ -682,6 +684,10 @@ function eventsHome(){
             }
             
         });
+    
+        $('.siteChurch').tap(function(event){
+        	window.open(encodeURI('www.rccg.org'), '_system', 'location=no');  
+        }); 
 }
 
 function openP(event){
