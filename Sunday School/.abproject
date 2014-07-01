@@ -1,0 +1,50 @@
+{
+  "ProjectGuid": "53b02e3d-8c8d-4dfb-a886-c4e119afe35b",
+  "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
+  "AppIdentifier": "com.telerik.sunday",
+  "ProjectName": "Sunday School",
+  "IsRunnable": "true",
+  "FrameworkVersion": "3.0.0",
+  "AndroidPermissions": [
+    "android.permission.ACCESS_COARSE_LOCATION",
+    "android.permission.ACCESS_FINE_LOCATION",
+    "android.permission.ACCESS_LOCATION_EXTRA_COMMANDS",
+    "android.permission.READ_PHONE_STATE",
+    "android.permission.INTERNET",
+    "android.permission.RECEIVE_SMS",
+    "android.permission.WRITE_EXTERNAL_STORAGE",
+    "android.permission.ACCESS_NETWORK_STATE",
+    "android.permission.ACCOUNT_MANAGER",
+    "android.permission.GET_ACCOUNTS",
+    "android.permission.MANAGE_ACCOUNTS",
+    "android.permission.BROADCAST_STICKY",
+    "android.permission.GET_TASKS"
+  ],
+  "CorePlugins": [
+    "org.apache.cordova.AudioHandler",
+    "org.apache.cordova.device",
+    "org.apache.cordova.dialogs",
+    "org.apache.cordova.file",
+    "org.apache.cordova.file-transfer",
+    "org.apache.cordova.globalization",
+    "org.apache.cordova.inappbrowser",
+    "org.apache.cordova.media-capture",
+    "org.apache.cordova.network-information",
+    "org.apache.cordova.splashscreen"
+  ],
+  "DeviceOrientations": [
+    "Portrait"
+  ],
+  "iOSStatusBarStyle": "Default",
+  "AndroidHardwareAcceleration": "true",
+  "BundleVersion": "1.0",
+  "iOSDisplayName": "",
+  "iOSDeviceFamily": [
+    "1",
+    "2"
+  ],
+  "iOSBackgroundMode": [],
+  "AndroidVersionCode": "1",
+  "Framework": "Cordova",
+  "DisplayName": ""
+}
